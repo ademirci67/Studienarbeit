@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+               <h:outputStylesheet library="css" name="layout.css"/>
+    </h:head>
+    <h:body>
+        <h:form>
+         <p:growl>
+        <p:autoUpdate />
+    </p:growl>
+        <p:panelMenu style="width:300px">
+        <p:submenu label="Modul" rendered = "#{LoginController.isLoggedIn==true}">
+            <p:menuitem value="Create" action="/createmodul.xhtml" rendered = "#{LoginController.isLoggedIn}"  icon="pi pi-save" />
+            <p:menuitem value="Show" action="/showmodul.xhtml" rendered = "#{LoginController.isLoggedIn}"  icon="pi pi-refresh"/>
+        </p:submenu>
+        <p:submenu label="Navigations" rendered = "#{LoginController.isLoggedIn}">
+            <p:menuitem value="External" url="http://localhost:8080/stundenplanung/faces/showmodul.xhtml" rendered = "#{LoginController.isLoggedIn}" icon="pi pi-home"/>
+        </p:submenu>
+    </p:panelMenu>
+            <ul>
+                <li>
+                    <h:commandLink value="Anmelden" 
+                                   action="/login.xhtml"
+                                   rendered = "#{!LoginController.isLoggedIn}"/>                
+                </li>
+                 <li>
+                    <h:commandLink value="Registrieren" 
+                                   action="/register.xhtml"                
+                                   rendered = "#{!LoginController.isLoggedIn}"/>
+                </li>
+                <li>
+                    <h:commandLink value="Abmelden" 
+                                   action="/logout.xhtml"               
+                                   rendered = "#{LoginController.isLoggedIn==true}"/> 
+                </li>
+                <li>
+                    <h:commandLink value="Module" 
+                                   action="/showmodul.xhtml?faces-redirect=true"                
+                                   rendered = "#{LoginController.isLoggedIn==true}"/> 
+                </li>
+                <li>
+                    <h:commandLink value="Account" 
+                                   action="#{LoginController.doHome()}"
+                                   rendered = "#{LoginController.isLoggedIn==true}"/>
+                </li>
+                <li>
+                    <h:commandLink value="Benutzergruppen" 
+                                   action="/showbenutzergruppen.xhtml"                
+                                   rendered = "#{LoginController.isLoggedIn==true}"/> 
+                </li>
+                <li>
+                    <h:commandLink value="Dozenten" 
+                                   action="/showdozenten.xhtml"                
+                                   rendered = "#{LoginController.isLoggedIn==true}"/> 
+                </li>
+                <li>
+                    <h:commandLink value="Faculty" 
+                                   action="/showfaculty.xhtml"                
+                                   rendered = "#{LoginController.isLoggedIn==true}"/> 
+                </li>
+                <li>
+                    <h:commandLink value="Lehrveranstaltungsart" 
+                                   action="/showlehrveranstaltungsart.xhtml"                
+                                   rendered = "#{LoginController.isLoggedIn==true}"/> 
+                </li>
+                <li>
+                    <h:commandLink value="Location" 
+                                   action="/showlocation.xhtml"                
+                                   rendered = "#{LoginController.isLoggedIn==true}"/> 
+                </li>
+                <li>
+                    <h:commandLink value="Räume" 
+                                   action="/showraum.xhtml"                
+                                   rendered = "#{LoginController.isLoggedIn==true}"/> 
+                </li>
+                <li>
+                    <h:commandLink value="SGModul" 
+                                   action="/showsgmodul.xhtml"                
+                                   rendered = "#{LoginController.isLoggedIn==true}"/> 
+                </li>
+                <li>
+                    <h:commandLink value="Studiengang" 
+                                   action="/showstudiengang.xhtml"                
+                                   rendered = "#{LoginController.isLoggedIn==true}"/> 
+                </li>
+                <li>
+                    <h:commandLink value="Stundenplansemester" 
+                                   action="/showstundenplansemester.xhtml"                
+                                   rendered = "#{LoginController.isLoggedIn==true}"/> 
+                </li>
+                <li>
+                    <h:commandLink value="Stundenplanstatus" 
+                                   action="/showstundenplanstatus.xhtml"                
+                                   rendered = "#{LoginController.isLoggedIn==true}"/> 
+                </li>
+            </ul>
+        </h:form>
+    </h:body>
+</html>
