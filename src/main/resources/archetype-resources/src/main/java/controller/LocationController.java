@@ -31,10 +31,11 @@ import org.primefaces.event.RowEditEvent;
 
 /**
 *
-* @author Manuel
+* @author Anil
 */
 
-@ManagedBean(name="LocationController")
+//@ManagedBean(name="LocationController")
+@Named(value="locationController")
 @SessionScoped
 public class LocationController implements Serializable {
 	private static final long serialVersionUID = 1L;
