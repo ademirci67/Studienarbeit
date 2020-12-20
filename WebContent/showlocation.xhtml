@@ -14,10 +14,10 @@
 		<h:form id="form">
 		    <p:growl id="msgs" showDetail="true"/>   
 		    <p:commandButton value="Create Location" id="ajax" update="msgs" action="/createlocation.xhtml" style="margin-right:20px;" styleClass="ui-priority-primary" />
-			<p:dataTable id="LocationListe" var="list" value="#{LocationController.loclist}" editable="true" rowKey="#{list.lid}" selection="#{LocationController.selectedlocation}" selectionMode="single">
+			<p:dataTable id="LocationListe" var="list" value="#{locationController.loclist}" editable="true" rowKey="#{list.lid}" selection="#{locationController.selectedlocation}" selectionMode="single">
 			
-		        <p:ajax event="rowEdit" listener="#{LocationController.onRowEdit}" update=":form:msgs" />
-        		<p:ajax event="rowEditCancel" listener="#{LocationController.onRowCancel}" update=":form:msgs" />
+		        <p:ajax event="rowEdit" listener="#{locationController.onRowEdit}" update=":form:msgs" />
+        		<p:ajax event="rowEditCancel" listener="#{locationController.onRowCancel}" update=":form:msgs" />
 		 
 		        <p:column headerText="Id">
 	               <p:cellEditor>
@@ -46,7 +46,7 @@
 		       
 		    </p:dataTable>
 		    <p:contextMenu for="LocationListe" widgetVar="cMenu">   
-		        <p:menuitem value="Delete" update="LocationListe" icon="pi pi-times" action="#{LocationController.deleteLocation}"/>  
+		        <p:menuitem value="Delete" update="LocationListe" icon="pi pi-times" action="#{locationController.deleteLocation}"/>  
 		    </p:contextMenu> 
 		 </h:form>
 		 </ui:define>

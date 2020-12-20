@@ -33,10 +33,11 @@ import controller.MessageForPrimefaces;
 
 /**
 *
-* @author Manuel
+* @author Anil
 */
 
-@ManagedBean(name="StudiengangController")
+//@ManagedBean(name="StudiengangController")
+@Named(value="studiengangController")
 @SessionScoped
 public class StudiengangController implements Serializable {
 	private static final long serialVersionUID = 1L;

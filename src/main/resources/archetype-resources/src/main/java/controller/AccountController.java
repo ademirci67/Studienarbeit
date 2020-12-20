@@ -47,11 +47,11 @@ import controller.MessageForPrimefaces;
 
 /**
 *
-* @author Manuel
+* @author Anil
 */
 
-@ManagedBean(name="AccountController")
-//@Named(value = "ModulController")
+//@ManagedBean(name="AccountController")
+@Named(value="accountController")
 //@SessionScoped
 @SessionScoped
 public class AccountController implements Serializable {

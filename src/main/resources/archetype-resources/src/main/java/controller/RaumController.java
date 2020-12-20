@@ -32,10 +32,11 @@ import controller.MessageForPrimefaces;
 
 /**
 *
-* @author Manuel
+* @author Anil
 */
 
-@ManagedBean(name="RaumController")
+//@ManagedBean(name="RaumController")
+@Named(value="raumController")
 @SessionScoped
 public class RaumController implements Serializable {
 	private static final long serialVersionUID = 1L;

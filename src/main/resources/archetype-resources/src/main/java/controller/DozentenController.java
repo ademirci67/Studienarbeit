@@ -51,8 +51,8 @@ import controller.MessageForPrimefaces;
 * @author Manuel
 */
 
-@ManagedBean(name="DozentenController")
-//@Named(value = "ModulController")
+//@ManagedBean(name="DozentenController")
+@Named(value="dozentenController")
 //@SessionScoped
 @SessionScoped
 public class DozentenController implements Serializable {

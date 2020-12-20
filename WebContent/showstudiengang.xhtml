@@ -14,14 +14,14 @@
 		<h:form id="form">
 		    <p:growl id="msgs" showDetail="true"/>
 		    <p:commandButton value="Create Studiengang" id="ajax" update="msgs" action="/createstudiengang.xhtml" style="margin-right:20px;" styleClass="ui-priority-primary" />   
-			<p:dataTable id="StudiengangListe" var="list" value="#{StudiengangController.sglist}" editable="true" rowKey="#{list.sgid}" selection="#{StudiengangController.selectedstudiengang}" selectionMode="single">
+			<p:dataTable id="StudiengangListe" var="list" value="#{studiengangController.sglist}" editable="true" rowKey="#{list.sgid}" selection="#{studiengangController.selectedstudiengang}" selectionMode="single">
 		        <f:facet name="header">
 		            Cell Editing with Click and RightClick
 		        </f:facet>
 		 		<!-- editMode="cell" widgetVar="cellModul" -->
 		        <!-- <p:ajax event="cellEdit" listener="#{ModulController.onCellEdit}" update=":form:msgs" /> -->
-		        <p:ajax event="rowEdit" listener="#{StudiengangController.onRowEdit}" update=":form:msgs" />
-        		<p:ajax event="rowEditCancel" listener="#{StudiengangController.onRowCancel}" update=":form:msgs" />
+		        <p:ajax event="rowEdit" listener="#{studiengangController.onRowEdit}" update=":form:msgs" />
+        		<p:ajax event="rowEditCancel" listener="#{studiengangController.onRowCancel}" update=":form:msgs" />
 		 
 		        <p:column headerText="Id">
 	               <p:cellEditor>
@@ -56,7 +56,7 @@
 		                <f:facet name="output"><h:outputText value="#{list.stundenplansemester.SPSemester}" /></f:facet>
 		                <f:facet name="input">
 		                    <h:selectOneMenu value="#{list.stundenplansemester.SPSemester}" style="width:100%">
-		                        <f:selectItems value="#{StudiengangController.stundenplansemesterListe}" var="#{stundenplansemester.SPSemester}" itemLabel="#{stundenplansemester.SPSemester}" itemValue="#{stundenplansemester.SPSemester}" />
+		                        <f:selectItems value="#{studiengangController.stundenplansemesterListe}" var="#{stundenplansemester.SPSemester}" itemLabel="#{stundenplansemester.SPSemester}" itemValue="#{stundenplansemester.SPSemester}" />
 		                    </h:selectOneMenu>
 		                </f:facet>
 		            </p:cellEditor>
@@ -67,7 +67,7 @@
 		                <f:facet name="output"><h:outputText value="#{list.faculty.facName}" /></f:facet>
 		                <f:facet name="input">
 		                    <h:selectOneMenu value="#{list.faculty.facName}" style="width:100%">
-		                        <f:selectItems value="#{StudiengangController.facultyListe}" var="#{faculty.facName}" itemLabel="#{faculty.facName}" itemValue="#{faculty.facName}" />
+		                        <f:selectItems value="#{studiengangController.facultyListe}" var="#{faculty.facName}" itemLabel="#{faculty.facName}" itemValue="#{faculty.facName}" />
 		                    </h:selectOneMenu>
 		                </f:facet>
 		            </p:cellEditor>
@@ -86,7 +86,7 @@
 		        <p:menuitem value="Hide Menu" icon="pi pi-times" onclick="PF('cMenu').hide()"/>
 		    </p:contextMenu> -->
 		    <p:contextMenu for="StudiengangListe" widgetVar="cMenu">   
-		        <p:menuitem value="Delete" update="StudiengangListe" icon="pi pi-times" action="#{StudiengangController.deleteStudiengang}"/>  
+		        <p:menuitem value="Delete" update="StudiengangListe" icon="pi pi-times" action="#{studiengangController.deleteStudiengang}"/>  
 		    </p:contextMenu> 
 		 </h:form>
 		 </ui:define>

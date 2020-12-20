@@ -34,10 +34,11 @@ import controller.MessageForPrimefaces;
 
 /**
 *
-* @author Manuel
+* @author Anil
 */
 
-@ManagedBean(name="SgmodulController")
+//@ManagedBean(name="SgmodulController")
+@Named(value="sgmodulController")
 @SessionScoped
 public class SgmodulController implements Serializable {
 	private static final long serialVersionUID = 1L;

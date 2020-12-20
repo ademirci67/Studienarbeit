@@ -19,8 +19,10 @@ import model.Modul;
  
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.inject.Named;
 
-@ManagedBean(name="ModulBean")
+//@ManagedBean(name="ModulBean")
+@Named(value="modulBean")
 @RequestScoped
 
 public class ModulBean{

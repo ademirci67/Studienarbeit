@@ -27,11 +27,11 @@ import javax.faces.bean.ManagedBean;
 
 /**
  *
- * @author Manuel
+ * @author Anil
  */
 
-//@Named(value = "loginController")
-@ManagedBean(name="LoginController")
+@Named(value="loginController")
+//@ManagedBean(name="LoginController")
 @SessionScoped
 public class LoginController implements Serializable {
 	//Serial Version ID Es kann sein, dass man die nicht braucht.

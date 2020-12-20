@@ -36,7 +36,8 @@ import controller.MessageForPrimefaces;
 * @author Manuel
 */
 
-@ManagedBean(name="StundenplansemesterController")
+//@ManagedBean(name="StundenplansemesterController")
+@Named(value="stundenplansemesterController")
 @SessionScoped
 public class StundenplansemesterController implements Serializable {
 	private static final long serialVersionUID = 1L;

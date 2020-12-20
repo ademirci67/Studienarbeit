@@ -35,7 +35,7 @@
                                 <h:inputText                                     
                                     id="SGName_reg"     
                                     styleClass="form-control"                                 
-                                    value="#{StudiengangController.SGName}" 
+                                    value="#{studiengangController.SGName}" 
                                     required = "true"  
                                     requiredMessage="Ein Studiengang muss eingegeben werden.">
                                 </h:inputText>
@@ -54,7 +54,7 @@
                                 <h:inputText                                     
                                     id="SGKurz_reg"     
                                     styleClass="form-control"                                 
-                                    value="#{StudiengangController.SGKurz}" 
+                                    value="#{studiengangController.SGKurz}" 
                                     required = "true"  
                                     requiredMessage="Eine SGKurz muss eingegeben werden.">
                                 </h:inputText>
@@ -73,7 +73,7 @@
                                 <h:inputText                                     
                                     id="semester_reg"     
                                     styleClass="form-control"                                 
-                                    value="#{StudiengangController.semester}" 
+                                    value="#{studiengangController.semester}" 
                                     required = "true"  
                                     requiredMessage="Eine Semester anzahl muss eingegeben werden.">
                                 </h:inputText>
@@ -94,12 +94,12 @@
 	                                id="fac_reg"
 	                                required="true"
 	                                requiredMessage="Bitte eine Fakultät zu dem Studiengang auswählen:"
-	                                value="#{StudiengangController.facName}">
+	                                value="#{studiengangController.facName}">
 	                                <f:selectItem
 	                                    itemLabel="-----"
 	                                    noSelectionOption="true"/>
 	                                    <f:selectItems
-	                                        value="#{StudiengangController.facultyListe}"/>
+	                                        value="#{studiengangController.facultyListe}"/>
 	                               </h:selectOneMenu>
 	                            <h:outputLabel     
 	                                value="" 
@@ -118,12 +118,12 @@
 	                                id="Ss_reg"
 	                                required="true"
 	                                requiredMessage="Bitte ein Semester zu dem Studiengang auswählen:"
-	                                value="#{StudiengangController.SPSemester}">
+	                                value="#{studiengangController.SPSemester}">
 	                                <f:selectItem
 	                                    itemLabel="-----"
 	                                    noSelectionOption="true"/>
 	                                    <f:selectItems
-	                                        value="#{StudiengangController.stundenplansemesterListe}"/>
+	                                        value="#{studiengangController.stundenplansemesterListe}"/>
 	                               </h:selectOneMenu>
 	                            <h:outputLabel     
 	                                value="" 
@@ -137,7 +137,7 @@
                                     styleClass="btn btn-primary" 
                                     value="Hinzufügen" 
                                     style="margin-top: 10px" 
-                                    action="#{StudiengangController.createDoStudiengang()}"/>
+                                    action="#{studiengangController.createDoStudiengang()}"/>
                             </h:panelGrid> 
                             <h:message for="submit"/>
                     	</h:form>

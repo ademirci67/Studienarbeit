@@ -35,7 +35,7 @@
                                 <h:inputText                                     
                                     id="modName_reg"     
                                     styleClass="form-control"                                 
-                                    value="#{ModulController.modName}" 
+                                    value="#{modulController.modName}" 
                                     required = "true"  
                                     requiredMessage="Ein Modulname muss eingegeben werden.">
                                 </h:inputText>
@@ -54,7 +54,7 @@
                                 <h:inputText                                     
                                     id="modKuerzel_reg"     
                                     styleClass="form-control"                                 
-                                    value="#{ModulController.modKuerzel}" 
+                                    value="#{modulController.modKuerzel}" 
                                     required = "true"  
                                     requiredMessage="Ein Modulkürzel muss eingegeben werden.">
                                 </h:inputText>
@@ -73,7 +73,7 @@
                                 <h:inputText                                     
                                     id="pcid_reg"     
                                     styleClass="form-control"                                 
-                                    value="#{ModulController.pcid}" 
+                                    value="#{modulController.pcid}" 
                                     required = "true"  
                                     requiredMessage="Eine Prüfcodeid muss eingegeben werden.">
                                 </h:inputText>
@@ -89,7 +89,7 @@
                                     styleClass="btn btn-primary" 
                                     value="Hinzufügen" 
                                     style="margin-top: 10px" 
-                                    action="#{ModulController.createDoModul()}"/>
+                                    action="#{modulController.createDoModul()}"/>
                             </h:panelGrid> 
                             <h:message for="submit"/>
                     	</h:form>

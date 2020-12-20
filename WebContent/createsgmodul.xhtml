@@ -35,7 +35,7 @@
                                 <h:inputText                                     
                                     id="modSemester_reg"     
                                     styleClass="form-control"                                 
-                                    value="#{SgmodulController.modSemester}" 
+                                    value="#{sgmodulController.modSemester}" 
                                     required = "true"  
                                     requiredMessage="Ein Semester muss eingegeben werden.">
                                 </h:inputText>
@@ -54,7 +54,7 @@
                                 <h:inputText                                     
                                     id="SGMNotiz_reg"     
                                     styleClass="form-control"                                 
-                                    value="#{SgmodulController.SGMNotiz}" 
+                                    value="#{sgmodulController.SGMNotiz}" 
                                     required = "true"  
                                     requiredMessage="Eine Notiz muss eingegeben werden.">
                                 </h:inputText>
@@ -75,12 +75,12 @@
 	                                id="modName_reg"
 	                                required="true"
 	                                requiredMessage="Bitte ein Modul zu dem Studiengang auswählen:"
-	                                value="#{SgmodulController.modName}">
+	                                value="#{sgmodulController.modName}">
 	                                <f:selectItem
 	                                    itemLabel="-----"
 	                                    noSelectionOption="true"/>
 	                                    <f:selectItems
-	                                        value="#{SgmodulController.modulListe}"/>
+	                                        value="#{sgmodulController.modulListe}"/>
 	                               </h:selectOneMenu>
 	                            <h:outputLabel     
 	                                value="" 
@@ -99,12 +99,12 @@
 	                                id="DName_reg"
 	                                required="true"
 	                                requiredMessage="Bitte einen Dozenten zu dem Studiengang auswählen:"
-	                                value="#{SgmodulController.DName}">
+	                                value="#{sgmodulController.DName}">
 	                                <f:selectItem
 	                                    itemLabel="-----"
 	                                    noSelectionOption="true"/>
 	                                    <f:selectItems
-	                                        value="#{SgmodulController.dozentenListe}"/>
+	                                        value="#{sgmodulController.dozentenListe}"/>
 	                               </h:selectOneMenu>
 	                            <h:outputLabel     
 	                                value="" 
@@ -123,12 +123,12 @@
 	                                id="SGName_reg"
 	                                required="true"
 	                                requiredMessage="Bitte ein Studiengang auswählen:"
-	                                value="#{SgmodulController.SGName}">
+	                                value="#{sgmodulController.SGName}">
 	                                <f:selectItem
 	                                    itemLabel="-----"
 	                                    noSelectionOption="true"/>
 	                                    <f:selectItems
-	                                        value="#{SgmodulController.studiengangListe}"/>
+	                                        value="#{sgmodulController.studiengangListe}"/>
 	                               </h:selectOneMenu>
 	                            <h:outputLabel     
 	                                value="" 
@@ -142,7 +142,7 @@
                                     styleClass="btn btn-primary" 
                                     value="Hinzufügen" 
                                     style="margin-top: 10px" 
-                                    action="#{SgmodulController.createDoSgmodul()}"/>
+                                    action="#{sgmodulController.createDoSgmodul()}"/>
                             </h:panelGrid> 
                             <h:message for="submit"/>
                     	</h:form>

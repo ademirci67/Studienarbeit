@@ -35,7 +35,7 @@
                                 <h:inputText                                     
                                     id="BGName_reg"     
                                     styleClass="form-control"                                 
-                                    value="#{BenutzergruppeController.BGName}" 
+                                    value="#{benutzergruppeController.BGName}" 
                                     required = "true"  
                                     requiredMessage="Ein Benutzergruppename muss eingegeben werden.">
                                 </h:inputText>
@@ -54,7 +54,7 @@
                                 <h:inputText                                     
                                     id="BGShortName_reg"     
                                     styleClass="form-control"                                 
-                                    value="#{BenutzergruppeController.BGShortName}" 
+                                    value="#{benutzergruppeController.BGShortName}" 
                                     required = "true"  
                                     requiredMessage="Ein Benutzergruppekürzel muss eingegeben werden.">
                                 </h:inputText>
@@ -73,7 +73,7 @@
                                 <h:inputText                                     
                                     id="BGRechte_reg"     
                                     styleClass="form-control"                                 
-                                    value="#{BenutzergruppeController.BGRechte}" 
+                                    value="#{benutzergruppeController.BGRechte}" 
                                     required = "true"  
                                     requiredMessage="Eine Benutzergrupperechte muss eingegeben werden.">
                                 </h:inputText>
@@ -89,7 +89,7 @@
                                     styleClass="btn btn-primary" 
                                     value="Hinzufügen" 
                                     style="margin-top: 10px" 
-                                    action="#{BenutzergruppeController.createDoBenutzergruppe()}"/>
+                                    action="#{benutzergruppeController.createDoBenutzergruppe()}"/>
                             </h:panelGrid> 
                             <h:message for="submit"/>
                     	</h:form>
