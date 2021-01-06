@@ -11,7 +11,10 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@NamedQuery(name="Stundenplaneintrag.findAll", query="SELECT s FROM Stundenplaneintrag s")
+@NamedQueries ({
+		@NamedQuery(name="Stundenplaneintrag.findAll", query="SELECT s FROM Stundenplaneintrag s"),
+		@NamedQuery(name="Stundenplaneintrag.findById", query="SELECT s FROM Stundenplaneintrag s WHERE s.spid = :spid"),
+		@NamedQuery(name="Stundenplaneintrag.findAllPlan", query = "SELECT a FROM Stundenplaneintrag a JOIN a.sgmodul b JOIN b.studiengang c WHERE b.modSemester = :semester AND c.SGName = :stgang")})
 public class Stundenplaneintrag implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -19,13 +22,12 @@ public class Stundenplaneintrag implements Serializable {
 	private int spid;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date SPEDatZeit;
-
-	private String SPSemester;
+	private Date SPEStartZeit;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date SPEEndZeit;
 
 	private int SPTermin;
-
-	private int status;
 
 	private int studierendenzahl;
 
@@ -34,17 +36,17 @@ public class Stundenplaneintrag implements Serializable {
 	//bi-directional many-to-one association to Lehrveranstaltungsart
 	@ManyToOne
 	@JoinColumn(name="FK_LVID")
-	private Lehrveranstaltungsart lehrveranstaltungsart;
+	public Lehrveranstaltungsart lehrveranstaltungsart;
 
 	//bi-directional many-to-one association to Raum
 	@ManyToOne
 	@JoinColumn(name="FK_RID")
-	private Raum raum;
+	public Raum raum;
 
 	//bi-directional many-to-one association to Sgmodul
 	@ManyToOne
 	@JoinColumn(name="FK_SGMID")
-	private Sgmodul sgmodul;
+	public Sgmodul sgmodul;
 
 	public Stundenplaneintrag() {
 	}
@@ -57,20 +59,20 @@ public class Stundenplaneintrag implements Serializable {
 		this.spid = spid;
 	}
 
-	public Date getSPEDatZeit() {
-		return this.SPEDatZeit;
+	public Date getSPEStartZeit() {
+		return this.SPEStartZeit;
 	}
 
-	public void setSPEDatZeit(Date SPEDatZeit) {
-		this.SPEDatZeit = SPEDatZeit;
+	public void setSPEStartZeit(Date SPEStartZeit) {
+		this.SPEStartZeit = SPEStartZeit;
 	}
 
-	public String getSPSemester() {
-		return this.SPSemester;
+	public Date getSPEEndZeit() {
+		return SPEEndZeit;
 	}
 
-	public void setSPSemester(String SPSemester) {
-		this.SPSemester = SPSemester;
+	public void setSPEEndZeit(Date sPEEndZeit) {
+		SPEEndZeit = sPEEndZeit;
 	}
 
 	public int getSPTermin() {
@@ -79,14 +81,6 @@ public class Stundenplaneintrag implements Serializable {
 
 	public void setSPTermin(int SPTermin) {
 		this.SPTermin = SPTermin;
-	}
-
-	public int getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
 	}
 
 	public int getStudierendenzahl() {

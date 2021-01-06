@@ -33,7 +33,7 @@ import controller.MessageForPrimefaces;
 
 /**
 *
-* @author Manuel
+* @author Anil
 */
 
 //@ManagedBean(name="StundenplansemesterController")

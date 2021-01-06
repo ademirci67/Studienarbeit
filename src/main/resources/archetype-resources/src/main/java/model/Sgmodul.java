@@ -15,6 +15,8 @@ import java.util.List;
 @NamedQuery(name = "Sgmodul.findBySgmid", query = "SELECT s FROM Sgmodul s WHERE s.sgmid = :sgmid"),
 @NamedQuery(name = "Sgmodul.findByModSemester", query = "SELECT s FROM Sgmodul s WHERE s.modSemester = :modSemester"),
 @NamedQuery(name = "Sgmodul.findBySGMNotiz", query = "SELECT s FROM Sgmodul s WHERE s.SGMNotiz = :SGMNotiz"),
+@NamedQuery(name = "Sgmodul.findBySemesterAndStudiengang", query = "SELECT s FROM Sgmodul s JOIN s.studiengang g WHERE s.modSemester = :semester AND g.SGName = :SGName"),
+@NamedQuery(name = "Sgmodul.findBySemesterAndStudiengangAndFaculty", query = "SELECT s FROM Sgmodul s JOIN s.studiengang g JOIN s.studiengang.faculty f WHERE s.modSemester = :semester AND g.SGName = :SGName AND f.facName = :facName"),
 @NamedQuery(name="Sgmodul.updateSgmodul", query="UPDATE Sgmodul s SET s.sgmid=:sgmid, s.modSemester=:modSemester, s.SGMNotiz=:SGMNotiz WHERE s.sgmid=:sgmid")})
 public class Sgmodul implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -22,7 +24,7 @@ public class Sgmodul implements Serializable {
 	@Id
 	private int sgmid;
 
-	private int modSemester;
+	private Integer modSemester;
 
 	private String SGMNotiz;
 
@@ -56,11 +58,11 @@ public class Sgmodul implements Serializable {
 		this.sgmid = sgmid;
 	}
 
-	public int getModSemester() {
+	public Integer getModSemester() {
 		return this.modSemester;
 	}
 
-	public void setModSemester(int modSemester) {
+	public void setModSemester(Integer modSemester) {
 		this.modSemester = modSemester;
 	}
 

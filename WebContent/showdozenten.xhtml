@@ -7,11 +7,9 @@
       
 <h:body>
 	<ui:composition template="WEB-INF/template/master.xhtml" >
-<!--  	<ui:define name="menu">       <ui:include src="WEB-INF/template/eingeloggt.xhtml"/> </ui:define> -->
 		<ui:define name="content">
 		<h:form id="form">
-		    <p:growl id="msgs" showDetail="true"/>
-		    <p:commandButton value="Create Dozent" id="ajax" update="msgs" action="/createdozenten.xhtml" style="margin-right:20px;" styleClass="ui-priority-primary" />   
+		    <p:growl id="msgs" showDetail="true"/>   
 			<p:dataTable id="DozentenListe" var="list" value="#{dozentenController.dozlist}" editable="true" rowKey="#{list.did}" selection="#{dozentenController.selecteddozenten}" selectionMode="single">
 		        <f:facet name="header">
 		            Cell Editing with Click and RightClick

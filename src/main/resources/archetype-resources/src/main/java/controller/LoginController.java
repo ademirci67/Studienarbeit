@@ -30,7 +30,7 @@ import javax.faces.bean.ManagedBean;
  * @author Anil
  */
 
-@Named(value="loginController")
+@Named(value = "loginController")
 //@ManagedBean(name="LoginController")
 @SessionScoped
 public class LoginController implements Serializable {
@@ -69,7 +69,7 @@ public class LoginController implements Serializable {
     
 //Getter und Setter Methoden
     
-    public boolean IsAdm() {
+    public boolean isIsAdm() {
         return isAdm;
     }
 
@@ -77,7 +77,7 @@ public class LoginController implements Serializable {
         this.isAdm = isAdm;
     }
     
-    public boolean isNob() {
+    public boolean isIsNob() {
         return isNob;
     }
 
@@ -85,7 +85,7 @@ public class LoginController implements Serializable {
         this.isNob = isNob;
     }    
     
-    public boolean IsSgl() {
+    public boolean isIsSgl() {
         return isSgl;
     }
 
@@ -93,7 +93,7 @@ public class LoginController implements Serializable {
         this.isSgl = isSgl;
     }    
     
-    public boolean IsRzp() {
+    public boolean isIsRzp() {
         return isRzp;
     }
 
@@ -109,19 +109,19 @@ public class LoginController implements Serializable {
         if(accName!=null){
             if(findUser(accName)){
                 nameFound=true;
-                if(nameFound==true && current.getBenutzergruppe() == findBGID((byte)1)){
+                if(nameFound==true && current.getBenutzergruppe().getGroupID() == 1){
                     isAdm = true;
                     
                 }
-                if(nameFound==true && current.getBenutzergruppe() == findBGID((byte)2)){
+                if(nameFound==true && current.getBenutzergruppe().getGroupID() == 2){
                     isNob = true;
                 
                 }
-                if(nameFound==true && current.getBenutzergruppe() == findBGID((byte)3)){
+                if(nameFound==true && current.getBenutzergruppe().getGroupID() == 3){
                     isSgl = true;
                 
                 }
-                if(nameFound==true && current.getBenutzergruppe() == findBGID((byte)9)){
+                if(nameFound==true && current.getBenutzergruppe().getGroupID() == 9){
                     isRzp = true;
                 
                 }
@@ -217,7 +217,7 @@ public class LoginController implements Serializable {
     }
     
     
-    private Benutzergruppe findBGID(byte id) {
+    private Benutzergruppe findBGID(int id) {
         try{
             EntityManager em = emf.createEntityManager(); 
             TypedQuery<Benutzergruppe> query
@@ -254,11 +254,11 @@ public class LoginController implements Serializable {
         String returnvalue;
         if(isLoggedIn==true){
 
-            returnvalue= "loggedIn.xhtml";
+            returnvalue= "index.xhtml";
             
         }
         else{
-            returnvalue="login.xhtml";
+            returnvalue="";
         }
 
         
@@ -266,7 +266,7 @@ public class LoginController implements Serializable {
     }
       
     //Beim drücken des Logout Buttons
-    public String logout(){
+    public void logout(){
         accName="";
         if(isLoggedIn==true){
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
@@ -274,9 +274,7 @@ public class LoginController implements Serializable {
             isLoggedIn=false;
             logOutPerformed =true;
             nameFound=false;
-            return "login.xhmtl";
         }
-		return "loggedIn.xhtml";
     }
       
     //Message an die View senden
@@ -285,7 +283,4 @@ public class LoginController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(loginformidName, message);     
     }
     
-    public String doHome(){
-        return "showaccount.xhtml?faces-redirect=true";            
-}
 }
