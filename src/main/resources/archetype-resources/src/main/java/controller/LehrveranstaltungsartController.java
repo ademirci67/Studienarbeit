@@ -1,6 +1,7 @@
 package controller;
 
 
+import model.Faculty;
 import model.Lehrveranstaltungsart;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -27,6 +28,8 @@ import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.SelectEvent;
+
 import javax.faces.bean.ManagedBean;
 import controller.MessageForPrimefaces;
 
@@ -48,40 +51,40 @@ public class LehrveranstaltungsartController implements Serializable {
 	private UserTransaction ut;
 	
 	@Inject 
-	private Lehrveranstaltungsart lehrveranstaltungsart;
+	private Lehrveranstaltungsart teachingEvent;
 	
 	@PostConstruct
     public void init() {
-        lvaList = getLehrveranstaltungsartList();
+        teachingEventList = getLehrveranstaltungsartList();
     }
  
-	private String lvaDauer;
-	private String lvaKurz;
-	private String lvaName;
-	private boolean lvaDauerOk = false;
-	private boolean lvaKurzOk = false;
-	private boolean lvaNameOk = false;
+	private String teachingEventLength;
+	private String teachingEventShort;
+	private String teachingEventName;
+	private boolean teachingEventLengthOk = false;
+	private boolean teachingEventShortOk = false;
+	private boolean teachingEventNameOk = false;
 	
-	List<Lehrveranstaltungsart> lvaList;
+	List<Lehrveranstaltungsart> teachingEventList;
 	
-	private Lehrveranstaltungsart lvaSelected;
+	private Lehrveranstaltungsart teachingEventSelected;
 
-	public Lehrveranstaltungsart getLehrveranstaltungsart() {
-		return lehrveranstaltungsart;
+	public Lehrveranstaltungsart getTeachingEvent() {
+		return teachingEvent;
 	}
 
-	public void setLehrveranstaltungsart(Lehrveranstaltungsart lehrveranstaltungsart) {
-		this.lehrveranstaltungsart = lehrveranstaltungsart;
+	public void setTeachingEvent(Lehrveranstaltungsart teachingEvent) {
+		this.teachingEvent = teachingEvent;
 	}
 
-	public String getLvaDauer() {
-		return lvaDauer;
+	public String getTeachingEventLength() {
+		return teachingEventLength;
 	}
 
-	public void setLvaDauer(String lvaDauer) {
-		if(lvaDauer!=null){
-			this.lvaDauer = lvaDauer;
-			lvaDauerOk=true;
+	public void setTeachingEventLength(String teachingEventLength) {
+		if(teachingEventLength!=null){
+			this.teachingEventLength = teachingEventLength;
+			teachingEventLengthOk=true;
 	    }
 	    else{
 	    	FacesMessage message = new FacesMessage("Lehrveranstaltungsdauer konnte nicht gesetzt werden.");
@@ -89,14 +92,14 @@ public class LehrveranstaltungsartController implements Serializable {
 	    }
 	}
 
-	public String getLvaKurz() {
-		return lvaKurz;
+	public String getTeachingEventShort() {
+		return teachingEventShort;
 	}
 
-	public void setLvaKurz(String lvaKurz) {
-		if(lvaKurz!=null){
-			this.lvaKurz = lvaKurz;
-			lvaKurzOk=true;
+	public void setTeachingEventShort(String teachingEventShort) {
+		if(teachingEventShort!=null){
+			this.teachingEventShort = teachingEventShort;
+			teachingEventShortOk=true;
 	    }
 	    else{
 	    	FacesMessage message = new FacesMessage("Lehrveranstaltungskurzform konnte nicht gesetzt werden.");
@@ -104,14 +107,14 @@ public class LehrveranstaltungsartController implements Serializable {
 	    }
 	}
 
-	public String getLvaName() {
-		return lvaName;
+	public String getTeachingEventName() {
+		return teachingEventName;
 	}
 
-	public void setLvaName(String lvaName) {
-		if(lvaName!=null){
-			this.lvaName = lvaName;
-			lvaNameOk=true;
+	public void setTeachingEventName(String teachingEventName) {
+		if(teachingEventName!=null){
+			this.teachingEventName = teachingEventName;
+			teachingEventNameOk=true;
 	    }
 	    else{
 	    	FacesMessage message = new FacesMessage("Lehrveranstaltungsname konnte nicht gesetzt werden.");
@@ -119,20 +122,20 @@ public class LehrveranstaltungsartController implements Serializable {
 	    }
 	}
 
-	public List<Lehrveranstaltungsart> getLvaList() {
-		return lvaList;
+	public List<Lehrveranstaltungsart> getTeachingEventList() {
+		return teachingEventList;
 	}
 
-	public void setLvaList(List<Lehrveranstaltungsart> lvaList) {
-		this.lvaList = lvaList;
+	public void setTeachingEventList(List<Lehrveranstaltungsart> teachingEventList) {
+		this.teachingEventList = teachingEventList;
 	}
 
-	public Lehrveranstaltungsart getLvaSelected() {
-		return lvaSelected;
+	public Lehrveranstaltungsart getTeachingEventSelected() {
+		return teachingEventSelected;
 	}
 
-	public void setLvaSelected(Lehrveranstaltungsart lvaSelected) {
-		this.lvaSelected = lvaSelected;
+	public void setTeachingEventSelected(Lehrveranstaltungsart teachingEventSelected) {
+		this.teachingEventSelected = teachingEventSelected;
 	}
 	
 	public UIComponent getReg() {
@@ -147,9 +150,9 @@ public class LehrveranstaltungsartController implements Serializable {
 	public void createLehrveranstaltungsart() throws IllegalStateException, SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception  {
 		EntityManager em = emf.createEntityManager();
 		Lehrveranstaltungsart lva = new Lehrveranstaltungsart();  
-		lva.setLvname(lvaName);
-		lva.setLvdauer(lvaDauer);     
-		lva.setLvkurz(lvaKurz);
+		lva.setLvname(teachingEventName);
+		lva.setLvdauer(teachingEventLength);     
+		lva.setLvkurz(teachingEventShort);
 		try {
 	        ut.begin();   
 	        em.joinTransaction();  
@@ -166,14 +169,12 @@ public class LehrveranstaltungsartController implements Serializable {
 		em.close();
 	}
 	
-	public String createDoLehrveranstaltungsart() throws SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception{
-		if(lvaNameOk == true && lvaDauerOk == true && lvaKurzOk == true) {
+	public void createDoLehrveranstaltungsart() throws SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception{
+		if(teachingEventNameOk == true && teachingEventLengthOk == true && teachingEventShortOk == true) {
 			createLehrveranstaltungsart();
-			return "showlehrveranstaltungsart.xhtml";
+			teachingEventList = getLehrveranstaltungsartList();
 		}
-		else{
-			return "createlehrveranstaltungsart.xhtml";
-		}
+		
 	}
 	
 	//----------------------------------------------------------------------------------------------------------------------------------------
@@ -181,57 +182,54 @@ public class LehrveranstaltungsartController implements Serializable {
 	public List<Lehrveranstaltungsart> getLehrveranstaltungsartList(){
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Lehrveranstaltungsart> query = em.createNamedQuery("Lehrveranstaltungsart.findAll", Lehrveranstaltungsart.class);
-		lvaList = query.getResultList();
+		teachingEventList = query.getResultList();
 		return query.getResultList();
 	}
 	
 	
+	public void onRowSelect(SelectEvent<Lehrveranstaltungsart> e) {
+    	FacesMessage msg = new FacesMessage("Lehrveranstaltungsart ausgewählt");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        
+        teachingEventSelected = e.getObject();
+        
+    }
+    
+    public void addLehrveranstaltungsart(){
+    	 try {
+ 	        ut.begin();
+ 	        EntityManager em = emf.createEntityManager();
+ 	        em.find(Lehrveranstaltungsart.class, teachingEventSelected.getLvid());
+ 	        teachingEvent.setLvid(teachingEventSelected.getLvid());
+ 	        teachingEvent.setLvname(teachingEventSelected.getLvname());
+ 	        teachingEvent.setLvdauer(teachingEventSelected.getLvdauer());
+ 	        teachingEvent.setLvkurz(teachingEventSelected.getLvkurz());
+ 	        em.merge(teachingEvent);
+ 	        ut.commit(); 
+ 	    }
+ 	    catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
+ 	        try {
+ 	            ut.rollback();
+ 	        } 
+ 	        catch (IllegalStateException | SecurityException | SystemException ex) {
+ 	        }
+ 	    }
+    }
 	
-	public void onRowEdit(RowEditEvent<Lehrveranstaltungsart> event) {
-        FacesMessage msg = new FacesMessage("Lehrveranstaltungsart Edited");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        
-        Lehrveranstaltungsart newLva = new Lehrveranstaltungsart();
-        newLva = event.getObject();
-        
-        try {
-	        ut.begin();
-	        EntityManager em = emf.createEntityManager();
-	        em.find(Lehrveranstaltungsart.class, newLva.getLvid());	        
-	        lehrveranstaltungsart.setLvid(newLva.getLvid());
-	        lehrveranstaltungsart.setLvname(newLva.getLvname());
-	        lehrveranstaltungsart.setLvdauer(newLva.getLvdauer());
-	        lehrveranstaltungsart.setLvkurz(newLva.getLvkurz());
-	        em.merge(lehrveranstaltungsart);
-	        ut.commit(); 
-	    }
-	    catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
-	        try {
-	            ut.rollback();
-	        } 
-	        catch (IllegalStateException | SecurityException | SystemException ex) {
-	        }
-	    }
-    }
-     
-    public void onRowCancel(RowEditEvent<Lehrveranstaltungsart> event) {
-    	FacesMessage msg = new FacesMessage("Lehrveranstaltungsart Cancelled");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
 	
 	//----------------------------------------------------------------------------------------------------------------------------------------------
     
     public void deleteLehrveranstaltungsart() throws IllegalStateException, SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception {
-        lvaList.remove(lvaSelected);        
+        teachingEventList.remove(teachingEventSelected);        
         EntityManager em = emf.createEntityManager();
         TypedQuery<Lehrveranstaltungsart> q = em.createNamedQuery("Lehrveranstaltungsart.findByLvid",Lehrveranstaltungsart.class);
-        q.setParameter("lvid", lvaSelected.getLvid());
-        lehrveranstaltungsart = (Lehrveranstaltungsart)q.getSingleResult();
+        q.setParameter("lvid", teachingEventSelected.getLvid());
+        teachingEvent = (Lehrveranstaltungsart)q.getSingleResult();
         
         try {
 	        ut.begin();   
 	        em.joinTransaction();  
-	        em.remove(lehrveranstaltungsart);
+	        em.remove(teachingEvent);
 	        ut.commit(); 
 	    }
 	    catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
@@ -241,7 +239,6 @@ public class LehrveranstaltungsartController implements Serializable {
 	        catch (IllegalStateException | SecurityException | SystemException ex) {
 	        }
 	    }
-        lvaSelected = null;
 		em.close();
     }
 	

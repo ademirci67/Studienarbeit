@@ -48,9 +48,9 @@ public class LoginController implements Serializable {
     
     
     private String accountName;
-    private String accountPwd;
-    private Benutzergruppe BGruppe;
-    private int FK_GroupID;
+    private String accountPassword;
+    private Benutzergruppe userGroup;
+    
     private boolean isLoggedIn=false;
     private boolean logOutPerformed = false;
     private boolean nameFound = false;
@@ -60,10 +60,9 @@ public class LoginController implements Serializable {
     private boolean isRzp;
 
     private Account current;
-    private String componentID;
+    private String componentId;
     private String summery;
     
-    private Benutzergruppe bg;
     private int id;
  
     
@@ -136,14 +135,14 @@ public class LoginController implements Serializable {
         }
     }
     
-    public String getAccountPwd() {
-        return accountPwd;
+    public String getAccountPassword() {
+        return accountPassword;
     }
 
-    public void setAccountPwd(String accountPwd) {
-        if(accountPwd!=null){
-            if(checkPwd(accountPwd)){
-                this.accountPwd = accountPwd;
+    public void setAccountPassword(String accountPassword) {
+        if(accountPassword!=null){
+            if(checkPwd(accountPassword)){
+                this.accountPassword = accountPassword;
                 isLoggedIn = true;
             }
             else{
@@ -155,12 +154,12 @@ public class LoginController implements Serializable {
         }
     }
 
-    public Benutzergruppe getBGruppe() {
-        return BGruppe;
+    public Benutzergruppe getUserGroup() {
+        return userGroup;
     }
 
-    public void setBGruppe(Benutzergruppe BGruppe) {       
-        this.BGruppe = BGruppe;
+    public void setUserGroup(Benutzergruppe userGroup) {       
+        this.userGroup = userGroup;
     }
 
     public boolean getIsLoggedIn() {
@@ -172,12 +171,12 @@ public class LoginController implements Serializable {
     }
 
 
-    public String getComponentID() {
-        return componentID;
+    public String getComponentId() {
+        return componentId;
     }
 
-    public void setComponentID(String componentID) {
-        this.componentID = componentID;
+    public void setComponentId(String componentId) {
+        this.componentId = componentId;
     }
 
     public String getSummery() {
@@ -223,11 +222,11 @@ public class LoginController implements Serializable {
             TypedQuery<Benutzergruppe> query
                 = em.createNamedQuery("Benutzergruppe.findByID",Benutzergruppe.class);
             query.setParameter("id", id);
-            bg = (Benutzergruppe)query.getSingleResult();
+            userGroup = (Benutzergruppe)query.getSingleResult();
         }
         catch(Exception e){   
         }
-        return bg;
+        return userGroup;
     }
     
     //Überprüfen ob das eingebene Passwort zum einegeben Namen passt
@@ -238,7 +237,7 @@ public class LoginController implements Serializable {
         
             if(pwd.equalsIgnoreCase(password)&& nameFound==true){
                 found=true;
-                BGruppe = current.getBenutzergruppe();
+                userGroup = current.getBenutzergruppe();
             }
             else{
             return found;

@@ -70,19 +70,19 @@ public class FacultyController implements Serializable {
 	
 	@PostConstruct
     public void init() {
-        facList = getFacultyList();
+        facultyList = getFacultyListAll();
     }
  
 	
 	
-	private String facName;
-	private String facShortName;
+	private String facultyName;
+	private String facultyShortName;
 	
-	private boolean facNameOk = false;
-	private boolean facShortNameOk = false;
+	private boolean facultyNameOk = false;
+	private boolean facultyShortNameOk = false;
 	
 	
-	List<Faculty> facList;
+	List<Faculty> facultyList;
 	
 	//modlist.add(getModulList());
 	
@@ -98,8 +98,8 @@ public class FacultyController implements Serializable {
 	
 	
 	  
-    public List<Faculty> getFacList() {
-        return facList;
+    public List<Faculty> getFacultyList() {
+        return facultyList;
     }
     
 	public Faculty getFaculty() {
@@ -110,14 +110,14 @@ public class FacultyController implements Serializable {
 		this.faculty = faculty;
 	}
 	  
-	public String getFacName() {
-		return facName;
+	public String getFacultyName() {
+		return facultyName;
 	}
 	  
-	public void setFacName(String facName) {
-		if(facName!=null){
-			this.facName = facName;
-			facNameOk = true;
+	public void setFacultyName(String facultyName) {
+		if(facultyName!=null){
+			this.facultyName = facultyName;
+			facultyNameOk = true;
 		}
 		else{
 			FacesMessage message = new FacesMessage("Faculty bereits vorhanden.");
@@ -127,14 +127,14 @@ public class FacultyController implements Serializable {
 	    }
 	}
 	  
-	public String getFacShortName() {
-		return facShortName;
+	public String getFacultyShortName() {
+		return facultyShortName;
 	}
 	  
-	public void setFacShortName(String facShortName) {
-	    if(facShortName!=null){
-	        this.facShortName = facShortName;
-	        facShortNameOk=true;
+	public void setFacultyShortName(String facultyShortName) {
+	    if(facultyShortName!=null){
+	        this.facultyShortName = facultyShortName;
+	        facultyShortNameOk=true;
 	    }
 	    else{
 	    	FacesMessage message = new FacesMessage("Facultykürzel bereits vorhanden.");
@@ -157,8 +157,8 @@ public class FacultyController implements Serializable {
 	public void createFaculty() throws IllegalStateException, SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception  {
 		EntityManager em = emf.createEntityManager();
 		Faculty fac = new Faculty();  
-		fac.setFacName(facName);    
-		fac.setFacShortName(facShortName);      
+		fac.setFacName(facultyName);    
+		fac.setFacShortName(facultyShortName);      
 		try {
 	        ut.begin();   
 	        em.joinTransaction();  
@@ -175,22 +175,19 @@ public class FacultyController implements Serializable {
 		em.close();
 	}
 	
-	public String createDoFaculty() throws SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception{
-		if(facNameOk == true && facShortNameOk == true ) {
+	public void createDoFaculty() throws SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception{
+		if(facultyNameOk == true && facultyShortNameOk == true ) {
 			createFaculty();
-			return "index.xhtml";
-		}
-		else{
-			return "index.xhtml";
+			facultyList = getFacultyList();
 		}
 	}
 	
 	//----------------------------------------------------------------------------------------------------------------------------------------
 	
-	public List<Faculty> getFacultyList(){
+	public List<Faculty> getFacultyListAll(){
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Faculty> query = em.createNamedQuery("Faculty.findAll", Faculty.class);
-		facList = query.getResultList();
+		facultyList = query.getResultList();
 		return query.getResultList();
 	}
 	
@@ -201,7 +198,7 @@ public class FacultyController implements Serializable {
 	//----------------------------------------------------------------------------------------------------------------------------------------------
     
     public void deleteFaculty() throws IllegalStateException, SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception {
-        facList.remove(facultySelected);
+        facultyList.remove(facultySelected);
         //selectedmodul = null;
         //updateModul(modlist);
         
@@ -223,8 +220,7 @@ public class FacultyController implements Serializable {
 	        } 
 	        catch (IllegalStateException | SecurityException | SystemException ex) {
 	        }
-	    }
-        facultySelected = null;
+	    }       
 		em.close();
     }
     

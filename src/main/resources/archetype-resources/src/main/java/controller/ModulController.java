@@ -31,6 +31,7 @@ import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.SelectEvent;
 
 import com.sun.javafx.logging.Logger;
 
@@ -68,19 +69,19 @@ public class ModulController implements Serializable {
 	
 	@PostConstruct
     public void init() {
-        modList = getModulList();
+        modulList = getModulListAll();
     }
  
 	
 	
-	private String modulKuerzel;
+	private String modulShort;
 	private String modulName;
 	private Integer pcId;
-	private boolean modulKuerzelOk = false;
+	private boolean modulShortOk = false;
 	private boolean modulNameOk = false;
 	private boolean pcIdOk = false;
 	
-	List<Modul> modList;
+	List<Modul> modulList;
 	
 	//modlist.add(getModulList());
 	
@@ -96,8 +97,8 @@ public class ModulController implements Serializable {
 	
 	
 	  
-    public List<Modul> getModList() {
-        return modList;
+    public List<Modul> getModulList() {
+        return modulList;
     }
     
 	public Modul getModul() {
@@ -108,14 +109,14 @@ public class ModulController implements Serializable {
 		this.modul = modul;
 	}
 	  
-	public String getModulKuerzel() {
-		return modulKuerzel;
+	public String getModulShort() {
+		return modulShort;
 	}
 	  
-	public void setModulKuerzel(String modulKuerzel) {
-		if(modulKuerzel!=null){
-			this.modulKuerzel = modulKuerzel;
-			modulKuerzelOk = true;
+	public void setModulShort(String modulShort) {
+		if(modulShort!=null){
+			this.modulShort = modulShort;
+			modulShortOk = true;
 		}
 		else{
 			FacesMessage message = new FacesMessage("Modulkürzel bereits vorhanden.");
@@ -172,7 +173,7 @@ public class ModulController implements Serializable {
 		EntityManager em = emf.createEntityManager();
 		Modul mod = new Modul();  
 		mod.setModName(modulName);    
-		mod.setModKuerzel(modulKuerzel);      
+		mod.setModKuerzel(modulShort);      
 		mod.setPcid(pcId);
 		try {
 	        ut.begin();   
@@ -190,72 +191,30 @@ public class ModulController implements Serializable {
 		em.close();
 	}
 	
-	public String createDoModul() throws SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception{
-		if(modulNameOk == true && modulKuerzelOk == true && pcIdOk == true) {
+	public void createDoModul() throws SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception{
+		if(modulNameOk == true && modulShortOk == true && pcIdOk == true) {
 			createModul();
-			return "showmodul.xhtml";
-		}
-		else{
-			return "createmodul.xhtml";
+			modulList = getModulListAll();
 		}
 	}
 	
 	//----------------------------------------------------------------------------------------------------------------------------------------
 	
-	public List<Modul> getModulList(){
+	public List<Modul> getModulListAll(){
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Modul> query = em.createNamedQuery("Modul.findAll", Modul.class);
-		modList = query.getResultList();
+		modulList = query.getResultList();
 		return query.getResultList();
 	}
 	
 	
 	
-	public void onRowEdit(RowEditEvent<Modul> event) {
-        //MessageForPrimefaces msg = new MessageForPrimefaces("Modul Edited", event.getObject().getModID());
-        //FacesMessage msg = new FacesMessage("Modul Edited", event.getObject().getModID());
-        FacesMessage msg = new FacesMessage("Modul Edited");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        
-        Modul newMod = new Modul();
-        newMod = event.getObject();
-        
-        try {
-	        ut.begin();
-	        EntityManager em = emf.createEntityManager();
-	        //em.joinTransaction();
-	        em.find(Modul.class, 279);
-	        //em.persist(q)
-	        
-	        modul.setModID(newMod.getModID());
-	        modul.setModName(newMod.getModName());
-	        modul.setModKuerzel(newMod.getModKuerzel());
-	        modul.setPcid(newMod.getPcid());
-	        
-	        
-	        em.merge(modul);
-	        ut.commit(); 
-	    }
-	    catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
-	        try {
-	            ut.rollback();
-	        } 
-	        catch (IllegalStateException | SecurityException | SystemException ex) {
-	        }
-	    }
-    }
-     
-    public void onRowCancel(RowEditEvent<Modul> event) {
-        //MessageForPrimefaces msg = new MessageForPrimefaces("Modul Cancelled", event.getObject().getModID());
-        //FacesMessage msg = new FacesMessage("Modul Cancelled", event.getObject().getModID());
-    	FacesMessage msg = new FacesMessage("Modul Cancelled");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
+	
 	
 	//----------------------------------------------------------------------------------------------------------------------------------------------
     
     public void deleteModul() throws IllegalStateException, SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception {
-        modList.remove(modulSelected);
+        modulList.remove(modulSelected);
         //selectedmodul = null;
         //updateModul(modlist);
         
@@ -278,9 +237,39 @@ public class ModulController implements Serializable {
 	        catch (IllegalStateException | SecurityException | SystemException ex) {
 	        }
 	    }
-        modulSelected = null;
+        
 		em.close();
     }
+    
+    public void onRowSelect(SelectEvent<Modul> e) {
+    	FacesMessage msg = new FacesMessage("Modul ausgewählt");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        
+        modulSelected = e.getObject();
+        
+    }
+    
+    public void addModul(){
+    	 try {
+ 	        ut.begin();
+ 	        EntityManager em = emf.createEntityManager();
+ 	        em.find(Modul.class, modulSelected.getModID());
+ 	        modul.setModID(modulSelected.getModID());
+ 	        modul.setModName(modulSelected.getModName());
+ 	        modul.setModKuerzel(modulSelected.getModKuerzel());
+ 	        modul.setPcid(modulSelected.getPcid());
+ 	        em.merge(modul);
+ 	        ut.commit(); 
+ 	    }
+ 	    catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
+ 	        try {
+ 	            ut.rollback();
+ 	        } 
+ 	        catch (IllegalStateException | SecurityException | SystemException ex) {
+ 	        }
+ 	    }
+    }
+    
     
    // ---------------------------------------------------------------------------------------------------------------------
     
