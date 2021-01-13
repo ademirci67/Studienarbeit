@@ -90,7 +90,7 @@
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="teachingEventLength_reg" style="color: red"/>
                     </h:panelGrid>
-                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{lehrveranstaltungsartController.createDoLehrveranstaltungsart()}" oncomplete="PF('eventDialog').hide();" update=":form:LehrveranstaltungsartListe"/>		 			
+                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{lehrveranstaltungsartController.createDoLehrveranstaltungsart}" oncomplete="PF('eventDialog').hide();" update=":form:LehrveranstaltungsartListe"/>		 			
 		 			<p:commandButton id="reset" type="reset" value="Reset" />
 		            
 		        </h:panelGrid>

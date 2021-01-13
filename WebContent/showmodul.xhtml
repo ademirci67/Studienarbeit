@@ -46,7 +46,7 @@
 		        	 
 		       
 		    </p:dataTable>
-		     <p:dialog id="eventEditDialog" widgetVar="eventEditDialog" header="Standort Editiert Details" showEffect="clip" hideEffect="clip">
+		     <p:dialog id="eventEditDialog" widgetVar="eventEditDialog" header="Modul Editiert Details" showEffect="clip" hideEffect="clip">
 		        <h:panelGrid id="eventEditDetails" columns="2">
 		 
 		            <h:outputLabel for="modulName_reg" value="Modul: "/>
@@ -65,10 +65,10 @@
 		     
 		 </h:form>
 		 <h:form id="eventDetailsForm">
-		    <p:dialog id="eventDialog" widgetVar="eventDialog" header="Fakultät" showEffect="clip" hideEffect="clip">
+		    <p:dialog id="eventDialog" widgetVar="eventDialog" header="Modul" showEffect="clip" hideEffect="clip">
 		        <h:panelGrid id="eventDetails" columns="2">
 		 
-		            <h:outputLabel styleClass="label" style="font-size:12pt; color:black;" for="modulName_reg" value="Fakultät: "/>
+		            <h:outputLabel styleClass="label" style="font-size:12pt" for="modulName_reg" value="Modul: "/>
                     <h:panelGrid columns="3">
                     	<h:inputText id="modulName_reg" styleClass="form-control" value="#{modulController.modulName}" required = "true" requiredMessage="Eine Fakultät muss eingegeben werden."></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
@@ -80,7 +80,7 @@
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="modulShortName_reg" style="color: red"/>
                     </h:panelGrid>
-                    <h:outputLabel styleClass="label" style="font-size:12pt; color:black;" for="pcid_reg" value="Kürzel: "/>
+                    <h:outputLabel styleClass="label" style="font-size:12pt; color:black;" for="pcid_reg" value="Prüfcode: "/>
                     <h:panelGrid columns="3">
                     	<h:inputText id="pcid_reg" styleClass="form-control" value="#{modulController.pcId}" required = "true" requiredMessage="Ein Kürzel muss eingegeben werden."></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>

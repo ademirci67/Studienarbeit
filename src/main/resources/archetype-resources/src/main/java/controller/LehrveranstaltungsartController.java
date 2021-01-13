@@ -170,10 +170,10 @@ public class LehrveranstaltungsartController implements Serializable {
 	}
 	
 	public void createDoLehrveranstaltungsart() throws SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception{
-		if(teachingEventNameOk == true && teachingEventLengthOk == true && teachingEventShortOk == true) {
+		//if(teachingEventNameOk == true && teachingEventLengthOk == true && teachingEventShortOk == true) {
 			createLehrveranstaltungsart();
 			teachingEventList = getLehrveranstaltungsartList();
-		}
+		//}
 		
 	}
 	
