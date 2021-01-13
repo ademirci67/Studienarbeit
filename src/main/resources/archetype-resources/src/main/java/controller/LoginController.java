@@ -265,7 +265,7 @@ public class LoginController implements Serializable {
     }
       
     //Beim drücken des Logout Buttons
-    public void logout(){
+    public String logout(){
         accountName="";
         if(isLoggedIn==true){
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
@@ -273,7 +273,9 @@ public class LoginController implements Serializable {
             isLoggedIn=false;
             logOutPerformed =true;
             nameFound=false;
+            return "/login.xhtml";
         }
+		return "/index.xhtml";
     }
       
     //Message an die View senden

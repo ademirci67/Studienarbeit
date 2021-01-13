@@ -57,13 +57,13 @@
 		    <p:dialog id="eventDialog" widgetVar="eventDialog" header="Standort" showEffect="clip" hideEffect="clip">
 		        <h:panelGrid id="eventDetails" columns="2">
 		 
-		            <h:outputLabel styleClass="label" style="font-size:12pt; color:black;" for="lCity_reg" value="Stadt: "/>
+		            <h:outputLabel styleClass="label" style="font-size:12pt" for="lCity_reg" value="Stadt: "/>
                     <h:panelGrid columns="3">
                     	<h:inputText id="lCity_reg" styleClass="form-control" value="#{locationController.LCity}" required = "true" requiredMessage="Eine Stadt muss eingegeben werden."></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="modName_reg" style="color: red"/>
                     </h:panelGrid>                                                        
-                    <h:outputLabel styleClass="label" style="font-size:12pt; color:black;" for="lStreet_reg" value="Straße: "/>
+                    <h:outputLabel styleClass="label" style="font-size:12pt" for="lStreet_reg" value="Straße: "/>
                     <h:panelGrid columns="3">
                     	<h:inputText id="lStreet_reg" styleClass="form-control" value="#{locationController.LStreet}" required = "true" requiredMessage="Eine Straße muss eingegeben werden."></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>

@@ -73,19 +73,19 @@
 		    <p:dialog id="eventDialog" widgetVar="eventDialog" header="Benutzergruppe" showEffect="clip" hideEffect="clip">
 		        <h:panelGrid id="eventDetails" columns="2">
 		 
-		            <h:outputLabel styleClass="label" style="font-size:12pt; color:black;" for="userGroupName_reg" value="Benutzergruppe: "/>
+		            <h:outputLabel styleClass="label" style="font-size:12pt" for="userGroupName_reg" value="Benutzergruppe: "/>
                     <h:panelGrid columns="3">
                     	<h:inputText id="userGroupName_reg" styleClass="form-control" value="#{benutzergruppeController.userGroupName}" required = "true" requiredMessage="Eine Benutzergruppe muss eingegeben werden."></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="userGroupName_reg" style="color: red"/>
                     </h:panelGrid>                                                        
-                    <h:outputLabel styleClass="label" style="font-size:12pt; color:black;" for="userGroupShortName_reg" value="Kürzel: "/>
+                    <h:outputLabel styleClass="label" style="font-size:12pt" for="userGroupShortName_reg" value="Kürzel: "/>
                     <h:panelGrid columns="3">
                     	<h:inputText id="userGroupShortName_reg" styleClass="form-control" value="#{benutzergruppeController.userGroupShortName}" required = "true" requiredMessage="Ein Kürzel muss eingegeben werden."></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="userGroupShortName_reg" style="color: red"/>
                     </h:panelGrid>
-                    <h:outputLabel styleClass="label" style="font-size:12pt; color:black;" for="userGroupRights_reg" value="Rechte: "/>
+                    <h:outputLabel styleClass="label" style="font-size:12pt" for="userGroupRights_reg" value="Rechte: "/>
                     <h:panelGrid columns="3">
                     	<h:inputText id="userGroupRights_reg" styleClass="form-control" value="#{benutzergruppeController.userGroupRights}" required = "true" requiredMessage="Ein Kürzel muss eingegeben werden."></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>

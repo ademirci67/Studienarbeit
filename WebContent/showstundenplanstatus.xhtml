@@ -72,19 +72,19 @@
 		        <h:panelGrid id="eventDetails" columns="2">
 		 
 		                                                                    
-                    <h:outputLabel styleClass="label" style="font-size:12pt; color:black;" for="statusDescription_reg" value="Bezeichnung: "/>
+                    <h:outputLabel styleClass="label" style="font-size:12pt" for="statusDescription_reg" value="Bezeichnung: "/>
                     <h:panelGrid columns="3">
                     	<h:inputText id="statusDescription_reg" styleClass="form-control" value="#{stundenplanstatusController.statusDescription}" required = "true" requiredMessage="Eine Bezeichnung muss eingegeben werden."></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="statusDescription_reg" style="color: red"/>
                     </h:panelGrid>
-                    <h:outputLabel styleClass="label" style="font-size:12pt; color:black;" for="statusHint_reg" value="Hinweis: "/>
+                    <h:outputLabel styleClass="label" style="font-size:12pt" for="statusHint_reg" value="Hinweis: "/>
                     <h:panelGrid columns="3">
                     	<h:inputText id="statusHint_reg" styleClass="form-control" value="#{stundenplanstatusController.statusHint}" required = "true" requiredMessage="Ein Hinweis muss eingegeben werden."></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="statusHint_reg" style="color: red"/>
                     </h:panelGrid>
-                    <h:outputLabel styleClass="label" style="font-size:12pt; color:black;" for="statusColor_reg" value="Farbe: "/>
+                    <h:outputLabel styleClass="label" style="font-size:12pt" for="statusColor_reg" value="Farbe: "/>
                     <h:panelGrid columns="3">
                     	<h:inputText id="statusColor_reg" styleClass="form-control" value="#{stundenplanstatusController.statusColor}" required = "true" requiredMessage="Eine Farbe muss eingegeben werden."></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
