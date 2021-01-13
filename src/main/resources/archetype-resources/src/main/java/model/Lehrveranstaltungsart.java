@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Lehrveranstaltungsart.findAll", query="SELECT l FROM Lehrveranstaltungsart l"),
+	@NamedQuery(name="Lehrveranstaltungsart.findByLvname", query="SELECT l FROM Lehrveranstaltungsart l WHERE l.lvname = :lvname"),
 	@NamedQuery(name="Lehrveranstaltungsart.findByLvid", query="SELECT l FROM Lehrveranstaltungsart l WHERE l.lvid = :lvid")})
 public class Lehrveranstaltungsart implements Serializable {
 	private static final long serialVersionUID = 1L;

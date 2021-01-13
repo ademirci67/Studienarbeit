@@ -38,12 +38,12 @@ public class Studiengang implements Serializable {
 	//bi-directional many-to-one association to Faculty
 	@ManyToOne
 	@JoinColumn(name="FK_FBID")
-	public Faculty faculty;
+	private Faculty faculty;
 
 	//bi-directional many-to-one association to Stundenplansemester
 	@ManyToOne
 	@JoinColumn(name="FK_SPSID")
-	public Stundenplansemester stundenplansemester;
+	private Stundenplansemester stundenplansemester;
 
 	public Studiengang() {
 	}

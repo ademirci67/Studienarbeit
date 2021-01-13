@@ -47,8 +47,8 @@ public class LoginController implements Serializable {
     //private Account Account;
     
     
-    private String accName;
-    private String accPwd;
+    private String accountName;
+    private String accountPwd;
     private Benutzergruppe BGruppe;
     private int FK_GroupID;
     private boolean isLoggedIn=false;
@@ -101,13 +101,13 @@ public class LoginController implements Serializable {
         this.isRzp = isRzp;
     }    
     
-    public String getAccName() {
-        return accName;
+    public String getAccountName() {
+        return accountName;
     }
 
-    public void setAccName(String accName) {
-        if(accName!=null){
-            if(findUser(accName)){
+    public void setAccountName(String accountName) {
+        if(accountName!=null){
+            if(findUser(accountName)){
                 nameFound=true;
                 if(nameFound==true && current.getBenutzergruppe().getGroupID() == 1){
                     isAdm = true;
@@ -125,7 +125,7 @@ public class LoginController implements Serializable {
                     isRzp = true;
                 
                 }
-                this.accName = accName;
+                this.accountName = accountName;
             }
             else{
                 FacesMessage message = new FacesMessage("Account nicht vorhanden");
@@ -136,14 +136,14 @@ public class LoginController implements Serializable {
         }
     }
     
-    public String getAccPwd() {
-        return accPwd;
+    public String getAccountPwd() {
+        return accountPwd;
     }
 
-    public void setAccPwd(String accPwd) {
-        if(accPwd!=null){
-            if(checkPwd(accPwd)){
-                this.accPwd = accPwd;
+    public void setAccountPwd(String accountPwd) {
+        if(accountPwd!=null){
+            if(checkPwd(accountPwd)){
+                this.accountPwd = accountPwd;
                 isLoggedIn = true;
             }
             else{
@@ -267,7 +267,7 @@ public class LoginController implements Serializable {
       
     //Beim drücken des Logout Buttons
     public void logout(){
-        accName="";
+        accountName="";
         if(isLoggedIn==true){
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
             FacesContext.getCurrentInstance().getExternalContext().getSession(true);

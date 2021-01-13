@@ -256,7 +256,7 @@ public class StundenplansemesterController implements Serializable {
 	        stundenplansemester.setSPJahr(newsps.getSPJahr());
 	        stundenplansemester.setSPKw(newsps.getSPKw());
 	        stundenplansemester.setStartDatum(newsps.getStartDatum());
-	        stundenplansemester.setStundenplanstatus(findSps(newsps.stundenplanstatus.getSPSTBezeichnung()));
+	        stundenplansemester.setStundenplanstatus(findSps(newsps.getStundenplanstatus().getSPSTBezeichnung()));
 	        em.merge(stundenplansemester);
 	        ut.commit(); 
 	    }

@@ -52,20 +52,20 @@ public class StundenplanstatusController implements Serializable {
 	
 	@PostConstruct
     public void init() {
-        spslist = getStundenplanstatusList();
+		statusList = getStundenplanstatusList();
     }
  
 	
-	private String PColor;
-	private String SPSTBezeichnung;
-	private String SPSTHint;
-	private boolean PColor_ok = false;
-	private boolean SPSTBezeichnung_ok = false;
-	private boolean SPSTHint_ok = false;
+	private String color;
+	private String statusBezeichnung;
+	private String statusHint;
+	private boolean colorOk = false;
+	private boolean statusBezeichnungOk = false;
+	private boolean statusHintOk = false;
 	
-	List<Stundenplanstatus> spslist;
+	List<Stundenplanstatus> statusList;
 	
-	private Stundenplanstatus selectedsps;
+	private Stundenplanstatus statusSelected;
 
 	public Stundenplanstatus getStundenplanstatus() {
 		return stundenplanstatus;
@@ -75,14 +75,14 @@ public class StundenplanstatusController implements Serializable {
 		this.stundenplanstatus = stundenplanstatus;
 	}
 
-	public String getPColor() {
-		return PColor;
+	public String getColor() {
+		return color;
 	}
 
-	public void setPColor(String PColor) {
-		if(PColor!=null){
-			this.PColor = PColor;
-			PColor_ok = true;
+	public void setColor(String color) {
+		if(color!=null){
+			this.color = color;
+			colorOk = true;
 		}
 		/*else{
 			FacesMessage message = new FacesMessage("Farbe bereits vorhanden.");
@@ -90,14 +90,14 @@ public class StundenplanstatusController implements Serializable {
 	    }*/
 	}
 
-	public String getSPSTBezeichnung() {
-		return SPSTBezeichnung;
+	public String getStatusBezeichnung() {
+		return statusBezeichnung;
 	}
 
-	public void setSPSTBezeichnung(String SPSTBezeichnung) {
-		if(SPSTBezeichnung!=null){
-			this.SPSTBezeichnung = SPSTBezeichnung;
-			SPSTBezeichnung_ok = true;
+	public void setStatusBezeichnung(String statusBezeichnung) {
+		if(statusBezeichnung!=null){
+			this.statusBezeichnung = statusBezeichnung;
+			statusBezeichnungOk = true;
 		}
 		/*else{
 			FacesMessage message = new FacesMessage("Bezeichnung bereits vorhanden.");
@@ -105,14 +105,14 @@ public class StundenplanstatusController implements Serializable {
 	    }*/
 	}
 
-	public String getSPSTHint() {
-		return SPSTHint;
+	public String getStatusHint() {
+		return statusHint;
 	}
 
-	public void setSPSTHint(String SPSTHint) {
-		if(SPSTHint!=null){
-			this.SPSTHint = SPSTHint;
-			SPSTHint_ok = true;
+	public void setStatusHint(String statusHint) {
+		if(statusHint!=null){
+			this.statusHint = statusHint;
+			statusHintOk = true;
 		}
 		/*else{
 			FacesMessage message = new FacesMessage("Hinweis bereits vorhanden.");
@@ -120,16 +120,16 @@ public class StundenplanstatusController implements Serializable {
 	    }*/
 	}
 
-	public Stundenplanstatus getSelectedsps() {
-		return selectedsps;
+	public Stundenplanstatus getStatusSelected() {
+		return statusSelected;
 	}
 
-	public void setSelectedsps(Stundenplanstatus selectedsps) {
-		this.selectedsps = selectedsps;
+	public void setStatusSelected(Stundenplanstatus statusSelected) {
+		this.statusSelected = statusSelected;
 	}
 
-	public List<Stundenplanstatus> getSpslist() {
-		return spslist;
+	public List<Stundenplanstatus> getStatusList() {
+		return statusList;
 	}
 	
 	public UIComponent getReg() {
@@ -144,9 +144,9 @@ public class StundenplanstatusController implements Serializable {
 	public void createStundenplanstatus() throws IllegalStateException, SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception  {
 		EntityManager em = emf.createEntityManager();
 		Stundenplanstatus sps = new Stundenplanstatus();  
-		sps.setSPSTBezeichnung(SPSTBezeichnung);
-		sps.setSPSTHint(SPSTHint);
-		sps.setPColor(PColor);
+		sps.setSPSTBezeichnung(statusBezeichnung);
+		sps.setSPSTHint(statusHint);
+		sps.setPColor(color);
 		try {
 	        ut.begin();   
 	        em.joinTransaction();  
@@ -164,7 +164,7 @@ public class StundenplanstatusController implements Serializable {
 	}
 	
 	public String createDoStundenplanstatus() throws SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception{
-		if(SPSTBezeichnung_ok == true && SPSTHint_ok == true && PColor_ok == true) {
+		if(statusBezeichnungOk == true && statusHintOk == true && colorOk == true) {
 			createStundenplanstatus();
 			return "showstundenplanstatus.xhtml";
 		}
@@ -178,7 +178,7 @@ public class StundenplanstatusController implements Serializable {
 	public List<Stundenplanstatus> getStundenplanstatusList(){
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Stundenplanstatus> query = em.createNamedQuery("Stundenplanstatus.findAll", Stundenplanstatus.class);
-		spslist = query.getResultList();
+		statusList = query.getResultList();
 		return query.getResultList();
 	}
 	
@@ -188,17 +188,17 @@ public class StundenplanstatusController implements Serializable {
         FacesMessage msg = new FacesMessage("Stundenplanstatus Edited");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         
-        Stundenplanstatus newsps = new Stundenplanstatus();
-        newsps = event.getObject();
+        Stundenplanstatus newStatus = new Stundenplanstatus();
+        newStatus = event.getObject();
         
         try {
 	        ut.begin();
 	        EntityManager em = emf.createEntityManager();
-	        em.find(Stundenplanstatus.class, newsps.getSpstid());
-	        stundenplanstatus.setSpstid(newsps.getSpstid());
-	        stundenplanstatus.setPColor(newsps.getPColor());
-	        stundenplanstatus.setSPSTBezeichnung(newsps.getSPSTBezeichnung());
-	        stundenplanstatus.setSPSTHint(newsps.getSPSTHint());
+	        em.find(Stundenplanstatus.class, newStatus.getSpstid());
+	        stundenplanstatus.setSpstid(newStatus.getSpstid());
+	        stundenplanstatus.setPColor(newStatus.getPColor());
+	        stundenplanstatus.setSPSTBezeichnung(newStatus.getSPSTBezeichnung());
+	        stundenplanstatus.setSPSTHint(newStatus.getSPSTHint());
 	        em.merge(stundenplanstatus);
 	        ut.commit(); 
 	    }
@@ -219,10 +219,10 @@ public class StundenplanstatusController implements Serializable {
 	//----------------------------------------------------------------------------------------------------------------------------------------------
     
     public void deleteStundenplanstatus() throws IllegalStateException, SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception {
-        spslist.remove(selectedsps);        
+        statusList.remove(statusSelected);        
         EntityManager em = emf.createEntityManager();
         TypedQuery<Stundenplanstatus> q = em.createNamedQuery("Stundenplanstatus.findBySpsid",Stundenplanstatus.class);
-        q.setParameter("spstid", selectedsps.getSpstid());
+        q.setParameter("spstid", statusSelected.getSpstid());
         stundenplanstatus = (Stundenplanstatus)q.getSingleResult();
         
         try {
@@ -238,7 +238,7 @@ public class StundenplanstatusController implements Serializable {
 	        catch (IllegalStateException | SecurityException | SystemException ex) {
 	        }
 	    }
-        selectedsps = null;
+        statusSelected = null;
 		em.close();
     }
 

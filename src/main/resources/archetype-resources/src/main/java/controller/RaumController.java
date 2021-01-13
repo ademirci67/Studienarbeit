@@ -233,7 +233,7 @@ public class RaumController implements Serializable {
 	        raum.setRName(newrau.getRName());
 	        raum.setKapazitaet(newrau.getKapazitaet());
 	        raum.setNachbarRaum(newrau.getNachbarRaum());
-	        raum.setLocation(findLoc(newrau.location.getLStreet()));
+	        raum.setLocation(findLoc(newrau.getLocation().getLStreet()));
 	        em.merge(raum);
 	        ut.commit(); 
 	    }

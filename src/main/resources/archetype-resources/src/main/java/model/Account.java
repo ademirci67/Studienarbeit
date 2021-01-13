@@ -35,12 +35,12 @@ public class Account implements Serializable {
 	//bi-directional many-to-one association to Benutzergruppe
 	@ManyToOne
 	@JoinColumn(name="FK_GroupID")
-	public Benutzergruppe benutzergruppe;
+	private Benutzergruppe benutzergruppe;
 
 	//bi-directional many-to-one association to Faculty
 	@ManyToOne
 	@JoinColumn(name="FK_FBID")
-	public Faculty faculty;
+	private Faculty faculty;
 
 	//bi-directional many-to-one association to Dozenten
 	@OneToMany(mappedBy="account")

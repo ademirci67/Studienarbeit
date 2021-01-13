@@ -68,36 +68,36 @@ public class ModulController implements Serializable {
 	
 	@PostConstruct
     public void init() {
-        modlist = getModulList();
+        modList = getModulList();
     }
  
 	
 	
-	private String modKuerzel;
-	private String modName;
-	private Integer pcid;
-	private boolean modKuerzel_ok = false;
-	private boolean modName_ok = false;
-	private boolean pcid_ok = false;
+	private String modulKuerzel;
+	private String modulName;
+	private Integer pcId;
+	private boolean modulKuerzelOk = false;
+	private boolean modulNameOk = false;
+	private boolean pcIdOk = false;
 	
-	List<Modul> modlist;
+	List<Modul> modList;
 	
 	//modlist.add(getModulList());
 	
-	private Modul selectedmodul;
+	private Modul modulSelected;
 	
-	public Modul getSelectedmodul() {
-		return selectedmodul;
+	public Modul getModulSelected() {
+		return modulSelected;
 	}
 	  
-	public void setSelectedmodul(Modul selectedmodul) {
-		this.selectedmodul = selectedmodul;
+	public void setModulSelected(Modul modulSelected) {
+		this.modulSelected = modulSelected;
 	}
 	
 	
 	  
-    public List<Modul> getModlist() {
-        return modlist;
+    public List<Modul> getModList() {
+        return modList;
     }
     
 	public Modul getModul() {
@@ -108,14 +108,14 @@ public class ModulController implements Serializable {
 		this.modul = modul;
 	}
 	  
-	public String getModKuerzel() {
-		return modKuerzel;
+	public String getModulKuerzel() {
+		return modulKuerzel;
 	}
 	  
-	public void setModKuerzel(String modKuerzel) {
-		if(modKuerzel!=null){
-			this.modKuerzel = modKuerzel;
-			modKuerzel_ok = true;
+	public void setModulKuerzel(String modulKuerzel) {
+		if(modulKuerzel!=null){
+			this.modulKuerzel = modulKuerzel;
+			modulKuerzelOk = true;
 		}
 		else{
 			FacesMessage message = new FacesMessage("Modulkürzel bereits vorhanden.");
@@ -125,14 +125,14 @@ public class ModulController implements Serializable {
 	    }
 	}
 	  
-	public String getModName() {
-		return modName;
+	public String getModulName() {
+		return modulName;
 	}
 	  
-	public void setModName(String modName) {
-	    if(modName!=null){
-	        this.modName = modName;
-	        modName_ok=true;
+	public void setModulName(String modulName) {
+	    if(modulName!=null){
+	        this.modulName = modulName;
+	        modulNameOk=true;
 	    }
 	    else{
 	    	FacesMessage message = new FacesMessage("Modulname bereits vorhanden.");
@@ -142,14 +142,14 @@ public class ModulController implements Serializable {
 	    }
 	}
 	  
-	public Integer getPcid() {
-		return pcid;
+	public Integer getPcId() {
+		return pcId;
 	}
 	  
-	public void setPcid(Integer pcid) {
-		if(pcid!=null){
-	        this.pcid = pcid;
-	        pcid_ok=true;
+	public void setPcId(Integer pcId) {
+		if(pcId!=null){
+	        this.pcId = pcId;
+	        pcIdOk=true;
 	    }
 	    else{
 	    	FacesMessage message = new FacesMessage("Prüfcodeid bereits vorhanden.");
@@ -171,9 +171,9 @@ public class ModulController implements Serializable {
 	public void createModul() throws IllegalStateException, SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception  {
 		EntityManager em = emf.createEntityManager();
 		Modul mod = new Modul();  
-		mod.setModName(modName);    
-		mod.setModKuerzel(modKuerzel);      
-		mod.setPcid(pcid);
+		mod.setModName(modulName);    
+		mod.setModKuerzel(modulKuerzel);      
+		mod.setPcid(pcId);
 		try {
 	        ut.begin();   
 	        em.joinTransaction();  
@@ -191,12 +191,12 @@ public class ModulController implements Serializable {
 	}
 	
 	public String createDoModul() throws SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception{
-		if(modName_ok == true && modKuerzel_ok == true && pcid_ok == true) {
+		if(modulNameOk == true && modulKuerzelOk == true && pcIdOk == true) {
 			createModul();
-			return "index.xhtml";
+			return "showmodul.xhtml";
 		}
 		else{
-			return "index.xhtml";
+			return "createmodul.xhtml";
 		}
 	}
 	
@@ -205,7 +205,7 @@ public class ModulController implements Serializable {
 	public List<Modul> getModulList(){
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Modul> query = em.createNamedQuery("Modul.findAll", Modul.class);
-		modlist = query.getResultList();
+		modList = query.getResultList();
 		return query.getResultList();
 	}
 	
@@ -217,8 +217,8 @@ public class ModulController implements Serializable {
         FacesMessage msg = new FacesMessage("Modul Edited");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         
-        Modul newmod = new Modul();
-        newmod = event.getObject();
+        Modul newMod = new Modul();
+        newMod = event.getObject();
         
         try {
 	        ut.begin();
@@ -227,10 +227,10 @@ public class ModulController implements Serializable {
 	        em.find(Modul.class, 279);
 	        //em.persist(q)
 	        
-	        modul.setModID(newmod.getModID());
-	        modul.setModName(newmod.getModName());
-	        modul.setModKuerzel(newmod.getModKuerzel());
-	        modul.setPcid(newmod.getPcid());
+	        modul.setModID(newMod.getModID());
+	        modul.setModName(newMod.getModName());
+	        modul.setModKuerzel(newMod.getModKuerzel());
+	        modul.setPcid(newMod.getPcid());
 	        
 	        
 	        em.merge(modul);
@@ -255,13 +255,13 @@ public class ModulController implements Serializable {
 	//----------------------------------------------------------------------------------------------------------------------------------------------
     
     public void deleteModul() throws IllegalStateException, SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception {
-        modlist.remove(selectedmodul);
+        modList.remove(modulSelected);
         //selectedmodul = null;
         //updateModul(modlist);
         
         EntityManager em = emf.createEntityManager();
         TypedQuery<Modul> q = em.createNamedQuery("Modul.findByModID",Modul.class);
-        q.setParameter("modID", selectedmodul.getModID());
+        q.setParameter("modID", modulSelected.getModID());
         modul = (Modul)q.getSingleResult();
         
         try {
@@ -278,7 +278,7 @@ public class ModulController implements Serializable {
 	        catch (IllegalStateException | SecurityException | SystemException ex) {
 	        }
 	    }
-        selectedmodul = null;
+        modulSelected = null;
 		em.close();
     }
     

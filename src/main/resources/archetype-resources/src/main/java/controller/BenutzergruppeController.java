@@ -69,36 +69,36 @@ public class BenutzergruppeController implements Serializable {
 	
 	@PostConstruct
     public void init() {
-        bglist = getBenutzergruppeList();
+        bgList = getBenutzergruppeList();
     }
  
 	
 	
-	private String BGName;
-	private String BGShortName;
-	private Integer BGRechte;
-	private boolean BGName_ok = false;
-	private boolean BGShortName_ok = false;
-	private boolean BGRechte_ok = false;
+	private String bgName;
+	private String bgShortName;
+	private Integer bgRechte;
+	private boolean bgNameOk = false;
+	private boolean bgShortNameOk = false;
+	private boolean bgRechteOk = false;
 	
-	List<Benutzergruppe> bglist;
+	List<Benutzergruppe> bgList;
 	
 	//modlist.add(getModulList());
 	
-	private Benutzergruppe selectedbenutzergruppe;
+	private Benutzergruppe benutzergruppeSelected;
 	
-	public Benutzergruppe getSelectedbenutzergruppe() {
-		return selectedbenutzergruppe;
+	public Benutzergruppe getBenutzergruppeSelected() {
+		return benutzergruppeSelected;
 	}
 	  
-	public void setSelectedbenutzergruppe(Benutzergruppe selectedbenutzergruppe) {
-		this.selectedbenutzergruppe = selectedbenutzergruppe;
+	public void setBenutzergruppeSelected(Benutzergruppe benutzergruppeSelected) {
+		this.benutzergruppeSelected = benutzergruppeSelected;
 	}
 	
 	
 	  
-    public List<Benutzergruppe> getBglist() {
-        return bglist;
+    public List<Benutzergruppe> getBgList() {
+        return bgList;
     }
     
 	public Benutzergruppe getBenutzergruppe() {
@@ -109,14 +109,14 @@ public class BenutzergruppeController implements Serializable {
 		this.benutzergruppe = benutzergruppe;
 	}
 	  
-	public String getBGName() {
-		return BGName;
+	public String getBgName() {
+		return bgName;
 	}
 	  
-	public void setBGName(String BGName) {
-		if(BGName!=null){
-			this.BGName = BGName;
-			BGName_ok = true;
+	public void setbgName(String bgName) {
+		if(bgName!=null){
+			this.bgName = bgName;
+			bgNameOk = true;
 		}
 		else{
 			FacesMessage message = new FacesMessage("Benutzergruppekürzel bereits vorhanden.");
@@ -126,14 +126,14 @@ public class BenutzergruppeController implements Serializable {
 	    }
 	}
 	  
-	public String getBGShortName() {
-		return BGShortName;
+	public String getBgShortName() {
+		return bgShortName;
 	}
 	  
-	public void setBGShortName(String BGShortName) {
-	    if(BGShortName!=null){
-	        this.BGShortName = BGShortName;
-	        BGShortName_ok=true;
+	public void setbgShortName(String bgShortName) {
+	    if(bgShortName!=null){
+	        this.bgShortName = bgShortName;
+	        bgShortNameOk=true;
 	    }
 	    else{
 	    	FacesMessage message = new FacesMessage("Benutzergruppe bereits vorhanden.");
@@ -143,14 +143,14 @@ public class BenutzergruppeController implements Serializable {
 	    }
 	}
 	  
-	public Integer getBGRechte() {
-		return BGRechte;
+	public Integer getBgRechte() {
+		return bgRechte;
 	}
 	  
-	public void setBGRechte(Integer BGRechte) {
-		if(BGRechte!=null){
-	        this.BGRechte = BGRechte;
-	        BGRechte_ok=true;
+	public void setBgRechte(Integer bgRechte) {
+		if(bgRechte!=null){
+	        this.bgRechte = bgRechte;
+	        bgRechteOk=true;
 	    }
 	    else{
 	    	FacesMessage message = new FacesMessage("BGRechte bereits vorhanden.");
@@ -172,9 +172,9 @@ public class BenutzergruppeController implements Serializable {
 	public void createBenutzergruppe() throws IllegalStateException, SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception  {
 		EntityManager em = emf.createEntityManager();
 		Benutzergruppe bg = new Benutzergruppe();  
-		bg.setBGName(BGName);    
-		bg.setBGShortName(BGShortName);      
-		bg.setBGRechte(BGRechte);
+		bg.setBGName(bgName);    
+		bg.setBGShortName(bgShortName);      
+		bg.setBGRechte(bgRechte);
 		try {
 	        ut.begin();   
 	        em.joinTransaction();  
@@ -192,7 +192,7 @@ public class BenutzergruppeController implements Serializable {
 	}
 	
 	public String createDoBenutzergruppe() throws SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception{
-		if(BGName_ok == true && BGShortName_ok == true && BGRechte_ok == true) {
+		if(bgNameOk == true && bgShortNameOk == true && bgRechteOk == true) {
 			createBenutzergruppe();
 			return "index.xhtml";
 		}
@@ -206,7 +206,7 @@ public class BenutzergruppeController implements Serializable {
 	public List<Benutzergruppe> getBenutzergruppeList(){
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Benutzergruppe> query = em.createNamedQuery("Benutzergruppe.findAll", Benutzergruppe.class);
-		bglist = query.getResultList();
+		bgList = query.getResultList();
 		return query.getResultList();
 	}
 	
@@ -218,8 +218,8 @@ public class BenutzergruppeController implements Serializable {
         FacesMessage msg = new FacesMessage("Benutzergruppe Edited");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         
-        Benutzergruppe newbg = new Benutzergruppe();
-        newbg = event.getObject();
+        Benutzergruppe newBg = new Benutzergruppe();
+        newBg = event.getObject();
         
         try {
 	        ut.begin();
@@ -228,10 +228,10 @@ public class BenutzergruppeController implements Serializable {
 	        em.find(Benutzergruppe.class, 279);
 	        //em.persist(q)
 	        
-	        benutzergruppe.setGroupID(newbg.getGroupID());
-	        benutzergruppe.setBGName(newbg.getBGName());
-	        benutzergruppe.setBGShortName(newbg.getBGShortName());
-	        benutzergruppe.setBGRechte(newbg.getBGRechte());
+	        benutzergruppe.setGroupID(newBg.getGroupID());
+	        benutzergruppe.setBGName(newBg.getBGName());
+	        benutzergruppe.setBGShortName(newBg.getBGShortName());
+	        benutzergruppe.setBGRechte(newBg.getBGRechte());
 	        
 	        
 	        em.merge(benutzergruppe);
@@ -256,13 +256,13 @@ public class BenutzergruppeController implements Serializable {
 	//----------------------------------------------------------------------------------------------------------------------------------------------
     
     public void deleteBenutzergruppe() throws IllegalStateException, SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception {
-        bglist.remove(selectedbenutzergruppe);
+        bgList.remove(benutzergruppeSelected);
         //selectedmodul = null;
         //updateModul(modlist);
         
         EntityManager em = emf.createEntityManager();
         TypedQuery<Benutzergruppe> q = em.createNamedQuery("Benutzergruppe.findByID",Benutzergruppe.class);
-        q.setParameter("groupID", selectedbenutzergruppe.getGroupID());
+        q.setParameter("groupID", benutzergruppeSelected.getGroupID());
         benutzergruppe = (Benutzergruppe)q.getSingleResult();
         
         try {
@@ -279,7 +279,7 @@ public class BenutzergruppeController implements Serializable {
 	        catch (IllegalStateException | SecurityException | SystemException ex) {
 	        }
 	    }
-        selectedbenutzergruppe = null;
+        benutzergruppeSelected = null;
 		em.close();
     }
     

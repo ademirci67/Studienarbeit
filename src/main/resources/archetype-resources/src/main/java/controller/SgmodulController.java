@@ -276,9 +276,9 @@ public class SgmodulController implements Serializable {
 	        sgmodul.setSgmid(newsgm.getSgmid());
 	        sgmodul.setModSemester(newsgm.getModSemester());
 	        sgmodul.setSGMNotiz(newsgm.getSGMNotiz());
-	        sgmodul.setModul(findMod(newsgm.modul.getModName()));
-	        sgmodul.setDozenten(findDoz(newsgm.dozenten.getDName()));
-	        sgmodul.setStudiengang(findSg(newsgm.studiengang.getSGName()));
+	        sgmodul.setModul(findMod(newsgm.getModul().getModName()));
+	        sgmodul.setDozenten(findDoz(newsgm.getDozenten().getDName()));
+	        sgmodul.setStudiengang(findSg(newsgm.getStudiengang().getSGName()));
 	        em.merge(sgmodul);
 	        ut.commit(); 
 	    }

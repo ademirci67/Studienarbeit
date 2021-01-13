@@ -268,8 +268,8 @@ public class StudiengangController implements Serializable {
 	        studiengang.setSGName(newsg.getSGName());
 	        studiengang.setSGKurz(newsg.getSGKurz());
 	        studiengang.setSemester(newsg.getSemester());
-	        studiengang.setFaculty(findFac(newsg.faculty.getFacName()));
-	        studiengang.setStundenplansemester(findSP(newsg.stundenplansemester.getSPSemester()));
+	        studiengang.setFaculty(findFac(newsg.getFaculty().getFacName()));
+	        studiengang.setStundenplansemester(findSP(newsg.getStundenplansemester().getSPSemester()));
 	        em.merge(studiengang);
 	        ut.commit(); 
 	    }

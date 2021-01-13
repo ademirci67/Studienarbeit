@@ -39,7 +39,7 @@ public class Dozenten implements Serializable {
 	//bi-directional many-to-one association to Account
 	@ManyToOne
 	@JoinColumn(name="FK_AccID")
-	public Account account;
+	private Account account;
 
 	//bi-directional many-to-one association to Sgmodul
 	@OneToMany(mappedBy="dozenten")
