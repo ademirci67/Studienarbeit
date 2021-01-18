@@ -7,7 +7,6 @@
       
 <h:body>
 	<ui:composition template="WEB-INF/template/master.xhtml" >
-	<!--  	<ui:define name="menu">       <ui:include src="WEB-INF/template/eingeloggt.xhtml"/> </ui:define> -->
 		<ui:define name="content">
 		<h:form id="form">
 		    <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
@@ -73,7 +72,8 @@
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="facShortName_reg" style="color: red"/>
                     </h:panelGrid>
-                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{facultyController.createDoFaculty}" oncomplete="PF('eventDialog').hide();" update=":form:FacultyList"/>		 			
+                    
+                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{facultyController.createDoFaculty}" update=":form:FacultyList" oncomplete="PF('eventDialog').hide();"/>		 			
 		 			<p:commandButton id="reset" type="reset" value="Reset" />
 		            
 		        </h:panelGrid>

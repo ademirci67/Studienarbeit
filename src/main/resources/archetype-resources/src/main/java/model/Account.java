@@ -11,7 +11,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-
+@Table(name = "accounts")
 @NamedQueries({
 	@NamedQuery(name="Account.findAll", query="SELECT a FROM Account a"),
 	@NamedQuery(name="Account.findByAccName", query = "SELECT a FROM Account a WHERE a.accName = :accName"),

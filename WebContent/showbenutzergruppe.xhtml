@@ -7,14 +7,13 @@
       
 <h:body>
 	<ui:composition template="WEB-INF/template/master.xhtml" >
-	<!-- einzeiliger Kommentar 	<ui:define name="menu"> <ui:include src="WEB-INF/template/eingeloggt.xhtml"/></ui:define> -->
 		<ui:define name="content">
 		<h:form id="form">
 		    <p:growl id="msgs" showDetail="true"/>   
 		    <p:commandButton value="Benutzergruppe Hinzufügen" type="button" id="ajax" editable="true" update=":eventDetailsForm:eventDialog"  onclick="PF('eventDialog').show();" style="margin-right:20px;" styleClass="ui-priority-primary" /> 
 			<p:dataTable id="BenutzergruppeListe" var="list" value="#{benutzergruppeController.userGroupList}" selection="#{benutzergruppeController.userGroupSelected}" selectionMode="single" rowKey="#{list.groupID}" >
 		       
-		       <p:ajax event="rowSelect" listener="#{facultyController.onRowSelect}" update=":form:eventEditDialog" oncomplete="PF('eventEditDialog').show();" process="BenutzergruppeListe"/>
+		       <p:ajax event="rowSelect" listener="#{benutzergruppeController.onRowSelect}" update=":form:eventEditDialog" oncomplete="PF('eventEditDialog').show();" process="BenutzergruppeListe"/>
 		 
 		 
 		        <p:column headerText="Id">
