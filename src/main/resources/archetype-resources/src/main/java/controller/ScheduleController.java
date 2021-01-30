@@ -54,7 +54,7 @@ import java.util.Calendar;
 
 /**
 *
-* @author Manuel
+* @author Anil
 */
 @Named(value="scheduleController")
 @SessionScoped
@@ -105,10 +105,10 @@ public class ScheduleController implements Serializable {
 	ArrayList<String> teachingEventList = new ArrayList<>();
     private String teName;
     
-    ArrayList<Integer> roomList = new ArrayList<>();
+    ArrayList<Raum> roomList = new ArrayList<>();
     private int roomId;
     
-    ArrayList<Integer> sgmodulList = new ArrayList<>();
+    ArrayList<Sgmodul> sgmodulList = new ArrayList<>();
     private int sgmodulId;
     
     ArrayList<Integer> semesterList = new ArrayList<>();
@@ -288,7 +288,7 @@ public class ScheduleController implements Serializable {
         for (Object RListitem : RList)
         {
         	Raum ra =(Raum)RListitem;
-            roomList.add(ra.getRid());
+            roomList.add(ra);
         }
         
         EntityManager em3 = emf.createEntityManager();
@@ -297,7 +297,7 @@ public class ScheduleController implements Serializable {
         for (Object SListitem : SList)
         {
         	Sgmodul sg =(Sgmodul)SListitem;
-            sgmodulList.add(sg.getSgmid());
+            sgmodulList.add(sg);
         }
 		
 		EntityManager em4 = emf.createEntityManager();
@@ -583,10 +583,10 @@ public class ScheduleController implements Serializable {
 	
 	//--------------------------------------------------------------
 	
-	public ArrayList<Integer> getRoomList() {
+	public ArrayList<Raum> getRoomList() {
 		return roomList;
 	}
-	public void setRoomList(ArrayList<Integer> roomList) {
+	public void setRoomList(ArrayList<Raum> roomList) {
 		this.roomList = roomList;
 	}
 	public int getRoomId() {
@@ -598,10 +598,10 @@ public class ScheduleController implements Serializable {
 	
 	//--------------------------------------------------------------
     
-	public ArrayList<Integer> getSgmodulList() {
+	public ArrayList<Sgmodul> getSgmodulList() {
 		return sgmodulList;
 	}
-	public void setSgmodulListe(ArrayList<Integer> sgmodulList) {
+	public void setSgmodulListe(ArrayList<Sgmodul> sgmodulList) {
 		this.sgmodulList = sgmodulList;
 	}
 	
@@ -935,7 +935,5 @@ public class ScheduleController implements Serializable {
 	public void setLoadDb(List<Stundenplaneintrag> loadDb) {
 		this.loadDb = loadDb;
 	}
-	
-	
 
 }
