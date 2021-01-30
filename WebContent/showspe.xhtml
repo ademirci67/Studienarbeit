@@ -41,6 +41,7 @@
 	                            oncomplete="PF('myschedule1').update();PF('myschedule2').update();PF('myschedule3').update();PF('myschedule4').update();PF('myschedule5').update();PF('myschedule6').update();" />
 	        	</h:panelGrid>
 	        	<h:panelGroup id="panelgroup">
+	        		<h1>Semester 6</h1>
 			        <p:schedule id="schedule6" value="#{scheduleController.events[6]}" widgetVar="myschedule6" allDaySlot="false" showWeekends="#{scheduleController.showWeekends}" axisFormat="H:mm" slotMinutes="15" slotDuration="00:15:00" minTime="08:00:00" maxTime="20:00:00" locale="de" timeZone="Europe/Berlin" view="agendaWeek" leftHeaderTemplate="prev,next,today" rightHeaderTemplate="timeGridWeek,timeGridDay">
 						
 			            <p:ajax event="dateSelect" listener="#{scheduleController.onDateSelect}" disabled="#{!(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}" update=":eventDetailsForm:eventDialog" oncomplete="PF('eventDialog').show();" />
@@ -48,7 +49,8 @@
 			           	<p:ajax event="eventMove" listener="#{scheduleController.onEventMove}" disabled="#{!(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}" update="messages" />
 			           	<p:ajax event="eventResize" listener="#{scheduleController.onEventResize}" disabled="#{!(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}" update="messages" />
 			 
-			        </p:schedule> 
+			        </p:schedule>
+			        <h1>Semester 5</h1>
 			        <p:schedule id="schedule5" value="#{scheduleController.events[5]}" widgetVar="myschedule5" allDaySlot="false" showWeekends="#{scheduleController.showWeekends}" axisFormat="H:mm" slotMinutes="15" slotDuration="00:15:00" minTime="08:00:00" maxTime="20:00:00" locale="de" timeZone="Europe/Berlin" view="agendaWeek" leftHeaderTemplate="prev,next,today" rightHeaderTemplate="timeGridWeek,timeGridDay">
 
 			            <p:ajax event="dateSelect" listener="#{scheduleController.onDateSelect}" disabled="#{!(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}" update=":eventDetailsForm:eventDialog" oncomplete="PF('eventDialog').show();" />
@@ -57,6 +59,7 @@
 			           	<p:ajax event="eventResize" listener="#{scheduleController.onEventResize}" disabled="#{!(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}" update="messages" />
 			 			
 			        </p:schedule>
+			        <h1>Semester 4</h1>
 			        <p:schedule id="schedule4" value="#{scheduleController.events[4]}" widgetVar="myschedule4" allDaySlot="false" showWeekends="#{scheduleController.showWeekends}" axisFormat="H:mm" slotMinutes="15" slotDuration="00:15:00" minTime="08:00:00" maxTime="20:00:00" locale="de" timeZone="Europe/Berlin" view="agendaWeek" leftHeaderTemplate="prev,next,today" rightHeaderTemplate="timeGridWeek,timeGridDay">
 
 			            <p:ajax event="dateSelect" listener="#{scheduleController.onDateSelect}" disabled="#{!(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}" update=":eventDetailsForm:eventDialog" oncomplete="PF('eventDialog').show();" />
@@ -65,6 +68,7 @@
 			           	<p:ajax event="eventResize" listener="#{scheduleController.onEventResize}" disabled="#{!(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}" update="messages" />
 			 			
 			        </p:schedule>
+			        <h1>Semester 3</h1>
 			        <p:schedule id="schedule3" value="#{scheduleController.events[3]}" widgetVar="myschedule3" allDaySlot="false" showWeekends="#{scheduleController.showWeekends}" axisFormat="H:mm" slotMinutes="15" slotDuration="00:15:00" minTime="08:00:00" maxTime="20:00:00" locale="de" timeZone="Europe/Berlin" view="agendaWeek" leftHeaderTemplate="prev,next,today" rightHeaderTemplate="timeGridWeek,timeGridDay">
 
 			            <p:ajax event="dateSelect" listener="#{scheduleController.onDateSelect}" disabled="#{!(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}" update=":eventDetailsForm:eventDialog" oncomplete="PF('eventDialog').show();" />
@@ -73,6 +77,7 @@
 			           	<p:ajax event="eventResize" listener="#{scheduleController.onEventResize}" disabled="#{!(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}" update="messages" />
 			 			
 			        </p:schedule>
+			        <h1>Semester 2</h1>
 			        <p:schedule id="schedule2" value="#{scheduleController.events[2]}" widgetVar="myschedule2" allDaySlot="false" showWeekends="#{scheduleController.showWeekends}" axisFormat="H:mm" slotMinutes="15" slotDuration="00:15:00" minTime="08:00:00" maxTime="20:00:00" locale="de" timeZone="Europe/Berlin" view="agendaWeek" leftHeaderTemplate="prev,next,today" rightHeaderTemplate="timeGridWeek,timeGridDay">
 
 			            <p:ajax event="dateSelect" listener="#{scheduleController.onDateSelect}" disabled="#{!(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}" update=":eventDetailsForm:eventDialog" oncomplete="PF('eventDialog').show();" />
@@ -81,6 +86,7 @@
 			           	<p:ajax event="eventResize" listener="#{scheduleController.onEventResize}" disabled="#{!(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}" update="messages" />
 			 			
 			        </p:schedule>
+			        <h1>Semester 1</h1>
 			        <p:schedule id="schedule1" value="#{scheduleController.events[1]}" widgetVar="myschedule1" allDaySlot="false" showWeekends="#{scheduleController.showWeekends}" axisFormat="H:mm" slotMinutes="15" slotDuration="00:15:00" minTime="08:00:00" maxTime="20:00:00" locale="de" timeZone="Europe/Berlin" view="agendaWeek" leftHeaderTemplate="prev,next,today" rightHeaderTemplate="timeGridWeek,timeGridDay">
 
 			            <p:ajax event="dateSelect" listener="#{scheduleController.onDateSelect}" disabled="#{!(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}" update=":eventDetailsForm:eventDialog" oncomplete="PF('eventDialog').show();" />
@@ -93,7 +99,7 @@
 			</p:panel>
 		</h:form>
 		<h:form id="eventDetailsForm">
-		    <p:dialog id="eventDialog" widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip" width="350">
+		    <p:dialog id="eventDialog" widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip" width="600">
 		        <h:panelGrid id="eventDetails" columns="2">
 		 
 		            <p:outputLabel for="von" value="Von:" />
@@ -107,7 +113,7 @@
 		        	
 		        	<p:outputLabel for="Sgmodul" value="Sgmodul:" />
 		        	<p:selectOneMenu id="Sgmodul" value="#{scheduleController.sgmodulId}" style="width:100%">
-                        <f:selectItems value="#{scheduleController.sgmodulList}" />
+                        <f:selectItems value="#{scheduleController.sgmodulList}" var="sgmodule" itemLabel="#{sgmodule.modul.modName}, #{sgmodule.studiengang.SGName}, #{sgmodule.dozenten.DName}" itemValue="#{sgmodule.sgmid}"/>
                     </p:selectOneMenu>
 		        	
 			        <p:outputLabel for="teachingEvent" value="Lehrveranstaltungsart:" />
@@ -117,7 +123,7 @@
 			        
 			        <p:outputLabel for="room" value="Raum:" />
 			        <p:selectOneMenu id="room" value="#{scheduleController.roomId}" style="width:100%">
-                    	<f:selectItems value="#{scheduleController.roomList}" />
+                    	<f:selectItems value="#{scheduleController.roomList}" var="rau" itemLabel="#{rau.RName}, #{rau.location.LCity}, #{rau.location.LStreet}" itemValue="#{rau.rid}"/>
 			        </p:selectOneMenu>
 			        
 			        <p:outputLabel for="studentNumber" value="Studierendenanzahl:" />
@@ -130,7 +136,7 @@
 		    </p:dialog>    
 		</h:form>
 		<h:form id="eventDetailsEditForm">
-		    <p:dialog id="eventEditDialog" widgetVar="eventEditDialog" header="Event Edit Details" showEffect="clip" hideEffect="clip" width="350">
+		    <p:dialog id="eventEditDialog" widgetVar="eventEditDialog" header="Event Edit Details" showEffect="clip" hideEffect="clip" width="600">
 		        <h:panelGrid id="eventEditDetails" columns="2">
 		 
 		            <p:outputLabel for="von1" value="Von:" />
@@ -144,7 +150,7 @@
 		        	
 		        	<p:outputLabel for="Sgmodul1" value="Sgmodul:" />
 		        	<p:selectOneMenu id="Sgmodul1" value="#{scheduleController.sgmodulId}" style="width:100%">
-                        <f:selectItems value="#{scheduleController.sgmodulList}" />
+                        <f:selectItems value="#{scheduleController.sgmodulList}" var="sgmodule" itemLabel="#{sgmodule.modul.modName}, #{sgmodule.studiengang.SGName}, #{sgmodule.dozenten.DName}" itemValue="#{sgmodule.sgmid}"/>
                     </p:selectOneMenu>
 		        	
 			        <p:outputLabel for="teachingEvent1" value="Lehrveranstaltungsart:" />
@@ -154,7 +160,7 @@
 			        
 			        <p:outputLabel for="room1" value="Raum:" />
 			        <p:selectOneMenu id="room1" value="#{scheduleController.roomId}" style="width:100%">
-                    	<f:selectItems value="#{scheduleController.roomList}" />
+                    	<f:selectItems value="#{scheduleController.roomList}" var="rau" itemLabel="#{rau.RName}, #{rau.location.LCity}, #{rau.location.LStreet}" itemValue="#{rau.rid}" />
 			        </p:selectOneMenu>
 			        
 			        <p:outputLabel for="studentNumber1" value="Studierendenanzahl:" />
