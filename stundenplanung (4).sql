@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 17. Dez 2020 um 15:10
+-- Erstellungszeit: 12. Feb 2021 um 14:04
 -- Server-Version: 10.4.11-MariaDB
 -- PHP-Version: 7.4.2
 
@@ -50,7 +50,8 @@ INSERT INTO `accounts` (`AccID`, `AccName`, `AccPwd`, `AccEmail`, `FK_GroupID`, 
 (52, 'User6', '1234', 'user6@fh-bielefeld.de', NULL, 2),
 (53, 'User7', '1234', 'user7@fh-bielefeld.de', NULL, 3),
 (54, 'User8', '1234', 'user8@fh-bielefeld.de', NULL, 1),
-(55, 'User9', '1234', 'user9@fh-bielefeld.de', 2, 1);
+(55, 'User9', '1234', 'user9@fh-bielefeld.de', 2, 1),
+(56, 'Manu', 'Manu', 'manu.topp@online.de', 1, 8);
 
 -- --------------------------------------------------------
 
@@ -181,7 +182,8 @@ INSERT INTO `dozenten` (`DID`, `DName`, `DVorname`, `DTitel`, `DKurz`, `FK_AccID
 (134, 'Funke', 'Herbert', 'Prof. Dr.-Ing.', 'Fu', NULL),
 (135, 'Kaimann', 'Andrea', 'Prof\'n. Dr.-Ing.', 'Km', NULL),
 (136, 'Manowicz', 'Adam-Alexander', 'Prof. Dr.', 'Mw', NULL),
-(141, 'Lüke', 'Sabine', 'M.Sc.', 'Lk', NULL);
+(141, 'Lüke', 'Sabine', 'M.Sc.', 'Lk', NULL),
+(142, 'Topp', 'Manuel', 'Prof', 'MT', 56);
 
 -- --------------------------------------------------------
 
@@ -420,8 +422,7 @@ INSERT INTO `modul` (`ModID`, `ModName`, `ModKuerzel`, `PCID`) VALUES
 (274, 'Embedded Systems', 'ESYS', 69),
 (275, 'Angewandte Informatik', 'AINF', 16),
 (276, 'Mathematik I', 'MAT1', 15),
-(277, 'Physik I', 'PH1', 16),
-(282, 'te', 't', 16);
+(277, 'Physik I', 'PH1', 16);
 
 -- --------------------------------------------------------
 
@@ -449,8 +450,7 @@ INSERT INTO `raum` (`RID`, `RName`, `Kapazitaet`, `NachbarRaum`, `FK_LID`) VALUE
 (28, 'G4', 25, 'G3', 3),
 (29, 'A2', 60, '', 4),
 (30, 'C3', 60, 'C4', 1),
-(31, 'C4', 90, 'C3', 1),
-(34, 'te', 30, 'test1', 4);
+(31, 'C4', 90, 'C3', 1);
 
 -- --------------------------------------------------------
 
@@ -677,8 +677,24 @@ CREATE TABLE `stundenplaneintrag` (
 --
 
 INSERT INTO `stundenplaneintrag` (`SPID`, `SPEStartZeit`, `SPEEndZeit`, `SPTermin`, `FK_SGMID`, `FK_LVID`, `FK_RID`, `Studierendenzahl`, `ZeitStempel`) VALUES
-(2, '2020-12-15 06:00:00', '2020-12-15 07:30:00', 1, 49, 1, 24, 30, '2020-12-15 17:15:46'),
-(3, '2020-12-15 08:00:00', '2020-12-15 08:45:00', 1, 49, 2, 24, 30, '2020-12-15 17:16:48');
+(3, '2021-02-09 08:00:00', '2021-02-09 09:30:00', 1, 49, 2, 24, 30, '2021-02-12 13:01:36'),
+(8, '2021-02-11 08:00:00', '2021-02-11 08:45:00', 1, 49, 2, 24, 30, '2021-02-12 13:01:36'),
+(9, '2021-02-10 08:00:00', '2021-02-10 09:30:00', 2, 49, 1, 27, 20, '2021-02-12 13:01:36'),
+(11, '2021-02-09 08:00:00', '2021-02-09 08:45:00', 1, 54, 2, 24, 30, '2021-02-12 13:01:36'),
+(12, '2021-02-09 08:00:00', '2021-02-09 08:45:00', 1, 56, 2, 24, 30, '2021-02-12 13:01:36'),
+(13, '2021-02-09 08:00:00', '2021-02-09 09:15:00', 1, 252, 2, 24, 30, '2021-02-12 13:01:36'),
+(29, '2021-02-10 10:15:00', '2021-02-10 11:45:00', 1, 49, 1, 24, 30, '2021-02-12 13:01:36'),
+(96, '2021-02-11 12:00:00', '2021-02-11 13:00:00', 6, 49, 2, 26, 6, '2021-02-12 13:01:36'),
+(97, '2021-02-11 14:00:00', '2021-02-11 15:00:00', 2, 49, 2, 27, 2, '2021-02-12 13:01:36'),
+(101, '2021-02-10 14:00:00', '2021-02-10 15:00:00', 3, 49, 1, 25, 3, '2021-02-12 13:01:36'),
+(104, '2021-02-10 14:00:00', '2021-02-10 15:00:00', 3, 55, 1, 25, 3, '2021-02-12 13:01:36'),
+(106, '2021-02-08 08:00:00', '2021-02-08 09:15:00', 3, 49, 1, 26, 3, '2021-02-12 13:01:36'),
+(111, '2021-02-08 10:30:00', '2021-02-08 11:30:00', 6, 49, 2, 27, 2, '2021-02-12 13:01:36'),
+(112, '2021-02-09 09:15:00', '2021-02-09 10:15:00', 2, 55, 1, 24, 2, '2021-02-12 13:01:36'),
+(113, '2021-02-09 12:30:00', '2021-02-09 13:30:00', 3, 49, 1, 24, 2, '2021-02-12 13:01:36'),
+(114, '2021-02-10 09:00:00', '2021-02-10 10:00:00', 4, 55, 1, 24, 2, '2021-02-12 13:01:36'),
+(115, '2021-02-10 15:30:00', '2021-02-10 16:30:00', 3, 49, 1, 24, 2, '2021-02-12 13:01:36'),
+(116, '2021-02-09 10:30:00', '2021-02-09 12:00:00', 4, 55, 2, 28, 1, '2021-02-12 13:01:36');
 
 -- --------------------------------------------------------
 
@@ -837,73 +853,73 @@ ALTER TABLE `stundenplanstatus`
 -- AUTO_INCREMENT für Tabelle `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `AccID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `AccID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT für Tabelle `benutzergruppe`
 --
 ALTER TABLE `benutzergruppe`
-  MODIFY `GroupID` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `GroupID` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT für Tabelle `faculty`
 --
 ALTER TABLE `faculty`
-  MODIFY `FBID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `FBID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT für Tabelle `lehrveranstaltungsart`
 --
 ALTER TABLE `lehrveranstaltungsart`
-  MODIFY `LVID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `LVID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT für Tabelle `location`
 --
 ALTER TABLE `location`
-  MODIFY `LID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `LID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT für Tabelle `modul`
 --
 ALTER TABLE `modul`
-  MODIFY `ModID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=283;
+  MODIFY `ModID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=284;
 
 --
 -- AUTO_INCREMENT für Tabelle `raum`
 --
 ALTER TABLE `raum`
-  MODIFY `RID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `RID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT für Tabelle `sgmodul`
 --
 ALTER TABLE `sgmodul`
-  MODIFY `SGMID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=258;
+  MODIFY `SGMID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=261;
 
 --
 -- AUTO_INCREMENT für Tabelle `studiengang`
 --
 ALTER TABLE `studiengang`
-  MODIFY `SGID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `SGID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT für Tabelle `stundenplaneintrag`
 --
 ALTER TABLE `stundenplaneintrag`
-  MODIFY `SPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `SPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
 -- AUTO_INCREMENT für Tabelle `stundenplansemester`
 --
 ALTER TABLE `stundenplansemester`
-  MODIFY `SPSID` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `SPSID` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- AUTO_INCREMENT für Tabelle `stundenplanstatus`
 --
 ALTER TABLE `stundenplanstatus`
-  MODIFY `SPSTID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `SPSTID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints der exportierten Tabellen

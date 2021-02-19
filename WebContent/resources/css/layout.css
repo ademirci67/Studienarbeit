@@ -45,9 +45,9 @@ body{
     position: absolute;
     top: 145px;
     left: 205px;
-    width: 1032px;
-    height: 536px;
-    
+    width: 1471px;
+    height: 720px;
+    resize: true;    
 }
 
 li{
