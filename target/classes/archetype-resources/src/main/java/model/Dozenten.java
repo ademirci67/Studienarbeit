@@ -3,7 +3,6 @@ package model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
-import model.Account;
 
 
 /**
@@ -18,9 +17,7 @@ import model.Account;
 @NamedQuery(name = "Dozenten.findByDid", query = "SELECT d FROM Dozenten d WHERE d.did = :did"),
 @NamedQuery(name = "Dozenten.findByDTitel", query = "SELECT d FROM Dozenten d WHERE d.DTitel = :DTitel"),
 @NamedQuery(name = "Dozenten.findByDVorname", query = "SELECT d FROM Dozenten d WHERE d.DVorname = :DVorname"),
-@NamedQuery(name = "Dozenten.findByDKurz", query = "SELECT d FROM Dozenten d WHERE d.DKurz = :DKurz"),
-//@NamedQuery(name = "Dozenten.findByFK_AccID", query = "SELECT d FROM Dozenten d WHERE d.fk.FK_AccID = :FK_AccID"),
-@NamedQuery(name="Dozenten.updateDozenten", query="UPDATE Dozenten d SET d.did=:did, d.DName=:DName, d.DVorname=:DVorname, d.DKurz = :DKurz, d.DTitel = :DTitel  WHERE d.did=:did")})
+@NamedQuery(name = "Dozenten.findByDKurz", query = "SELECT d FROM Dozenten d WHERE d.DKurz = :DKurz")})
 
 public class Dozenten implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -35,11 +32,6 @@ public class Dozenten implements Serializable {
 	private String DTitel;
 
 	private String DVorname;
-
-	//bi-directional many-to-one association to Account
-	@ManyToOne
-	@JoinColumn(name="FK_AccID")
-	public Account account;
 
 	//bi-directional many-to-one association to Sgmodul
 	@OneToMany(mappedBy="dozenten")
@@ -86,14 +78,6 @@ public class Dozenten implements Serializable {
 
 	public void setDVorname(String DVorname) {
 		this.DVorname = DVorname;
-	}
-
-	public Account getAccount() {
-		return this.account;
-	}
-
-	public void setAccount(Account account) {
-		this.account = account;
 	}
 
 	public List<Sgmodul> getSgmoduls() {

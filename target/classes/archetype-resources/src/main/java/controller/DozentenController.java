@@ -3,6 +3,8 @@ package controller;
 import model.Account;
 
 import model.Dozenten;
+import model.Location;
+import model.Raum;
 import model.Sgmodul;
 
 import javax.inject.Named;
@@ -15,6 +17,7 @@ import java.util.logging.Level;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -33,8 +36,12 @@ import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.SelectEvent;
 
 import com.sun.javafx.logging.Logger;
+
+import EJB.DozentenFacadeLocal;
+import EJB.ModulFacadeLocal;
 
 import org.primefaces.event.CellEditEvent;
 //import org.primefaces.event.
@@ -48,12 +55,10 @@ import controller.MessageForPrimefaces;
 
 /**
 *
-* @author Manuel
+* @author Anil
 */
 
-@ManagedBean(name="DozentenController")
-//@Named(value = "ModulController")
-//@SessionScoped
+@Named(value = "dozentenController")
 @SessionScoped
 public class DozentenController implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -64,124 +69,107 @@ public class DozentenController implements Serializable {
 	@Resource
 	private UserTransaction ut;
 	
-	//@SuppressWarnings("cdi-ambiguous-dependency")
 	@Inject 
-	private Dozenten dozenten;
-	private Account account;
+	private Dozenten professor;
 	
-	ArrayList<String> AccountListe = new ArrayList<>();
+	@EJB
+	private DozentenFacadeLocal dozentenFacadeLocal;
+	
+
 	
 	@PostConstruct
     public void init() {
-        dozlist = getDozentenList();
-        EntityManager em = emf.createEntityManager();
-        Query q = em.createNamedQuery("Account.findAll");
-        List AList = q.getResultList();
-        for (Object AListitem : AList)
-        {
-            Account acc =(Account)AListitem;
-            AccountListe.add(acc.getAccName());
-        }
+		professorList = getDozentenList();
+
     }
  
 	
-	
-	private String DKurz;
-	private String DName;
-	private String DTitel;
-	private String DVorname;
-	private String accName;
-	private boolean DKurz_ok = false;
-	
-	
-	List<Dozenten> dozlist;
-	
-	//modlist.add(getModulList());
-	
-	private Dozenten selecteddozenten;
+	private String professorShortName;
+	private String professorName;
+	private String professorTitle;
+	private String professorFirstName;
+	private boolean professorShortNameOk = false;
+	private boolean professorNameOk = false;
+
 	
 	
-	public Dozenten getSelecteddozenten() {
-		return selecteddozenten;
+	List<Dozenten> professorList;
+	
+	private Dozenten professorSelected;
+	
+	public Dozenten getProfessorSelected() {
+		return professorSelected;
 	}
 	  
-	public void setSelecteddozenten(Dozenten selecteddozenten) {
-		this.selecteddozenten = selecteddozenten;
+	public void setProfessorSelected(Dozenten professorSelected) {
+		this.professorSelected = professorSelected;
 	}
 	
   
-    public List<Dozenten> getDozlist() {
-        return dozlist;
+    public List<Dozenten> getProfessorList() {
+        return professorList;
     }
     
-    public void setDozlist(List<Dozenten> dozlist) {
-		this.dozlist = dozlist;
+    public void setProfessorList(List<Dozenten> professorList) {
+		this.professorList = professorList;
 		
 	}
     
-	public Dozenten getDozenten() {
-		return dozenten;
+	public Dozenten getProfessor() {
+		return professor;
 	}
 	  
-	public void setDozenten(Dozenten dozenten) {
-		this.dozenten = dozenten;
+	public void setProfessor(Dozenten professor) {
+		this.professor = professor;
 	}
 	  
-	public ArrayList<String> getAccountListe() {
-        return AccountListe;
-    }
-
-    public void setAccountListe(ArrayList<String> AccountListe) {
-        this.AccountListe = AccountListe;
-    }
 	
-	public String getDKurz() {
-		return DKurz;
+	
+	public String getProfessorShortName() {
+		return professorShortName;
 	}
 	  
-	public void setDKurz(String DKurz) {
-		if(DKurz!=null){
-			this.DKurz = DKurz;
-			DKurz_ok = true;
+	public void setProfessorShortName(String professorShortName) {
+		if(professorShortName!=null){
+			this.professorShortName = professorShortName;
+			professorShortNameOk = true;
 		}
 		else{
-			FacesMessage message = new FacesMessage("Dozentenkürzel bereits vorhanden.");
+			FacesMessage message = new FacesMessage("Bitte Dozentenkürzel eingeben.");
             FacesContext.getCurrentInstance().addMessage("DozentenForm:DKurz_reg", message);
-	        //String msg = "Modulkürzel bereits vorhanden.";
-	        //addMessage("modKuerzel_reg",msg);
 	    }
 	}
 	  
-	public String getDName() {
-		return DName;
+	public String getProfessorName() {
+		return professorName;
 	}
 	  
-	public void setDName(String DName) {	   
-	        this.DName = DName;	        
+	public void setProfessorName(String professorName) {	   
+	        if(professorName!=null){
+	        	this.professorName = professorName;
+	        	professorNameOk = true;
+			}
+			else{
+				FacesMessage message = new FacesMessage("Bitte Dozentennamen eingeben.");
+	            FacesContext.getCurrentInstance().addMessage("DozentenForm:DName_reg", message);
+		    }
 	}
 	  
-	public String getDTitel() {
-		return DTitel;
+	public String getProfessorTitle() {
+		return professorTitle;
 	}
 	  
-	public void setDTitel(String DTitel) {
-	        this.DTitel = DTitel;	   
+	public void setProfessorTitle(String professorTitle) {
+	        this.professorTitle = professorTitle;	   
 	}
 	
-	public String getDVorname() {
-		return DVorname;
+	public String getProfessorFirstName() {
+		return professorFirstName;
 	}
 	  
-	public void setDVorname(String DVorname) {
-	        this.DVorname = DVorname;
+	public void setProfessorFirstName(String professorFirstName) {
+	        this.professorFirstName = professorFirstName;
 	}
-	 public String getAccName() {
-	        return accName;
-	    }
-
-	public void setAccName(String accName) {
-	        this.accName = accName;
-	    }
 	    
 	public UIComponent getReg() {
         return reg;
@@ -190,47 +178,21 @@ public class DozentenController implements Serializable {
     public void setReg(UIComponent reg) {
         this.reg = reg;
     }
-    
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 	  
 	private UIComponent reg;  
-	public void createDozenten() throws IllegalStateException, SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception  {
-		EntityManager em = emf.createEntityManager();
-		Dozenten doz = new Dozenten();  
-		doz.setDKurz(DKurz);    
-		doz.setDName(DName);
-		doz.setDVorname(DVorname);
-		doz.setDTitel(DTitel);
-		doz.setAccount(findAcc(accName));
-		try {
-	        ut.begin();   
-	        em.joinTransaction();  
-	        em.persist(doz);  
-	        ut.commit(); 
-	    }
-	    catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
-	        try {
-	            ut.rollback();
-	        } 
-	        catch (IllegalStateException | SecurityException | SystemException ex) {
-	        }
-	    }
-		em.close();
+	public void createDozent() {
+		Dozenten doz = new Dozenten();   
+		doz.setDName(professorName);
+		doz.setDVorname(professorFirstName);
+		doz.setDTitel(professorTitle);
+		doz.setDKurz(professorShortName);   
+	    dozentenFacadeLocal.create(doz);
 	}
 	
-	public String createDoDozenten() throws SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception{
-		if(DKurz_ok == true) {
-			createDozenten();
-			return "showdozenten.xhtml";
-		}
-		else{
-			return "showdozenten.xhtml";
+	public void createDoDozent() throws SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception{
+		if(professorShortNameOk == true && professorNameOk == true) {
+			createDozent();
+			professorList = getDozentenList();
 		}
 	}
 	
@@ -239,102 +201,47 @@ public class DozentenController implements Serializable {
 	public List<Dozenten> getDozentenList(){
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Dozenten> query = em.createNamedQuery("Dozenten.findAll", Dozenten.class);
-		dozlist = query.getResultList();
+		professorList = query.getResultList();
 		return query.getResultList();
 	}
-	
-	
-	
-	public void onRowEdit(RowEditEvent<Dozenten> event) {
-        //MessageForPrimefaces msg = new MessageForPrimefaces("Modul Edited", event.getObject().getModID());
-        //FacesMessage msg = new FacesMessage("Modul Edited", event.getObject().getModID());
-        FacesMessage msg = new FacesMessage("Dozenten Edited");
+    
+    public void onRowSelect(SelectEvent<Dozenten> e) {
+    	FacesMessage msg = new FacesMessage("Dozenten ausgewählt");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         
-        Dozenten newdoz = new Dozenten();
-        newdoz = event.getObject();
+        professorSelected = e.getObject();
         
-        try {
-	        ut.begin();
-	        EntityManager em = emf.createEntityManager();
-	        //em.joinTransaction();
-	        em.find(Dozenten.class, newdoz.getDid());
-	        //em.persist(q)
-	        dozenten.setDid(newdoz.getDid());
-	        dozenten.setDKurz(newdoz.getDKurz());
-	        dozenten.setDName(newdoz.getDName());
-	        dozenten.setDVorname(newdoz.getDVorname());
-	        dozenten.setDTitel(newdoz.getDTitel());
-	        dozenten.setAccount(findAcc(newdoz.account.getAccName()));
-	        
-	        
-	        em.merge(dozenten);
-	        ut.commit(); 
-	    }
-	    catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
-	        try {
-	            ut.rollback();
-	        } 
-	        catch (IllegalStateException | SecurityException | SystemException ex) {
-	        }
-	    }
-    }
-     
-    public void onRowCancel(RowEditEvent<Dozenten> event) {
-        //MessageForPrimefaces msg = new MessageForPrimefaces("Modul Cancelled", event.getObject().getModID());
-        //FacesMessage msg = new FacesMessage("Modul Cancelled", event.getObject().getModID());
-    	FacesMessage msg = new FacesMessage("Dozenten Cancelled");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 	
 	//----------------------------------------------------------------------------------------------------------------------------------------------
     
-    public void deleteDozenten() throws IllegalStateException, SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception {
-        dozlist.remove(selecteddozenten);
-        //selectedmodul = null;
-        //updateModul(modlist);
-        
+    public void deleteDozent() {
+    	professorList.remove(professorSelected);        
         EntityManager em = emf.createEntityManager();
         TypedQuery<Dozenten> q = em.createNamedQuery("Dozenten.findByDid",Dozenten.class);
-        q.setParameter("did", selecteddozenten.getDid());
-        dozenten = (Dozenten)q.getSingleResult();
-        
-        try {
-	        ut.begin();   
-	        em.joinTransaction();  
-	        //em.persist(q);
-	        em.remove(dozenten);
-	        ut.commit(); 
-	    }
-	    catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
-	        try {
-	            ut.rollback();
-	        } 
-	        catch (IllegalStateException | SecurityException | SystemException ex) {
-	        }
-	    }
-        selecteddozenten = null;
+        q.setParameter("did", professorSelected.getDid());
+        professor = (Dozenten)q.getSingleResult();
+        dozentenFacadeLocal.remove(professor);
 		em.close();
     }
     
-    private Account findAcc(String acc) {
-        try{
-            EntityManager em = emf.createEntityManager(); 
-            TypedQuery<Account> query
-                = em.createNamedQuery("Account.findByAccName",Account.class);
-            query.setParameter("accName", acc);
-            account = (Account)query.getSingleResult();
-        }
-        catch(Exception e){   
-        }
-        return account;
-    }
+    
+    public void addDozent(){
+        EntityManager em = emf.createEntityManager();
+        em.find(Dozenten.class, professorSelected.getDid());
+    	professor.setDid(professorSelected.getDid());
+        professor.setDKurz(professorSelected.getDKurz());
+        professor.setDName(professorSelected.getDName());
+        professor.setDVorname(professorSelected.getDVorname());
+        professor.setDTitel(professorSelected.getDTitel());
+        dozentenFacadeLocal.edit(professor);
+      	professorList = getDozentenList();
+		em.close();
+      }
     
    // ---------------------------------------------------------------------------------------------------------------------
-    
-	
 	  
-		//Nachrichten an die View senden
+	//Nachrichten an die View senden
 	private void addMessage(String loginformidName, String msg) {
 	   FacesMessage message = new FacesMessage(msg);
 	   FacesContext.getCurrentInstance().addMessage(loginformidName, message);     

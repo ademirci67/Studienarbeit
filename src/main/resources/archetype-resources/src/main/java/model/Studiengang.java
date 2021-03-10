@@ -16,8 +16,7 @@ import java.util.List;
 @NamedQuery(name="Studiengang.findBySgid", query="SELECT s FROM Studiengang s WHERE s.sgid = :sgid"),
 @NamedQuery(name="Studiengang.findBySGKurz", query="SELECT s FROM Studiengang s WHERE s.SGKurz = :SGKurz"),
 @NamedQuery(name="Studiengang.findBySGName", query="SELECT s FROM Studiengang s WHERE s.SGName = :SGName"),
-@NamedQuery(name="Studiengang.findBySemester", query="SELECT s FROM Studiengang s WHERE s.semester = :semester"),
-@NamedQuery(name="Studiengang.updateStudiengang", query="UPDATE Studiengang s SET s.sgid=:sgid, s.SGName=:SGName, s.SGKurz=:SGKurz, s.semester=:semester WHERE s.sgid=:sgid")})
+@NamedQuery(name="Studiengang.findBySemester", query="SELECT s FROM Studiengang s WHERE s.semester = :semester")})
 
 public class Studiengang implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -39,11 +38,10 @@ public class Studiengang implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="FK_FBID")
 	private Faculty faculty;
+	
+	@OneToMany(mappedBy="studiengang")
+	private List<Pruefcode> pruefcodes;
 
-	//bi-directional many-to-one association to Stundenplansemester
-	@ManyToOne
-	@JoinColumn(name="FK_SPSID")
-	private Stundenplansemester stundenplansemester;
 
 	public Studiengang() {
 	}
@@ -87,7 +85,29 @@ public class Studiengang implements Serializable {
 	public void setSgmoduls(List<Sgmodul> sgmoduls) {
 		this.sgmoduls = sgmoduls;
 	}
+	
+	public List<Pruefcode> getPruefcodes() {
+		return this.pruefcodes;
+	}
 
+	public void setPruefcodes(List<Pruefcode> pruefcodes) {
+		this.pruefcodes = pruefcodes;
+	}
+	
+	public Pruefcode addPruefcode(Pruefcode pruefcode) {
+		getPruefcodes().add(pruefcode);
+		pruefcode.setStudiengang(this);
+
+		return pruefcode;
+	}
+
+	public Pruefcode removePruefcode(Pruefcode pruefcode) {
+		getPruefcodes().remove(pruefcode);
+		pruefcode.setStudiengang(null);
+
+		return pruefcode;
+	}
+	
 	public Sgmodul addSgmodul(Sgmodul sgmodul) {
 		getSgmoduls().add(sgmodul);
 		sgmodul.setStudiengang(this);
@@ -110,12 +130,6 @@ public class Studiengang implements Serializable {
 		this.faculty = faculty;
 	}
 
-	public Stundenplansemester getStundenplansemester() {
-		return this.stundenplansemester;
-	}
-
-	public void setStundenplansemester(Stundenplansemester stundenplansemester) {
-		this.stundenplansemester = stundenplansemester;
-	}
+	
 
 }

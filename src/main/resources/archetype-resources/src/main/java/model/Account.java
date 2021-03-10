@@ -17,8 +17,7 @@ import javax.persistence.*;
 	@NamedQuery(name="Account.findByAccName", query = "SELECT a FROM Account a WHERE a.accName = :accName"),
 	@NamedQuery(name="Account.findByAccID", query = "SELECT a FROM Account a WHERE a.accID = :accID"),
 	@NamedQuery(name="Account.findByAccEmail", query = "SELECT a FROM Account a WHERE a.accEmail = :accEmail"),
-	@NamedQuery(name="Account.findByAccPwd", query = "SELECT a FROM Account a WHERE a.accPwd = :accPwd"),
-	@NamedQuery(name="Account.updateAccount", query="UPDATE Account a SET a.accID = :accID, a.accName = :accName, a.accEmail = :accEmail, a.accPwd = :accPwd  WHERE a.accID = :accID")})
+	@NamedQuery(name="Account.findByAccPwd", query = "SELECT a FROM Account a WHERE a.accPwd = :accPwd")})
 
 public class Account implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -41,10 +40,6 @@ public class Account implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="FK_FBID")
 	private Faculty faculty;
-
-	//bi-directional many-to-one association to Dozenten
-	@OneToMany(mappedBy="account")
-	private List<Dozenten> dozentens;
 
 	public Account() {
 	}
@@ -95,28 +90,6 @@ public class Account implements Serializable {
 
 	public void setFaculty(Faculty faculty) {
 		this.faculty = faculty;
-	}
-
-	public List<Dozenten> getDozentens() {
-		return this.dozentens;
-	}
-
-	public void setDozentens(List<Dozenten> dozentens) {
-		this.dozentens = dozentens;
-	}
-
-	public Dozenten addDozenten(Dozenten dozenten) {
-		getDozentens().add(dozenten);
-		dozenten.setAccount(this);
-
-		return dozenten;
-	}
-
-	public Dozenten removeDozenten(Dozenten dozenten) {
-		getDozentens().remove(dozenten);
-		dozenten.setAccount(null);
-
-		return dozenten;
 	}
 
 }

@@ -12,34 +12,37 @@ import java.util.List;
 @Entity
 @NamedQueries({
 @NamedQuery(name="Sgmodul.findAll", query="SELECT s FROM Sgmodul s"),
+@NamedQuery(name="Sgmodul.findAllOrderBy", query="SELECT s FROM Sgmodul s GROUP BY s.modSemester ORDER BY s.modSemester"),
 @NamedQuery(name = "Sgmodul.findBySgmid", query = "SELECT s FROM Sgmodul s WHERE s.sgmid = :sgmid"),
 @NamedQuery(name = "Sgmodul.findByModSemester", query = "SELECT s FROM Sgmodul s WHERE s.modSemester = :modSemester"),
 @NamedQuery(name = "Sgmodul.findBySGMNotiz", query = "SELECT s FROM Sgmodul s WHERE s.SGMNotiz = :SGMNotiz"),
-@NamedQuery(name="Sgmodul.updateSgmodul", query="UPDATE Sgmodul s SET s.sgmid=:sgmid, s.modSemester=:modSemester, s.SGMNotiz=:SGMNotiz WHERE s.sgmid=:sgmid")})
+@NamedQuery(name = "Sgmodul.findBySemesterAndStudiengang", query = "SELECT s FROM Sgmodul s JOIN s.studiengang g WHERE s.modSemester = :semester AND g.SGName = :SGName"),
+@NamedQuery(name = "Sgmodul.findBySemesterAndStudiengangAndFaculty", query = "SELECT s FROM Sgmodul s JOIN s.studiengang g JOIN s.studiengang.faculty f WHERE s.modSemester = :semester AND g.SGName = :SGName AND f.facName = :facName"),
+@NamedQuery(name = "Sgmodul.findByStudiengangAndFaculty", query = "SELECT s FROM Sgmodul s JOIN s.studiengang g JOIN s.studiengang.faculty f WHERE g.SGName = :SGName AND f.facName = :facName")})
 public class Sgmodul implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private int sgmid;
 
-	private int modSemester;
+	private Integer modSemester;
 
 	private String SGMNotiz;
 
 	//bi-directional many-to-one association to Dozenten
 	@ManyToOne
 	@JoinColumn(name="FK_DID")
-	public Dozenten dozenten;
+	private Dozenten dozenten;
 
 	//bi-directional many-to-one association to Modul
 	@ManyToOne
 	@JoinColumn(name="FK_ModID")
-	public Modul modul;
+	private Modul modul;
 
 	//bi-directional many-to-one association to Studiengang
 	@ManyToOne
 	@JoinColumn(name="FK_SGID")
-	public Studiengang studiengang;
+	private Studiengang studiengang;
 
 	//bi-directional many-to-one association to Stundenplaneintrag
 	@OneToMany(mappedBy="sgmodul")
@@ -56,11 +59,11 @@ public class Sgmodul implements Serializable {
 		this.sgmid = sgmid;
 	}
 
-	public int getModSemester() {
+	public Integer getModSemester() {
 		return this.modSemester;
 	}
 
-	public void setModSemester(int modSemester) {
+	public void setModSemester(Integer modSemester) {
 		this.modSemester = modSemester;
 	}
 

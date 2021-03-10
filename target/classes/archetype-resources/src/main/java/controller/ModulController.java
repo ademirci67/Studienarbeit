@@ -3,6 +3,9 @@ package controller;
 import model.Account;
 import model.Faculty;
 import model.Modul;
+import model.Pruefcode;
+import model.Studiengang;
+
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -31,6 +34,7 @@ import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.SelectEvent;
 
 import com.sun.javafx.logging.Logger;
 
@@ -44,14 +48,17 @@ import javax.faces.bean.ViewScoped;
 
 import controller.MessageForPrimefaces;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.ejb.EJB;
+import EJB.ModulFacadeLocal;
+
 /**
 *
-* @author Manuel
+* @author Anil
 */
 
-@ManagedBean(name="ModulController")
-//@Named(value = "ModulController")
-//@SessionScoped
+@Named(value="modulController")
 @SessionScoped
 public class ModulController implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -62,42 +69,67 @@ public class ModulController implements Serializable {
 	@Resource
 	private UserTransaction ut;
 	
-	//@SuppressWarnings("cdi-ambiguous-dependency")
 	@Inject 
 	private Modul modul;
+	private Pruefcode code;
+	
+	@EJB
+	private ModulFacadeLocal modulFacadeLocal;
 	
 	@PostConstruct
     public void init() {
-        modlist = getModulList();
+        modulList = getModulListAll();
+        EntityManager em = emf.createEntityManager();
+        Query q = em.createNamedQuery("Pruefcode.findAll");
+		List FList = q.getResultList();
+        for (Object FListitem : FList)
+        {
+        	Pruefcode pCode =(Pruefcode)FListitem;
+        	codeList.add(pCode);
+        }
     }
- 
+	
+	ArrayList<Pruefcode> codeList = new ArrayList<>();
 	
 	
-	private String modKuerzel;
-	private String modName;
-	private Integer pcid;
-	private boolean modKuerzel_ok = false;
-	private boolean modName_ok = false;
-	private boolean pcid_ok = false;
+	private String modulShort;
+	private String modulName;
+	private int pcId;
+	private boolean modulShortOk = false;
+	private boolean modulNameOk = false;
 	
-	List<Modul> modlist;
 	
-	//modlist.add(getModulList());
+	List<Modul> modulList;
 	
-	private Modul selectedmodul;
 	
-	public Modul getSelectedmodul() {
-		return selectedmodul;
+	private Modul modulSelected;
+	
+	public Modul getModulSelected() {
+		return modulSelected;
 	}
 	  
-	public void setSelectedmodul(Modul selectedmodul) {
-		this.selectedmodul = selectedmodul;
+	public void setModulSelected(Modul modulSelected) {
+		this.modulSelected = modulSelected;
 	}
 	
+	public ArrayList<Pruefcode> getCodeList() {
+		return codeList;
+	}
+
+	public void setCodeList(ArrayList<Pruefcode> codeList) {
+		this.codeList = codeList;
+	}
 	
+	public Pruefcode getCode() {
+		return code;
+	}
+
+	public void setCode(Pruefcode code) {
+		this.code = code;
+	}
 	  
-    public List<Modul> getModlist() {
-        return modlist;
+    public List<Modul> getModulList() {
+        return modulList;
     }
     
 	public Modul getModul() {
@@ -108,55 +140,42 @@ public class ModulController implements Serializable {
 		this.modul = modul;
 	}
 	  
-	public String getModKuerzel() {
-		return modKuerzel;
+	public String getModulShort() {
+		return modulShort;
 	}
 	  
-	public void setModKuerzel(String modKuerzel) {
-		if(modKuerzel!=null){
-			this.modKuerzel = modKuerzel;
-			modKuerzel_ok = true;
+	public void setModulShort(String modulShort) {
+		if(modulShort!=null){
+			this.modulShort = modulShort;
+			modulShortOk = true;
 		}
 		else{
 			FacesMessage message = new FacesMessage("Modulkürzel bereits vorhanden.");
             FacesContext.getCurrentInstance().addMessage("ModulForm:modKuerzel_reg", message);
-	        //String msg = "Modulkürzel bereits vorhanden.";
-	        //addMessage("modKuerzel_reg",msg);
 	    }
 	}
 	  
-	public String getModName() {
-		return modName;
+	public String getModulName() {
+		return modulName;
 	}
 	  
-	public void setModName(String modName) {
-	    if(modName!=null){
-	        this.modName = modName;
-	        modName_ok=true;
+	public void setModulName(String modulName) {
+	    if(modulName!=null){
+	        this.modulName = modulName;
+	        modulNameOk=true;
 	    }
 	    else{
 	    	FacesMessage message = new FacesMessage("Modulname bereits vorhanden.");
             FacesContext.getCurrentInstance().addMessage("ModulForm:modName_reg", message);
-	        //String msg = "Modulname bereits vorhanden.";
-	        //addMessage("modName_reg",msg);
 	    }
 	}
 	  
-	public Integer getPcid() {
-		return pcid;
+	public int getPcId() {
+		return pcId;
 	}
 	  
-	public void setPcid(Integer pcid) {
-		if(pcid!=null){
-	        this.pcid = pcid;
-	        pcid_ok=true;
-	    }
-	    else{
-	    	FacesMessage message = new FacesMessage("Prüfcodeid bereits vorhanden.");
-            FacesContext.getCurrentInstance().addMessage("ModulForm:pcid_reg", message);
-	        //String msg = "Prüfcodeid bereits vorhanden.";
-	        //addMessage("pcid_reg",msg);
-	    }
+	public void setPcId(int pcId) {
+	        this.pcId = pcId;
 	}
 	
 	public UIComponent getReg() {
@@ -168,19 +187,16 @@ public class ModulController implements Serializable {
     }
 	  
 	private UIComponent reg;  
-	public void createModul() throws IllegalStateException, SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception  {
+	public void createModul() throws Exception  {
 		EntityManager em = emf.createEntityManager();
 		Modul mod = new Modul();  
-		mod.setModName(modName);    
-		mod.setModKuerzel(modKuerzel);      
-		mod.setPcid(pcid);
+		mod.setModName(modulName);    
+		mod.setModKuerzel(modulShort);      
+		mod.setPruefcode(findCode(pcId));
 		try {
-	        ut.begin();   
-	        em.joinTransaction();  
-	        em.persist(mod);  
-	        ut.commit(); 
+			modulFacadeLocal.create(mod);
 	    }
-	    catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
+	    catch (Exception e) {
 	        try {
 	            ut.rollback();
 	        } 
@@ -190,103 +206,95 @@ public class ModulController implements Serializable {
 		em.close();
 	}
 	
-	public String createDoModul() throws SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception{
-		if(modName_ok == true && modKuerzel_ok == true && pcid_ok == true) {
+	public void createDoModul() throws SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception{
+		if(modulNameOk == true && modulShortOk == true) {
 			createModul();
-			return "index.xhtml";
-		}
-		else{
-			return "index.xhtml";
+			modulList = getModulListAll();
 		}
 	}
 	
 	//----------------------------------------------------------------------------------------------------------------------------------------
 	
-	public List<Modul> getModulList(){
+	public List<Modul> getModulListAll(){
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Modul> query = em.createNamedQuery("Modul.findAll", Modul.class);
-		modlist = query.getResultList();
+		modulList = query.getResultList();
 		return query.getResultList();
 	}
 	
 	
 	
-	public void onRowEdit(RowEditEvent<Modul> event) {
-        //MessageForPrimefaces msg = new MessageForPrimefaces("Modul Edited", event.getObject().getModID());
-        //FacesMessage msg = new FacesMessage("Modul Edited", event.getObject().getModID());
-        FacesMessage msg = new FacesMessage("Modul Edited");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        
-        Modul newmod = new Modul();
-        newmod = event.getObject();
-        
-        try {
-	        ut.begin();
-	        EntityManager em = emf.createEntityManager();
-	        //em.joinTransaction();
-	        em.find(Modul.class, 279);
-	        //em.persist(q)
-	        
-	        modul.setModID(newmod.getModID());
-	        modul.setModName(newmod.getModName());
-	        modul.setModKuerzel(newmod.getModKuerzel());
-	        modul.setPcid(newmod.getPcid());
-	        
-	        
-	        em.merge(modul);
-	        ut.commit(); 
-	    }
-	    catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
-	        try {
-	            ut.rollback();
-	        } 
-	        catch (IllegalStateException | SecurityException | SystemException ex) {
-	        }
-	    }
-    }
-     
-    public void onRowCancel(RowEditEvent<Modul> event) {
-        //MessageForPrimefaces msg = new MessageForPrimefaces("Modul Cancelled", event.getObject().getModID());
-        //FacesMessage msg = new FacesMessage("Modul Cancelled", event.getObject().getModID());
-    	FacesMessage msg = new FacesMessage("Modul Cancelled");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
+	
 	
 	//----------------------------------------------------------------------------------------------------------------------------------------------
     
-    public void deleteModul() throws IllegalStateException, SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception {
-        modlist.remove(selectedmodul);
-        //selectedmodul = null;
-        //updateModul(modlist);
-        
+    public void deleteModul() throws Exception {
+        modulList.remove(modulSelected);
         EntityManager em = emf.createEntityManager();
         TypedQuery<Modul> q = em.createNamedQuery("Modul.findByModID",Modul.class);
-        q.setParameter("modID", selectedmodul.getModID());
+        q.setParameter("modID", modulSelected.getModID());
         modul = (Modul)q.getSingleResult();
         
         try {
-	        ut.begin();   
-	        em.joinTransaction();  
-	        //em.persist(q);
-	        em.remove(modul);
-	        ut.commit(); 
+        	modulFacadeLocal.remove(modul);
 	    }
-	    catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
+	    catch (Exception e) {
 	        try {
 	            ut.rollback();
 	        } 
 	        catch (IllegalStateException | SecurityException | SystemException ex) {
 	        }
 	    }
-        selectedmodul = null;
+        
 		em.close();
     }
     
+    public void onRowSelect(SelectEvent<Modul> e) {
+    	FacesMessage msg = new FacesMessage("Modul ausgewählt");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        
+        modulSelected = e.getObject();
+        pcId = modulSelected.getPruefcode().getPcid();
+        
+    }
+    
+    public void addModul(){
+    	 try {
+ 	        EntityManager em = emf.createEntityManager();
+ 	        em.find(Modul.class, modulSelected.getModID());
+ 	        modul.setModID(modulSelected.getModID());
+ 	        modul.setModName(modulSelected.getModName());
+ 	        modul.setModKuerzel(modulSelected.getModKuerzel());
+ 	        modul.setPruefcode(findCode(pcId));
+ 	        modulFacadeLocal.edit(modul);
+ 	    }
+ 	    catch (Exception e) {
+ 	        try {
+ 	            ut.rollback();
+ 	        } 
+ 	        catch (IllegalStateException | SecurityException | SystemException ex) {
+ 	        }
+ 	    }
+    	 modulList = getModulListAll();
+    }
+    
+    private Pruefcode findCode(int pcid) {
+        try{
+            EntityManager em = emf.createEntityManager(); 
+            TypedQuery<Pruefcode> query
+                = em.createNamedQuery("Pruefcode.findByPcid",Pruefcode.class);
+            query.setParameter("pcid", pcid);
+            code = (Pruefcode)query.getSingleResult();
+        }
+        catch(Exception e){   
+        }
+        return code;
+    }
    // ---------------------------------------------------------------------------------------------------------------------
     
 	
 	  
-		//Nachrichten an die View senden
+	//Nachrichten an die View senden
 	private void addMessage(String loginformidName, String msg) {
 	   FacesMessage message = new FacesMessage(msg);
 	   FacesContext.getCurrentInstance().addMessage(loginformidName, message);     
