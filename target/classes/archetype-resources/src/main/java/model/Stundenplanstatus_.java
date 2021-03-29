@@ -5,7 +5,7 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2021-02-15T14:32:14.302+0100")
+@Generated(value="Dali", date="2021-03-29T13:45:44.561+0200")
 @StaticMetamodel(Stundenplanstatus.class)
 public class Stundenplanstatus_ {
 	public static volatile SingularAttribute<Stundenplanstatus, Integer> spstid;
