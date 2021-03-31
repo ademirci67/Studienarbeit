@@ -17,36 +17,15 @@
 		 
 	           
 	           <p:column headerText="Modul" sortBy="#{list.modul.modID}">
-		           <p:cellEditor>
-		                <f:facet name="output"><h:outputText value="#{list.modul.modName}" /></f:facet>
-		                <f:facet name="input">
-		                    <h:selectOneMenu value="#{list.modul.modName}" style="width:100%">
-		                        <f:selectItems value="#{sgmodulController.moduleList}" var="#{modul.modID}" itemLabel="#{modul.modID}" itemValue="#{modul.modID}" />
-		                    </h:selectOneMenu>
-		                </f:facet>
-		            </p:cellEditor>
+		           <h:outputText value="#{list.modul.modName}, #{list.modul.modKuerzel}" />
 		        </p:column>
 	           
 	           <p:column headerText="Studiengang" sortBy="#{list.studiengang.SGName}">
-		           <p:cellEditor>
-		                <f:facet name="output"><h:outputText value="#{list.studiengang.faculty.facName}, #{list.studiengang.SGName}" /></f:facet>
-		                <f:facet name="input">
-		                    <h:selectOneMenu value="#{list.studiengang.faculty.facName}, #{list.studiengang.SGName}" style="width:100%">
-		                        <f:selectItems value="#{sgmodulController.courseList}" var="#{studiengang.sgid}" itemLabel="#{studiengang.sgid}" itemValue="#{studiengang.sgid}" />
-		                    </h:selectOneMenu>
-		                </f:facet>
-		            </p:cellEditor>
+		           <h:outputText value="#{list.studiengang.faculty.facName}, #{list.studiengang.SGName}" />
 		        </p:column>
 		        
 		        <p:column headerText="Dozenten" sortBy="#{list.dozenten.DName}">
-		           <p:cellEditor>
-		                <f:facet name="output"><h:outputText value="#{list.dozenten.DName}, #{list.dozenten.DVorname}" /></f:facet>
-		                <f:facet name="input">
-		                    <h:selectOneMenu value="#{list.dozenten.DName}, #{list.dozenten.DVorname}" style="width:100%">
-		                        <f:selectItems value="#{sgmodulController.professorList}" var="#{dozenten.did}" itemLabel="#{dozenten.did}" itemValue="#{dozenten.did}" />
-		                    </h:selectOneMenu>
-		                </f:facet>
-		            </p:cellEditor>
+		           <h:outputText value="#{list.dozenten.DName}, #{list.dozenten.DVorname}" />		                
 		        </p:column>
 		 
 		        <p:column headerText="Modul Semester" sortBy="#{list.modSemester}">
@@ -64,7 +43,7 @@
 		 			
 		 			<p:outputLabel for="modul" value="Modul: " />
 			        <p:selectOneMenu id="modul" value="#{sgmodulController.moduleId}" style="width:100%">
-                    	<f:selectItems value="#{sgmodulController.moduleList}" var="modul" itemLabel="#{modul.modID}, #{modul.modName}" itemValue="#{modul.modID}"/>
+                    	<f:selectItems value="#{sgmodulController.moduleList}" var="modul" itemLabel="#{modul.modName}, #{modul.modKuerzel}" itemValue="#{modul.modID}"/>
 			        </p:selectOneMenu>
 			        
 			        <p:outputLabel for="studiengang" value="Studiengang: " />
@@ -96,7 +75,7 @@
 		            <p:outputLabel for="modul1" value="Modul: " />
 			        <p:selectOneMenu id="modul1" value="#{sgmodulController.moduleId}" style="width:100%">
 			        	<f:selectItem itemLabel="-----" noSelectionOption="true"/>
-                    	<f:selectItems value="#{sgmodulController.moduleList}" var="modul" itemLabel="#{modul.modID}, #{modul.modName}" itemValue="#{modul.modID}"/>
+                    	<f:selectItems value="#{sgmodulController.moduleList}" var="modul" itemLabel="#{modul.modName}, #{modul.modKuerzel}" itemValue="#{modul.modID}"/>
 			        </p:selectOneMenu>
 			        
 			        <p:outputLabel for="studiengang1" value="Studiengang: " />

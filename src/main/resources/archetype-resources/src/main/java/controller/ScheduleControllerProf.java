@@ -42,7 +42,7 @@ import org.primefaces.model.ScheduleModel;
 
 /**
 *
-* @author Manuel
+* @author Anil
 */
 @Named(value="scheduleControllerProf")
 @SessionScoped

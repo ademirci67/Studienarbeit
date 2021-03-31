@@ -41,7 +41,7 @@
 							 value="Filtern"
 	                         process="@parent"
 	                         actionListener="#{scheduleController.loadSchedule}"
-	                         update=":idForm :printDetailsForm"/>
+	                         update=":idForm :printDetailsForm :exportDetailsForm"/>
 			    <p:commandButton 
 			    				value="Drucken" 
 			    				id="ajax"  
@@ -49,6 +49,15 @@
 			    				editable="true" 
 			    				update=":printDetailsForm" 
 			    				onclick="PF('printDialog').show();" 
+			    				style="margin-right:20px;" 
+			    				styleClass="ui-priority-primary" />
+			    <p:commandButton 
+			    				value="Export" 
+			    				id="ajax1"  
+			    				type="button" 
+			    				editable="true" 
+			    				update=":exportDetailsForm" 
+			    				onclick="PF('exportDialog').show();" 
 			    				style="margin-right:20px;" 
 			    				styleClass="ui-priority-primary" />
 	        	</h:panelGrid>
@@ -381,6 +390,51 @@
 					    </p:commandButton>
 				    </h:panelGroup>
 		            
+		        </h:panelGrid>
+		    </p:dialog>    
+		</h:form>
+		<h:form id="exportDetailsForm">
+		    <p:dialog id="exportDialog" widgetVar="exportDialog" header="Exporter" showEffect="clip" hideEffect="clip" width="250">
+		        <h:panelGrid id="exportEventDetails" columns="2">
+		 			
+		 		<p:dataTable id="SpeListe" var="list" value="#{scheduleController.scheduleEntryList}" >
+		        
+		        <p:column headerText="Tag" >
+		                <h:outputText value="#{list.wochentag}" />
+		        </p:column>
+		 		
+		        <p:column headerText="Modulname" >
+		                <h:outputText value="#{list.sgmodul.modul.modKuerzel}" />
+		        </p:column>
+		        
+		        <p:column headerText="Dozent" >
+		                <h:outputText value="#{list.sgmodul.dozenten.DKurz}" />
+		        </p:column>
+		        
+		        <p:column headerText="Beginn" >
+		                <p:datePicker value="#{list.SPEStartZeit}" showTime="true" />
+		        </p:column>
+		        
+		        <p:column headerText="Veranstaltung" >
+		                <h:outputText value="#{list.lehrveranstaltungsart.lvkurz}" />
+		        </p:column>
+		        		        
+		        <p:column headerText="Dauer" >
+		                <h:outputText value="#{list.lehrveranstaltungsart.lvdauer}" />
+		        </p:column>
+		        
+		        <p:column headerText="Termin" >
+		                <h:outputText value="#{list.SPTermin}" />
+		        </p:column>
+		        
+		        <p:column headerText="Raum" >
+		                <h:outputText value="#{list.raum.RName}" />
+		        </p:column>
+		        
+		    </p:dataTable>
+		            <p:commandButton value="PDF"  ajax="false">
+                    	<p:dataExporter type="pdf" target="SpeListe" fileName="schedules" />
+               		 </p:commandButton>
 		        </h:panelGrid>
 		    </p:dialog>    
 		</h:form>

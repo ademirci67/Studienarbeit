@@ -31,6 +31,8 @@ import org.primefaces.event.SelectEvent;
 
 import javax.ejb.EJB;
 import EJB.AccountFacadeLocal;
+import EJB.BenutzergruppeFacadeLocal;
+import EJB.FacultyFacadeLocal;
 
 /**
 *
@@ -55,9 +57,13 @@ public class AccountController implements Serializable {
 	
 	@EJB
 	private AccountFacadeLocal accFacadeLocal;
+	@EJB
+	private FacultyFacadeLocal facultyEJB;
+	@EJB
+	private BenutzergruppeFacadeLocal userGroupEJB;
 	
-    ArrayList<String> facultyList = new ArrayList<>();
-    ArrayList<String> userGroupList = new ArrayList<>();
+    List<Faculty> facultyList ;
+    List<Benutzergruppe> userGroupList ;
 	
 	/**
 	 * Initialisierung
@@ -65,6 +71,9 @@ public class AccountController implements Serializable {
 	@PostConstruct
     public void init() {
 		accountList = getAccountListAll();
+		facultyList = facultyEJB.findAll();
+		userGroupList = userGroupEJB.findAll();
+		/*
         EntityManager em = emf.createEntityManager();
         Query q = em.createNamedQuery("Faculty.findAll");
         List FList = q.getResultList();
@@ -80,6 +89,7 @@ public class AccountController implements Serializable {
             Benutzergruppe bg =(Benutzergruppe)BListitem;
             userGroupList.add(bg.getBGName());
         }
+        */
     }
 	
 	private String accountName;
@@ -107,6 +117,22 @@ public class AccountController implements Serializable {
 	public String getUserGroupName() {
 		return userGroupName;
 	}
+	
+	public List<Faculty> getFacultyList() {
+        return facultyList;
+    }
+
+	public void setFacultyList(List<Faculty> facultyList) {
+		this.facultyList = facultyList;
+	}
+	
+	public List<Benutzergruppe> getUserGroupList() {
+        return userGroupList;
+    }
+
+	public void setUserGroupList(List<Benutzergruppe> userGroupList) {
+		this.userGroupList = userGroupList;
+	}
 
 	public void setUserGroupName(String userGroupName) {
 		this.userGroupName = userGroupName;
@@ -128,7 +154,7 @@ public class AccountController implements Serializable {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
-	
+/*
 	public ArrayList<String> getFacultyList() {
         return facultyList;
     }
@@ -143,7 +169,7 @@ public class AccountController implements Serializable {
     public void setUserGroupList(ArrayList<String> userGroupList) {
         this.userGroupList = userGroupList;
     }
-	  
+*/	  
 	public String getAccountEmail() {
 		return accountEmail;
 	}
@@ -263,9 +289,12 @@ public class AccountController implements Serializable {
 	 * @return
 	 */
 	public List<Account> getAccountListAll(){
+		/*
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Account> query = em.createNamedQuery("Account.findAll", Account.class);
 		return query.getResultList();
+		*/
+		return accFacadeLocal.findAll();
 	}
 	
 	/**

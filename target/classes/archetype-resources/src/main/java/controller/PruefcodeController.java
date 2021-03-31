@@ -7,6 +7,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -32,6 +33,7 @@ import javax.transaction.UserTransaction;
 import org.primefaces.event.SelectEvent;
 import javax.ejb.EJB;
 import EJB.PruefcodeFacadeLocal;
+import EJB.StudiengangFacadeLocal;
 
 /**
 *
@@ -55,6 +57,8 @@ public class PruefcodeController implements Serializable {
 	
 	@EJB
 	private PruefcodeFacadeLocal pruefcodeFacadeLocal;
+	@EJB
+	private StudiengangFacadeLocal courseEJB;
 	
 	/**
 	 * Initialisierung
@@ -62,6 +66,8 @@ public class PruefcodeController implements Serializable {
 	@PostConstruct
     public void init() {
         codeList = getCodeListAll();
+        courseList = getCourseListAll();
+        /*
         EntityManager em = emf.createEntityManager();
         
         Query s = em.createNamedQuery("Studiengang.findAll");
@@ -70,11 +76,15 @@ public class PruefcodeController implements Serializable {
         {
         	Studiengang sg =(Studiengang)SListitem;
         	courseList.add(sg);
-        }
+        }*/
     }
  
-	ArrayList<Studiengang> courseList = new ArrayList<>();
+	//ArrayList<Studiengang> courseList = new ArrayList<>();
+	List<Studiengang> courseList;
+	private List<Studiengang> courseSort = null;
 	
+	
+
 	private int courseId;
 	private String dutyOrChoice;
 	private int verifyCode;
@@ -100,11 +110,27 @@ public class PruefcodeController implements Serializable {
 	public Pruefcode getCode() {
 		return code;
 	}
-	  
+	
+	public List<Studiengang> getCourseSort() {
+		return courseSort;
+	}
+
+	public void setCourseSort(List<Studiengang> courseSort) {
+		this.courseSort = courseSort;
+	}
+	
 	public void setCode(Pruefcode code) {
 		this.code = code;
 	}
 	
+	public List<Studiengang> getCourseList() {
+		return courseList;
+	}
+	
+	public void setCourseList(List<Studiengang> courseList) {
+		this.courseList = courseList;
+	}
+/*
 	public ArrayList<Studiengang> getCourseList() {
 		return courseList;
 	}
@@ -112,7 +138,7 @@ public class PruefcodeController implements Serializable {
 	public void setCourseList(ArrayList<Studiengang> courseList) {
 		this.courseList = courseList;
 	}
-	  
+*/
 	public String getSpecializationShort() {
 		return specializationShort;
 	}
@@ -210,9 +236,26 @@ public class PruefcodeController implements Serializable {
 	 * @return
 	 */
 	public List<Pruefcode> getCodeListAll(){
+		/*
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Pruefcode> query = em.createNamedQuery("Pruefcode.findAll", Pruefcode.class);
 		return query.getResultList();
+		*/
+		return pruefcodeFacadeLocal.findAll();
+	}
+	
+	public List<Studiengang> getCourseListAll(){
+		
+		if (courseSort==null) {
+			courseSort = courseEJB.findAll();
+			if (courseSort != null) {
+				Collections.sort(courseSort, (a,b) -> {
+					return a.getSGName().compareToIgnoreCase(b.getSGName());
+				});
+				}
+			}
+		
+		return  courseSort;
 	}
 	
 	//----------------------------------------------------------------------------------------------------------------------------------------------

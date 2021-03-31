@@ -209,9 +209,12 @@ public class LehrveranstaltungsartController implements Serializable {
 	 * @return
 	 */
 	public List<Lehrveranstaltungsart> getLehrveranstaltungsartList(){
+		/*
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Lehrveranstaltungsart> query = em.createNamedQuery("Lehrveranstaltungsart.findAll", Lehrveranstaltungsart.class);
 		return query.getResultList();
+		*/
+		return teachingEventFacadeLocal.findAll();
 	}
 	
 	/**

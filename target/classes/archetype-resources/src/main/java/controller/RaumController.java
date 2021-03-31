@@ -5,7 +5,7 @@ import model.Raum;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -31,6 +31,7 @@ import org.primefaces.event.SelectEvent;
 
 import javax.ejb.EJB;
 
+import EJB.LocationFacadeLocal;
 import EJB.RaumFacadeLocal;
 
 /**
@@ -55,6 +56,8 @@ public class RaumController implements Serializable {
 	
 	@EJB
 	private RaumFacadeLocal raumFacadeLocal;
+	@EJB
+	private LocationFacadeLocal locationEJB;
 	
 	/**
 	 * Initialisierung
@@ -66,6 +69,7 @@ public class RaumController implements Serializable {
     }
  
     List<Location> locationList;
+    private List<Location> locationSort = null;
     private int locationId;
 
 	private Integer capacity;
@@ -97,6 +101,14 @@ public class RaumController implements Serializable {
 
 	public Location getLocation() {
 		return location;
+	}
+
+	public List<Location> getLocationSort() {
+		return locationSort;
+	}
+
+	public void setLocationSort(List<Location> locationSort) {
+		this.locationSort = locationSort;
 	}
 
 	public void setLocation(Location location) {
@@ -217,9 +229,12 @@ public class RaumController implements Serializable {
 	 * @return
 	 */
 	public List<Raum> getRaumList(){
+		/*
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Raum> query = em.createNamedQuery("Raum.findAll", Raum.class);
 		return query.getResultList();
+		*/
+		return raumFacadeLocal.findAll();
 	}
 	
 	/**
@@ -227,9 +242,21 @@ public class RaumController implements Serializable {
 	 * @return
 	 */
 	public List<Location> getLocationList(){
+		/*
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Location> query = em.createNamedQuery("Location.findAll", Location.class);
 		return query.getResultList();
+		*/
+		if (locationSort==null) {
+			locationSort = locationEJB.findAll();
+			if (locationSort != null) {
+				Collections.sort(locationSort, (a,b) -> {
+					return a.getLCity().compareToIgnoreCase(b.getLCity());
+				});
+				}
+			}
+		
+		return  locationSort;
 	}
 	
 	/**

@@ -75,7 +75,7 @@ import com.itextpdf.text.pdf.PdfWriter;*/
 
 /**
 *
-* @author Manuel
+* @author Anil
 */
 @Named(value="scheduleController")
 @SessionScoped

@@ -9,6 +9,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -36,6 +37,7 @@ import javax.transaction.UserTransaction;
 import org.primefaces.event.SelectEvent;
 import javax.ejb.EJB;
 import EJB.ModulFacadeLocal;
+import EJB.PruefcodeFacadeLocal;
 
 /**
 *
@@ -59,6 +61,8 @@ public class ModulController implements Serializable {
 	
 	@EJB
 	private ModulFacadeLocal modulFacadeLocal;
+	@EJB
+	private PruefcodeFacadeLocal pruefCodeEJB;
 	
 	/**
 	 * Initialisierung
@@ -66,6 +70,8 @@ public class ModulController implements Serializable {
 	@PostConstruct
     public void init() {
         modulList = getModulListAll();
+        listPC = pruefCodeEJB.findAll();
+        /*
         EntityManager em = emf.createEntityManager();
         Query q = em.createNamedQuery("Pruefcode.findAll");
 		List FList = q.getResultList();
@@ -74,6 +80,7 @@ public class ModulController implements Serializable {
         	Pruefcode pCode =(Pruefcode)FListitem;
         	codeList.add(pCode);
         }
+        */
     }
 	
 	ArrayList<Pruefcode> codeList = new ArrayList<>();
@@ -86,6 +93,10 @@ public class ModulController implements Serializable {
 	private boolean modulNameOk = false;
 	
 	List<Modul> modulList;
+	List<Pruefcode> listPC;
+	
+	private List<Pruefcode> Codesort = null;
+	private List<Modul> Modulsort = null;
 	
 	private Modul modulSelected;
 	
@@ -118,6 +129,22 @@ public class ModulController implements Serializable {
         return modulList;
     }
     
+	public List<Pruefcode> getListPC() {
+		return listPC;
+	}
+
+	public List<Pruefcode> getCodesort() {
+		return Codesort;
+	}
+
+	public void setCodesort(List<Pruefcode> codesort) {
+		Codesort = codesort;
+	}
+
+	public void setListPC(List<Pruefcode> listPC) {
+		this.listPC = listPC;
+	}
+
 	public Modul getModul() {
 		return modul;
 	}
@@ -221,11 +248,38 @@ public class ModulController implements Serializable {
 	 * @return
 	 */
 	public List<Modul> getModulListAll(){
+		/*
+		return  modulFacadeLocal.findAll();
+		
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Modul> query = em.createNamedQuery("Modul.findAll", Modul.class);
-		return query.getResultList();
+		return query.getResultList(); 
+		*/	
+		if (Modulsort==null) {
+			Modulsort=modulFacadeLocal.findAll();
+			if (Modulsort != null) {
+				Collections.sort(Modulsort, (a,b) -> {
+					return a.getModName().compareToIgnoreCase(b.getModName());
+				});
+				}
+			}
+		
+		return  Modulsort;
 	}
-	
+	/*
+	public List<Pruefcode> getPruefcodeListAll(){
+		/*
+		if (Codesort==null) {
+			Codesort=pruefCodeEJB.findAll();
+			if (Codesort != null) {
+				Collections.sort(Codesort, (a,b) -> {
+					return a.getPrCode().compareTo(b.getPrCode());
+				});
+				}
+			}
+		/
+		return  pruefCodeEJB.findAll();
+	}*/
 	//----------------------------------------------------------------------------------------------------------------------------------------------
     
     /**

@@ -37,7 +37,7 @@ import EJB.StundenplaneintragFacadeLocal;
 
 /**
 *
-* @author Manuel
+* @author Anil
 */
 @Named(value="scheduleControllerCopy")
 @SessionScoped

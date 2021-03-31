@@ -197,9 +197,12 @@ public class StundenplanstatusController implements Serializable {
 	 * @return
 	 */
 	public List<Stundenplanstatus> getStundenplanstatusList(){
+		/*
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Stundenplanstatus> query = em.createNamedQuery("Stundenplanstatus.findAll", Stundenplanstatus.class);
 		return query.getResultList();
+		*/
+		return stundenplanstatusFacadeLocal.findAll();
 	}
 	
 	 /**

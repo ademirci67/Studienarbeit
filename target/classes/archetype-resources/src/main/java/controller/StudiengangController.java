@@ -6,7 +6,7 @@ import model.Studiengang;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -32,6 +32,8 @@ import org.primefaces.event.SelectEvent;
 
 
 import javax.ejb.EJB;
+
+import EJB.FacultyFacadeLocal;
 import EJB.StudiengangFacadeLocal;
 
 /**
@@ -57,6 +59,8 @@ public class StudiengangController implements Serializable {
 	
 	@EJB
 	private StudiengangFacadeLocal studiengangFacadeLocal;
+	@EJB
+	private FacultyFacadeLocal facultyEJB;
 	
 	/**
 	 * Initialisierung
@@ -68,10 +72,11 @@ public class StudiengangController implements Serializable {
     }
  
     List<Faculty> facultyList ;
+    private List<Faculty> facultySort = null;
     
     
-    
-    private int facultyID;
+
+	private int facultyID;
     private int semester;
 	private String courseShort;
 	private String courseName;
@@ -107,7 +112,15 @@ public class StudiengangController implements Serializable {
 	public void setFaculty(Faculty faculty) {
 		this.faculty = faculty;
 	}
-	
+
+    
+    public List<Faculty> getFacultySort() {
+		return facultySort;
+	}
+
+	public void setFacultySort(List<Faculty> facultySort) {
+		this.facultySort = facultySort;
+	}
 
 	public String getCourseName() {
 		return courseName;
@@ -224,9 +237,12 @@ public class StudiengangController implements Serializable {
 	 * @return
 	 */
 	public List<Studiengang> getStudiengangList(){
+		/*
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Studiengang> query = em.createNamedQuery("Studiengang.findAll", Studiengang.class);
 		return query.getResultList();
+		*/
+		return studiengangFacadeLocal.findAll();
 	}
 	
 	/**
@@ -234,9 +250,21 @@ public class StudiengangController implements Serializable {
 	 * @return
 	 */
 	public List<Faculty> getFacultyList(){
+		/*
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Faculty> query = em.createNamedQuery("Faculty.findAll", Faculty.class);
 		return query.getResultList();
+		*/
+		if (facultySort==null) {
+			facultySort = facultyEJB.findAll();
+			if (facultySort != null) {
+				Collections.sort(facultySort, (a,b) -> {
+					return a.getFacName().compareToIgnoreCase(b.getFacName());
+				});
+				}
+			}
+		
+		return  facultySort;
 	}
 	
 	

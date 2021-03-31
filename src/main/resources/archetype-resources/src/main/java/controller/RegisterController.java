@@ -30,6 +30,8 @@ import javax.transaction.UserTransaction;
 
 import javax.ejb.EJB;
 import EJB.AccountFacadeLocal;
+import EJB.BenutzergruppeFacadeLocal;
+import EJB.FacultyFacadeLocal;
 
 /**
  *
@@ -50,18 +52,25 @@ public class RegisterController implements Serializable {
     private Account account;
     private Faculty faculty;
     private Benutzergruppe userGroup;
-    ArrayList<String> facultyList = new ArrayList<>();
-    ArrayList<String> userGroupList = new ArrayList<>();
+    
+    List<Faculty> facultyList ;
+    List<Benutzergruppe> userGroupList ;
     
     @EJB
 	private AccountFacadeLocal accFacadeLocal;
-
+    @EJB
+	private FacultyFacadeLocal facultyEJB;
+	@EJB
+	private BenutzergruppeFacadeLocal userGroupEJB;
     
     /**
      * Initialisiere bei Anwendungsstart
      */
     @PostConstruct
     public void init(){
+    	facultyList = facultyEJB.findAll();
+		userGroupList = userGroupEJB.findAll();
+		/*
         EntityManager em = emf.createEntityManager();
         Query q = em.createNamedQuery("Faculty.findAll");
         List FList = q.getResultList();
@@ -70,13 +79,14 @@ public class RegisterController implements Serializable {
             Faculty fac =(Faculty)FListitem;
             facultyList.add(fac.getFacName());
         }
-        Query query = em.createNamedQuery("Benutzergruppe.findAll");
-        List BList = query.getResultList();
+        Query b = em.createNamedQuery("Benutzergruppe.findAll");
+        List BList = b.getResultList();
         for (Object BListitem : BList)
         {
             Benutzergruppe bg =(Benutzergruppe)BListitem;
             userGroupList.add(bg.getBGName());
         }
+        */
     }
 
     private String accountPassword;
@@ -100,7 +110,7 @@ public class RegisterController implements Serializable {
 
     
     //getter und setter - Methoden 
-    
+ /*   
     public ArrayList<String> getFacultyList() {
         return facultyList;
     }
@@ -108,7 +118,23 @@ public class RegisterController implements Serializable {
     public void setFacultyList(ArrayList<String> facultyList) {
         this.facultyList = facultyList;
     }
-    
+ */  
+    public List<Faculty> getFacultyList() {
+        return facultyList;
+    }
+
+	public void setFacultyList(List<Faculty> facultyList) {
+		this.facultyList = facultyList;
+	}
+	
+	public List<Benutzergruppe> getUserGroupList() {
+        return userGroupList;
+    }
+
+	public void setUserGroupList(List<Benutzergruppe> userGroupList) {
+		this.userGroupList = userGroupList;
+	}
+	
     public String getAccountName() {
         return accountName;
     }
@@ -205,7 +231,7 @@ public class RegisterController implements Serializable {
     public void setUserGroup(Benutzergruppe userGroup) {       
         this.userGroup = userGroup;
     }
-    
+ /*   
     public ArrayList<String> getUserGroupList() {
 		return userGroupList;
 	}
@@ -215,7 +241,7 @@ public class RegisterController implements Serializable {
 		this.userGroupList = userGroupList;
 	}
 
-
+ */
 	public String getUserGroupName() {
 		return userGroupName;
 	}

@@ -30,7 +30,7 @@
 		                <f:facet name="output"><h:outputText value="#{list.pruefcode.prCode}" /></f:facet>
 		                <f:facet name="input">
 		                    <h:selectOneMenu value="#{list.pruefcode.prCode}" style="width:100%">
-		                        <f:selectItems value="#{modulController.codeList}" var="pruefcode" itemLabel="#{pruefcode.pcid}" itemValue="#{pruefcode.pcid}" />
+		                        <f:selectItems value="#{modulController.listPC}" var="pruefcode" itemLabel="#{pruefcode.pcid}" itemValue="#{pruefcode.pcid}" />
 		                    </h:selectOneMenu>
 		                </f:facet>
 		            </p:cellEditor>
@@ -51,7 +51,7 @@
                     
                     <p:outputLabel for="pruefcode" value="Pruefcode: " />
 			        <p:selectOneMenu id="pruefcode" value="#{modulController.pcId}" style="width:100%">
-                    	<f:selectItems value="#{modulController.codeList}" var="code" itemLabel="#{code.prCode}" itemValue="#{code.pcid}"/>
+                    	<f:selectItems value="#{modulController.listPC}" var="code" itemLabel="#{code.prCode}" itemValue="#{code.pcid}"/>
 			        </p:selectOneMenu>
                     
                     <p:commandButton id="submit" type="submit" value="Speichern" action="#{modulController.addModul()}" update=":form:ModulListe :form:msgs" oncomplete="PF('eventEditDialog').hide();"/> 		 			
@@ -80,7 +80,7 @@
                     <h:panelGrid columns="3">                 
 			        	<p:selectOneMenu id="pcid_reg" value="#{modulController.pcId}" style="width:100%">
 			        		<f:selectItem itemLabel="-----" noSelectionOption="true"/>
-                    		<f:selectItems value="#{modulController.codeList}" var="code" itemLabel="#{code.prCode}" itemValue="#{code.pcid}"/>
+                    		<f:selectItems value="#{modulController.listPC}" var="code" itemLabel="#{code.prCode}" itemValue="#{code.pcid}"/>
 			        	</p:selectOneMenu>
                     </h:panelGrid>
                     <p:commandButton id="submit" value="Hinzufügen" actionListener="#{modulController.createDoModul}" oncomplete="PF('eventDialog').hide();" update=":form:ModulListe :form:msgs"/>		 			

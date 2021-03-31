@@ -74,7 +74,7 @@
                     
                     <p:outputLabel for="stundenplanstatus" value="Status: " />
 			        <p:selectOneMenu id="stundenplanstatus" value="#{stundenplansemesterController.scheduleSemesterId}" style="width:100%">
-                    	<f:selectItems value="#{stundenplansemesterController.scheduleStatusList}" var="sps" itemLabel="#{sps.spstid}, #{sps.SPSTBezeichnung}" itemValue="#{sps.spstid}"/>
+                    	<f:selectItems value="#{stundenplansemesterController.scheduleStatusList}" var="sps" itemLabel="#{sps.SPSTBezeichnung}" itemValue="#{sps.spstid}"/>
 			        </p:selectOneMenu>
                     
                     <p:commandButton id="submit" type="submit" value="Speichern" action="#{stundenplansemesterController.addStundenPlanSemester()}" update=":form:StundenplansemesterList :form:msgs" oncomplete="PF('eventEditDialog').hide();"/> 		 			
@@ -105,7 +105,7 @@
                     <p:outputLabel for="stundenplanstatus1" value="Status: " />
 			        <p:selectOneMenu id="stundenplanstatus1" value="#{stundenplansemesterController.scheduleSemesterId}" style="width:100%">
 			        	<f:selectItem itemLabel="-----" noSelectionOption="true"/>
-                    	<f:selectItems value="#{stundenplansemesterController.scheduleStatusList}" var="sps" itemLabel="#{sps.spstid}, #{sps.SPSTBezeichnung}" itemValue="#{sps.spstid}"/>
+                    	<f:selectItems value="#{stundenplansemesterController.scheduleStatusList}" var="sps" itemLabel="#{sps.SPSTBezeichnung}" itemValue="#{sps.spstid}"/>
 			        </p:selectOneMenu>
 		            
                     <p:commandButton id="submit" value="Hinzufügen" actionListener="#{stundenplansemesterController.createDoStundenplansemester}" update=":form:StundenplansemesterList :form:msgs" oncomplete="PF('eventDialog').hide();" />		 			

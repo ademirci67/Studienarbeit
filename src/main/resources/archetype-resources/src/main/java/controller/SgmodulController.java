@@ -1,7 +1,7 @@
 package controller;
 
 import model.Modul;
-
+import model.Pruefcode;
 import model.Dozenten;
 import model.Studiengang;
 import model.Sgmodul;
@@ -9,6 +9,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -33,8 +34,10 @@ import javax.transaction.UserTransaction;
 
 import org.primefaces.event.SelectEvent;
 
-
+import EJB.DozentenFacadeLocal;
+import EJB.ModulFacadeLocal;
 import EJB.SgModulFacadeLocal;
+import EJB.StudiengangFacadeLocal;
 
 
 /**
@@ -61,6 +64,12 @@ public class SgmodulController implements Serializable {
 	
 	@EJB
 	private SgModulFacadeLocal sgModulFacadeLocal;
+	@EJB
+	private ModulFacadeLocal modulEJB;
+	@EJB
+	private StudiengangFacadeLocal courseEJB;
+	@EJB
+	private DozentenFacadeLocal professorEJB;
 	
 	/**
 	 * Initilisierung
@@ -68,7 +77,11 @@ public class SgmodulController implements Serializable {
 	@PostConstruct
     public void init() {
 		sgmodulList = getSgmodulListAll();
+		moduleList = getModulListAll();
+		courseList = getCourseListAll();
+		professorList = getProfessorListAll();
 		
+		/*
         EntityManager em = emf.createEntityManager();
         Query q = em.createNamedQuery("Modul.findAll");
 		List FList = q.getResultList();
@@ -91,12 +104,15 @@ public class SgmodulController implements Serializable {
         	Dozenten doz =(Dozenten)DListitem;
         	professorList.add(doz);
         }
+        */
+		
     }
- 
+ /*
     ArrayList<Dozenten> professorList = new ArrayList<>();
     ArrayList<Modul> moduleList = new ArrayList<>();
     ArrayList<Studiengang> courseList = new ArrayList<>();
-    
+*/   
+	
     private int moduleSemester;
 	private String sgmodulNote;
 	
@@ -106,9 +122,65 @@ public class SgmodulController implements Serializable {
 	
 	
 	List<Sgmodul> sgmodulList;
+	List<Studiengang> courseList;
+	List<Modul> moduleList;
+	List<Dozenten> professorList;
+	
+	private List<Studiengang> courseSort = null;
+	private List<Modul> modulSort = null;
+	private List<Dozenten> professorSort = null;
+	
 	
 	private Sgmodul sgmodulSelected;
 	
+	public List<Studiengang> getCourseSort() {
+		return courseSort;
+	}
+
+	public void setCourseSort(List<Studiengang> courseSort) {
+		this.courseSort = courseSort;
+	}
+
+	public List<Modul> getModulSort() {
+		return modulSort;
+	}
+
+	public void setModulSort(List<Modul> modulSort) {
+		this.modulSort = modulSort;
+	}
+
+	public List<Dozenten> getProfessorSort() {
+		return professorSort;
+	}
+
+	public void setProfessorSort(List<Dozenten> professorSort) {
+		this.professorSort = professorSort;
+	}
+
+	public List<Studiengang> getCourseList() {
+		return courseList;
+	}
+	
+	public void setCourseList(List<Studiengang> courseList) {
+		this.courseList = courseList;
+	}
+
+	public List<Modul> getModuleList() {
+		return moduleList;
+	}
+	
+	public void setModuleList(List<Modul> moduleList) {
+		this.moduleList = moduleList;
+	}
+
+	public List<Dozenten> getProfessorList() {
+		return professorList;
+	}
+	
+	public void setProfessorList(List<Dozenten> professorList) {
+		this.professorList = professorList;
+	}
+
 	// Getter und Setter
 	public String getSgmodulNote() {
 		return sgmodulNote;
@@ -117,7 +189,7 @@ public class SgmodulController implements Serializable {
 	public void setSgmodulNote(String sgmodulNote) {
 		this.sgmodulNote = sgmodulNote;
 	}
-
+/*
 	public ArrayList<Dozenten> getProfessorList() {
 		return professorList;
 	}
@@ -140,7 +212,7 @@ public class SgmodulController implements Serializable {
 	public void setModuleList(ArrayList<Modul> moduleList) {
 		this.moduleList = moduleList;
 	}
-
+*/
 	public Studiengang getCourse() {
 		return course;
 	}
@@ -280,9 +352,54 @@ public class SgmodulController implements Serializable {
 	 * @return
 	 */
 	public List<Sgmodul> getSgmodulListAll(){
+		/*
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Sgmodul> query = em.createNamedQuery("Sgmodul.findAll", Sgmodul.class);
 		return query.getResultList();
+		*/
+		return sgModulFacadeLocal.findAll();
+	}
+	
+	public List<Modul> getModulListAll(){
+		
+		if (modulSort==null) {
+			modulSort = modulEJB.findAll();
+			if (modulSort != null) {
+				Collections.sort(modulSort, (a,b) -> {
+					return a.getModName().compareToIgnoreCase(b.getModName());
+				});
+				}
+			}
+		
+		return  modulSort;
+	}
+	
+	public List<Studiengang> getCourseListAll(){
+		
+		if (courseSort==null) {
+			courseSort = courseEJB.findAll();
+			if (courseSort != null) {
+				Collections.sort(courseSort, (a,b) -> {
+					return a.getSGName().compareToIgnoreCase(b.getSGName());
+				});
+				}
+			}
+		
+		return  courseSort;
+	}
+	
+	public List<Dozenten> getProfessorListAll(){
+		
+		if (professorSort==null) {
+			professorSort = professorEJB.findAll();
+			if (professorSort != null) {
+				Collections.sort(professorSort, (a,b) -> {
+					return a.getDName().compareToIgnoreCase(b.getDName());
+				});
+				}
+			}
+		
+		return  professorSort;
 	}
 	
 	 

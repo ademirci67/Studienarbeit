@@ -263,9 +263,12 @@ public class AccountController implements Serializable {
 	 * @return
 	 */
 	public List<Account> getAccountListAll(){
+		/*
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Account> query = em.createNamedQuery("Account.findAll", Account.class);
 		return query.getResultList();
+		*/
+		return accFacadeLocal.findAll();
 	}
 	
 	/**
