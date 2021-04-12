@@ -252,8 +252,8 @@
                     </p:selectOneMenu>
 		        	
 			        <p:outputLabel for="teachingEvent" value="Lehrveranstaltungsart:" />
-			        <p:selectOneMenu id="teachingEvent" value="#{scheduleController.teName}" style="width:100%">
-                        <f:selectItems value="#{scheduleController.teachingEventList}" />
+			        <p:selectOneMenu id="teachingEvent" value="#{scheduleController.teId}" style="width:100%">
+                        <f:selectItems value="#{scheduleController.teachingEventList}" var="lva" itemLabel="#{lva.lvname}, #{lva.lvkurz}" itemValue="#{lva.lvid}"/>
                     </p:selectOneMenu>
 			        
 			        <p:outputLabel for="room" value="Raum:" />
@@ -299,8 +299,8 @@
                     </p:selectOneMenu>
 		        	
 			        <p:outputLabel for="teachingEvent1" value="Lehrveranstaltungsart:" />
-			        <p:selectOneMenu id="teachingEvent1" value="#{scheduleController.teName}" style="width:100%">
-                        <f:selectItems value="#{scheduleController.teachingEventList}" />
+			        <p:selectOneMenu id="teachingEvent1" value="#{scheduleController.teId}" style="width:100%">
+                        <f:selectItems value="#{scheduleController.teachingEventList}" var="lva" itemLabel="#{lva.lvname}, #{lva.lvkurz}" itemValue="#{lva.lvid}"/>/>
                     </p:selectOneMenu>
 			        
 			        <p:outputLabel for="room1" value="Raum:" />
@@ -333,9 +333,6 @@
 	               		<p:commandButton id="Semester1" value="Drucken" type="button" styleClass="p-d-block p-shadow-2 p-mb-3">
 	                		<p:printer target=":idForm:panelgroup1"/>
 					    </p:commandButton>
-					    <p:commandButton value="PDF"  type="button" ajax="false" styleClass="p-mr-2 p-mb-2">
-                    	<p:dataExporter type="pdf" target=":idForm:panelgroup1" fileName="schedules" />
-               		 </p:commandButton>
 				    </h:panelGroup>
 				    
 				    <h:panelGroup id="panelgroup22" rendered="#{scheduleController.show2}">
@@ -350,9 +347,6 @@
 	               		<p:commandButton id="Semester3" value="Drucken" type="button" styleClass="p-d-block p-shadow-2 p-mb-3">
 	                		<p:printer target=":idForm:panelgroup3"/>
 					    </p:commandButton>
-					    <p:commandButton value="PDF"  ajax="false">
-                    	<p:dataExporter type="xls" target=":idForm:panelgroup3" fileName="schedules" />
-               		 </p:commandButton>
 				    </h:panelGroup>
 				    
 				    <h:panelGroup id="panelgroup44" rendered="#{scheduleController.show4}">
@@ -396,12 +390,26 @@
 		<h:form id="exportDetailsForm">
 		    <p:dialog id="exportDialog" widgetVar="exportDialog" header="Exporter" showEffect="clip" hideEffect="clip" width="250">
 		        <h:panelGrid id="exportEventDetails" columns="2">
+		 		
 		 			
-		 		<p:dataTable id="SpeListe" var="list" value="#{scheduleController.scheduleEntryList}" >
+		 			<h:panelGroup id="panelgroup111" rendered="#{scheduleController.show1}">
+			            <p:outputLabel for="SpeListe" value="Semester 1: " />               		 
+	               		
+				    	
+		 		<p:dataTable id="SpeListe" var="list" value="#{scheduleController.scheduleEntry1}" >
+		 		<f:facet name="header">
+                Erstes Semester
+            	</f:facet>
 		        
 		        <p:column headerText="Tag" >
 		                <h:outputText value="#{list.wochentag}" />
 		        </p:column>
+		        
+		        <p:column headerText="Beginn" >
+		        <h:outputText value="#{list.SPEStartZeit}">
+                    <f:convertDateTime pattern="HH:mm"/>
+                </h:outputText>
+                </p:column>
 		 		
 		        <p:column headerText="Modulname" >
 		                <h:outputText value="#{list.sgmodul.modul.modKuerzel}" />
@@ -411,8 +419,234 @@
 		                <h:outputText value="#{list.sgmodul.dozenten.DKurz}" />
 		        </p:column>
 		        
+		        
+		        <p:column headerText="Veranstaltung" >
+		                <h:outputText value="#{list.lehrveranstaltungsart.lvkurz}" />
+		        </p:column>
+		        		        
+		        <p:column headerText="Dauer" >
+		                <h:outputText value="#{list.lehrveranstaltungsart.lvdauer}" />
+		        </p:column>
+		        
+		        <p:column headerText="Termin" >
+		                <h:outputText value="#{list.SPTermin}" />
+		        </p:column>
+		        
+		        <p:column headerText="Raum" >
+		                <h:outputText value="#{list.raum.RName}" />
+		        </p:column>
+		        
+		    </p:dataTable> <br />
+		   		 <p:commandButton value="PDF"  ajax="false">
+                    	<p:dataExporter type="pdf" target="SpeListe" fileName="#{scheduleController.courseSelection}, 1.Semester" />
+               		 </p:commandButton>
+               		</h:panelGroup>
+               		<h:panelGroup id="panelgroup222" rendered="#{scheduleController.show2}">
+			            <p:outputLabel for="SpeListe2" value="Semester 2: " />               		 
+	               		
+				    	
+		 		<p:dataTable id="SpeListe2" var="list" value="#{scheduleController.scheduleEntry2}" >
+		        
+		        <p:column headerText="Tag" >
+		                <h:outputText value="#{list.wochentag}" />
+		        </p:column>
+		        
 		        <p:column headerText="Beginn" >
-		                <p:datePicker value="#{list.SPEStartZeit}" showTime="true" />
+		        <h:outputText value="#{list.SPEStartZeit}">
+                    <f:convertDateTime pattern="HH:mm"/>
+                </h:outputText>
+                </p:column>
+		 		
+		        <p:column headerText="Modulname" >
+		                <h:outputText value="#{list.sgmodul.modul.modKuerzel}" />
+		        </p:column>
+		        
+		        <p:column headerText="Dozent" >
+		                <h:outputText value="#{list.sgmodul.dozenten.DKurz}" />
+		        </p:column>
+		        
+		        
+		        <p:column headerText="Veranstaltung" >
+		                <h:outputText value="#{list.lehrveranstaltungsart.lvkurz}" />
+		        </p:column>
+		        		        
+		        <p:column headerText="Dauer" >
+		                <h:outputText value="#{list.lehrveranstaltungsart.lvdauer}" />
+		        </p:column>
+		        
+		        <p:column headerText="Termin" >
+		                <h:outputText value="#{list.SPTermin}" />
+		        </p:column>
+		        
+		        <p:column headerText="Raum" >
+		                <h:outputText value="#{list.raum.RName}" />
+		        </p:column>
+		        
+		    </p:dataTable> <br />
+		   		 <p:commandButton value="PDF"  ajax="false">
+                    	<p:dataExporter type="pdf" target="SpeListe2" fileName="#{scheduleController.courseSelection}, 2.Semester" />
+               		 </p:commandButton>
+               		</h:panelGroup>
+               		<h:panelGroup id="panelgroup333" rendered="#{scheduleController.show3}">
+			            <p:outputLabel for="SpeListe3" value="Semester 3: " />               		 
+	               		
+				    	
+		 		<p:dataTable id="SpeListe3" var="list" value="#{scheduleController.scheduleEntry3}" >
+		        
+		        <p:column headerText="Tag" >
+		                <h:outputText value="#{list.wochentag}" />
+		        </p:column>
+		 		
+		 		<p:column headerText="Beginn" >
+		        <h:outputText value="#{list.SPEStartZeit}">
+                    <f:convertDateTime pattern="HH:mm"/>
+                </h:outputText>
+                </p:column>
+		 		
+		        <p:column headerText="Modulname" >
+		                <h:outputText value="#{list.sgmodul.modul.modKuerzel}" />
+		        </p:column>
+		        
+		        <p:column headerText="Dozent" >
+		                <h:outputText value="#{list.sgmodul.dozenten.DKurz}" />
+		        </p:column>
+		        
+		        
+		        <p:column headerText="Veranstaltung" >
+		                <h:outputText value="#{list.lehrveranstaltungsart.lvkurz}" />
+		        </p:column>
+		        		        
+		        <p:column headerText="Dauer" >
+		                <h:outputText value="#{list.lehrveranstaltungsart.lvdauer}" />
+		        </p:column>
+		        
+		        <p:column headerText="Termin" >
+		                <h:outputText value="#{list.SPTermin}" />
+		        </p:column>
+		        
+		        <p:column headerText="Raum" >
+		                <h:outputText value="#{list.raum.RName}" />
+		        </p:column>
+		        
+		    </p:dataTable> <br />
+		   		 <p:commandButton value="PDF"  ajax="false">
+                    	<p:dataExporter type="pdf" target="SpeListe3" fileName="#{scheduleController.courseSelection}, 3.Semesters" />
+               		 </p:commandButton>
+               	</h:panelGroup>
+               		<h:panelGroup id="panelgroup444" rendered="#{scheduleController.show4}">
+			            <p:outputLabel for="SpeListe4" value="Semester 4: " />               		 
+	               		
+				    	
+		 		<p:dataTable id="SpeListe4" var="list" value="#{scheduleController.scheduleEntry4}" >
+		        
+		        <p:column headerText="Tag" >
+		                <h:outputText value="#{list.wochentag}" />
+		        </p:column>
+		        
+		        <p:column headerText="Beginn" >
+		        <h:outputText value="#{list.SPEStartZeit}">
+                    <f:convertDateTime pattern="HH:mm"/>
+                </h:outputText>
+                </p:column>
+		 		
+		        <p:column headerText="Modulname" >
+		                <h:outputText value="#{list.sgmodul.modul.modKuerzel}" />
+		        </p:column>
+		        
+		        <p:column headerText="Dozent" >
+		                <h:outputText value="#{list.sgmodul.dozenten.DKurz}" />
+		        </p:column>
+		       
+		        
+		        <p:column headerText="Veranstaltung" >
+		                <h:outputText value="#{list.lehrveranstaltungsart.lvkurz}" />
+		        </p:column>
+		        		        
+		        <p:column headerText="Dauer" >
+		                <h:outputText value="#{list.lehrveranstaltungsart.lvdauer}" />
+		        </p:column>
+		        
+		        <p:column headerText="Termin" >
+		                <h:outputText value="#{list.SPTermin}" />
+		        </p:column>
+		        
+		        <p:column headerText="Raum" >
+		                <h:outputText value="#{list.raum.RName}" />
+		        </p:column>
+		        
+		    </p:dataTable> <br />
+		   		 <p:commandButton value="PDF"  ajax="false">
+                    	<p:dataExporter type="pdf" target="SpeListe4" fileName="#{scheduleController.courseSelection}, 4.Semester" />
+               		 </p:commandButton>
+               		</h:panelGroup>
+               		<h:panelGroup id="panelgroup555" rendered="#{scheduleController.show5}">
+			            <p:outputLabel for="SpeListe5" value="Semester 5: " />               		 
+	               		
+				    	
+		 		<p:dataTable id="SpeListe5" var="list" value="#{scheduleController.scheduleEntry5}" >
+		        
+		        <p:column headerText="Tag" >
+		                <h:outputText value="#{list.wochentag}" />
+		        </p:column>
+		        
+		        <p:column headerText="Beginn" >
+		        <h:outputText value="#{list.SPEStartZeit}">
+                    <f:convertDateTime pattern="HH:mm"/>
+                </h:outputText>
+                </p:column>
+		 		
+		        <p:column headerText="Modulname" >
+		                <h:outputText value="#{list.sgmodul.modul.modKuerzel}" />
+		        </p:column>
+		        
+		        <p:column headerText="Dozent" >
+		                <h:outputText value="#{list.sgmodul.dozenten.DKurz}" />
+		        </p:column>
+
+		        
+		        <p:column headerText="Veranstaltung" >
+		                <h:outputText value="#{list.lehrveranstaltungsart.lvkurz}" />
+		        </p:column>
+		        		        
+		        <p:column headerText="Dauer" >
+		                <h:outputText value="#{list.lehrveranstaltungsart.lvdauer}" />
+		        </p:column>
+		        
+		        <p:column headerText="Termin" >
+		                <h:outputText value="#{list.SPTermin}" />
+		        </p:column>
+		        
+		        <p:column headerText="Raum" >
+		                <h:outputText value="#{list.raum.RName}" />
+		        </p:column>
+		        
+		    </p:dataTable> <br />
+		   		 <p:commandButton value="PDF"  ajax="false">
+                    	<p:dataExporter type="pdf" target="SpeListe5" fileName="#{scheduleController.courseSelection}, 5.Semester" />
+               		 </p:commandButton>
+               		</h:panelGroup>
+               		<h:panelGroup id="panelgroup666" rendered="#{scheduleController.show6}">
+			            <p:outputLabel for="SpeListe6" value="Semester 6: " />               		 
+	               		
+				    	
+		 		<p:dataTable id="SpeListe6" var="list" value="#{scheduleController.scheduleEntry6}" >
+		        
+		        <p:column headerText="Tag" >
+		                <h:outputText value="#{list.wochentag}" />
+		        </p:column>
+		        
+		        <p:column headerText="Beginn" >
+		        <h:outputText value="#{list.SPEStartZeit}">
+                    <f:convertDateTime pattern="HH:mm"/>
+                </h:outputText>
+                </p:column>
+		 		
+		        <p:column headerText="Modulname" >
+		                <h:outputText value="#{list.sgmodul.modul.modKuerzel}" />
+		        </p:column>
+		        
+		        <p:column headerText="Dozent" >
+		                <h:outputText value="#{list.sgmodul.dozenten.DKurz}" />
 		        </p:column>
 		        
 		        <p:column headerText="Veranstaltung" >
@@ -431,10 +665,103 @@
 		                <h:outputText value="#{list.raum.RName}" />
 		        </p:column>
 		        
-		    </p:dataTable>
-		            <p:commandButton value="PDF"  ajax="false">
-                    	<p:dataExporter type="pdf" target="SpeListe" fileName="schedules" />
+		    </p:dataTable> <br />
+		   		 <p:commandButton value="PDF"  ajax="false">
+                    	<p:dataExporter type="pdf" target="SpeListe6" fileName="#{scheduleController.courseSelection}, 6.Semester" />
                		 </p:commandButton>
+               		</h:panelGroup>
+               		<h:panelGroup id="panelgroup777" rendered="#{scheduleController.show7}">
+			            <p:outputLabel for="SpeListe7" value="Semester 7: " />               		 
+	               		
+				    	
+		 		<p:dataTable id="SpeListe7" var="list" value="#{scheduleController.scheduleEntry7}" >
+		        
+		        <p:column headerText="Tag" >
+		                <h:outputText value="#{list.wochentag}" />
+		        </p:column>
+		        
+		        <p:column headerText="Beginn" >
+		        <h:outputText value="#{list.SPEStartZeit}">
+                    <f:convertDateTime pattern="HH:mm"/>
+                </h:outputText>
+                </p:column>
+		 		
+		        <p:column headerText="Modulname" >
+		                <h:outputText value="#{list.sgmodul.modul.modKuerzel}" />
+		        </p:column>
+		        
+		        <p:column headerText="Dozent" >
+		                <h:outputText value="#{list.sgmodul.dozenten.DKurz}" />
+		        </p:column>
+
+		        
+		        <p:column headerText="Veranstaltung" >
+		                <h:outputText value="#{list.lehrveranstaltungsart.lvkurz}" />
+		        </p:column>
+		        		        
+		        <p:column headerText="Dauer" >
+		                <h:outputText value="#{list.lehrveranstaltungsart.lvdauer}" />
+		        </p:column>
+		        
+		        <p:column headerText="Termin" >
+		                <h:outputText value="#{list.SPTermin}" />
+		        </p:column>
+		        
+		        <p:column headerText="Raum" >
+		                <h:outputText value="#{list.raum.RName}" />
+		        </p:column>
+		        
+		    </p:dataTable> <br />
+		   		 <p:commandButton value="PDF"  ajax="false">
+                    	<p:dataExporter type="pdf" target="SpeListe7" fileName="#{scheduleController.courseSelection}, 7.Semester" />
+               		 </p:commandButton>
+               		</h:panelGroup>
+               		<h:panelGroup id="panelgroup888" rendered="#{scheduleController.show8}">
+			            <p:outputLabel for="SpeListe7" value="Semester 8: " />               		 
+	               		
+				    	
+		 		<p:dataTable id="SpeListe8" var="list" value="#{scheduleController.scheduleEntry8}" >
+		        
+		        <p:column headerText="Tag" >
+		                <h:outputText value="#{list.wochentag}" />
+		        </p:column>
+		        
+		        <p:column headerText="Beginn" >
+		        <h:outputText value="#{list.SPEStartZeit}">
+                    <f:convertDateTime pattern="HH:mm"/>
+                </h:outputText>
+                </p:column>
+		 		
+		        <p:column headerText="Modulname" >
+		                <h:outputText value="#{list.sgmodul.modul.modKuerzel}" />
+		        </p:column>
+		        
+		        <p:column headerText="Dozent" >
+		                <h:outputText value="#{list.sgmodul.dozenten.DKurz}" />
+		        </p:column>
+
+		        
+		        <p:column headerText="Veranstaltung" >
+		                <h:outputText value="#{list.lehrveranstaltungsart.lvkurz}" />
+		        </p:column>
+		        		        
+		        <p:column headerText="Dauer" >
+		                <h:outputText value="#{list.lehrveranstaltungsart.lvdauer}" />
+		        </p:column>
+		        
+		        <p:column headerText="Termin" >
+		                <h:outputText value="#{list.SPTermin}" />
+		        </p:column>
+		        
+		        <p:column headerText="Raum" >
+		                <h:outputText value="#{list.raum.RName}" />
+		        </p:column>
+		        
+		    </p:dataTable> <br />
+		   		 <p:commandButton value="PDF"  ajax="false">
+                    	<p:dataExporter type="pdf" target="SpeListe7" fileName="#{scheduleController.courseSelection}, 8.Semester" />
+               		 </p:commandButton>
+               		</h:panelGroup>
 		        </h:panelGrid>
 		    </p:dialog>    
 		</h:form>

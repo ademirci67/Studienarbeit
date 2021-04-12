@@ -214,11 +214,6 @@ public class DozentenController implements Serializable {
 	 * @return
 	 */
 	public List<Dozenten> getDozentenList(){
-		/*
-		EntityManager em = emf.createEntityManager();
-		TypedQuery<Dozenten> query = em.createNamedQuery("Dozenten.findAll", Dozenten.class);
-		return query.getResultList();
-		*/
 		return dozentenFacadeLocal.findAll();
 	}
     

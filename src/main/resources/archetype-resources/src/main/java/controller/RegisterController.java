@@ -70,23 +70,6 @@ public class RegisterController implements Serializable {
     public void init(){
     	facultyList = facultyEJB.findAll();
 		userGroupList = userGroupEJB.findAll();
-		/*
-        EntityManager em = emf.createEntityManager();
-        Query q = em.createNamedQuery("Faculty.findAll");
-        List FList = q.getResultList();
-        for (Object FListitem : FList)
-        {
-            Faculty fac =(Faculty)FListitem;
-            facultyList.add(fac.getFacName());
-        }
-        Query b = em.createNamedQuery("Benutzergruppe.findAll");
-        List BList = b.getResultList();
-        for (Object BListitem : BList)
-        {
-            Benutzergruppe bg =(Benutzergruppe)BListitem;
-            userGroupList.add(bg.getBGName());
-        }
-        */
     }
 
     private String accountPassword;
@@ -110,15 +93,7 @@ public class RegisterController implements Serializable {
 
     
     //getter und setter - Methoden 
- /*   
-    public ArrayList<String> getFacultyList() {
-        return facultyList;
-    }
-
-    public void setFacultyList(ArrayList<String> facultyList) {
-        this.facultyList = facultyList;
-    }
- */  
+ 
     public List<Faculty> getFacultyList() {
         return facultyList;
     }
@@ -231,17 +206,7 @@ public class RegisterController implements Serializable {
     public void setUserGroup(Benutzergruppe userGroup) {       
         this.userGroup = userGroup;
     }
- /*   
-    public ArrayList<String> getUserGroupList() {
-		return userGroupList;
-	}
 
-
-	public void setUserGroupList(ArrayList<String> userGroupList) {
-		this.userGroupList = userGroupList;
-	}
-
- */
 	public String getUserGroupName() {
 		return userGroupName;
 	}

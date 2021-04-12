@@ -3,6 +3,7 @@ package controller;
 import model.Faculty;
 import model.Studiengang;
 import model.Lehrveranstaltungsart;
+import model.Pruefcode;
 import model.Raum;
 import model.Sgmodul;
 import model.Stundenplaneintrag;
@@ -57,7 +58,14 @@ import java.util.Calendar;
 
 
 import javax.ejb.EJB;
+
+import EJB.FacultyFacadeLocal;
+import EJB.LehrveranstaltungsartFacadeLocal;
+import EJB.RaumFacadeLocal;
+import EJB.SgModulFacadeLocal;
+import EJB.StudiengangFacadeLocal;
 import EJB.StundenplaneintragFacadeLocal;
+import EJB.StundenplansemesterFacadeLocal;
 
 /*
 import com.itextpdf.text.Document;
@@ -98,6 +106,18 @@ public class ScheduleController implements Serializable {
 	
 	@EJB
 	private StundenplaneintragFacadeLocal speFacadeLocal;
+	@EJB
+	private SgModulFacadeLocal sgModulEJB;
+	@EJB
+	private StundenplansemesterFacadeLocal spsEJB;
+	@EJB
+	private LehrveranstaltungsartFacadeLocal lvaEJB;
+	@EJB
+	private RaumFacadeLocal roomEJB;
+	@EJB
+	private StudiengangFacadeLocal courseEJB;
+	@EJB
+	private FacultyFacadeLocal facultyEJB;
 	
 	/**
 	 * Initialisierung des Wochenplans
@@ -128,17 +148,28 @@ public class ScheduleController implements Serializable {
     
     private List<Stundenplaneintrag> loadDb;
     
-    private List<Stundenplaneintrag> scheduleEntryList;
+    //Stundenplaneintrag [] scheduleEntry = new Stundenplaneintrag[9];
+    //ArrayList<Stundenplaneintrag> scheduleEntry1 = new ArrayList<Stundenplaneintrag>();
+    ArrayList<Stundenplaneintrag> scheduleEntry1 = new ArrayList<>();
+    ArrayList<Stundenplaneintrag> scheduleEntry2 = new ArrayList<>();
+    ArrayList<Stundenplaneintrag> scheduleEntry3 = new ArrayList<>();
+    ArrayList<Stundenplaneintrag> scheduleEntry4 = new ArrayList<>();
+    ArrayList<Stundenplaneintrag> scheduleEntry5 = new ArrayList<>();
+    ArrayList<Stundenplaneintrag> scheduleEntry6 = new ArrayList<>();
+    ArrayList<Stundenplaneintrag> scheduleEntry7 = new ArrayList<>();
+    ArrayList<Stundenplaneintrag> scheduleEntry8 = new ArrayList<>();
+
+	private List<Stundenplaneintrag> scheduleEntryList;
     private Stundenplaneintrag eventSelected;
     private Stundenplaneintrag spe;
 	
-	ArrayList<String> teachingEventList = new ArrayList<>();
-    private String teName;
+    List<Lehrveranstaltungsart> teachingEventList ;
+    private int teId;
     
-    ArrayList<Raum> roomList = new ArrayList<>();
+    List<Raum> roomList;
     private int roomId;
     
-    ArrayList<Sgmodul> sgmodulList = new ArrayList<>();
+    List<Sgmodul> sgmodulList;
     private int sgmodulId;
     
     ArrayList<Integer> semesterList = new ArrayList<>();
@@ -150,7 +181,7 @@ public class ScheduleController implements Serializable {
     ArrayList<String> facultyList = new ArrayList<>();
     private String facultySelection;
     
-    ArrayList<Stundenplansemester> spsList = new ArrayList<>();
+    List<Stundenplansemester> spsList;
     private int spsId;
     
     ArrayList<String> sps1List = new ArrayList<>();
@@ -158,8 +189,8 @@ public class ScheduleController implements Serializable {
     ArrayList<Integer> sps2List = new ArrayList<>();
     private int spYearSelection;
     
-    GregorianCalendar calendarStart;
-    GregorianCalendar calendarEnd;
+    GregorianCalendar calendarStart = new GregorianCalendar();
+    GregorianCalendar calendarEnd = new GregorianCalendar();
     LocalDateTime localTime;
     LocalDateTime localTime2;
     
@@ -193,13 +224,13 @@ public class ScheduleController implements Serializable {
         GregorianCalendar calEnd =  new GregorianCalendar();
         
         EntityManager em = emf.createEntityManager();
-    	try{// Laden der Datenbank
-            Query query = em.createNamedQuery("Stundenplaneintrag.findAll", Stundenplaneintrag.class);
-            loadDb = query.getResultList();
-        }
-        catch(Exception e){
+    	//try{// Laden der Datenbank
+          //  Query query = em.createNamedQuery("Stundenplaneintrag.findAll", Stundenplaneintrag.class);
+        loadDb =  speFacadeLocal.findAll();                 //query.getResultList();
+        //}
+       // catch(Exception e){
         	
-        }
+        //}
     	
     	try {
     		for(int i = 0; i < loadDb.size(); i++){            	
@@ -326,7 +357,18 @@ public class ScheduleController implements Serializable {
     public void loadModule() {
     	for(int j = 0; j < 9; j++) {
         	events[j].clear();
+        	
+        	
+        	
         }
+    	scheduleEntry1.clear();
+    	scheduleEntry2.clear();
+    	scheduleEntry3.clear();
+    	scheduleEntry4.clear();
+    	scheduleEntry5.clear();
+    	scheduleEntry6.clear();
+    	scheduleEntry7.clear();
+    	scheduleEntry8.clear();
         eventLoader();
     	
 	}
@@ -352,6 +394,8 @@ public class ScheduleController implements Serializable {
 	        	this.spe = new Stundenplaneintrag();
 	        	spe = scheduleEntryList.get(i);
 	        	if(spe.getSgmodul().getModSemester() == j) {
+	        	
+	        	
 	        	LocalDateTime ltime = convertToLocalDateTimeViaInstant(spe.getSPEStartZeit());
 	        	LocalDateTime ltime2 = convertToLocalDateTimeViaInstant(spe.getSPEEndZeit());
 	            
@@ -370,7 +414,35 @@ public class ScheduleController implements Serializable {
 	                    .build();
 	            events[j].addEvent(event);
 	        	}
-	        }
+	        	
+	        	}
+	        }for(int i = 0; i < scheduleEntryList.size(); i++){
+            	this.spe = new Stundenplaneintrag();
+            	spe = scheduleEntryList.get(i);
+    	        if(spe.getSgmodul().getModSemester() == 1) {
+    	    		scheduleEntry1.add(spe);
+    	        }
+    	        if(spe.getSgmodul().getModSemester() == 2) {
+    	    		scheduleEntry2.add(spe);
+    	        }
+    	        if(spe.getSgmodul().getModSemester() == 3) {
+    	    		scheduleEntry3.add(spe);
+    	        }
+    	        if(spe.getSgmodul().getModSemester() == 4) {
+    	    		scheduleEntry4.add(spe);
+    	        }
+    	        if(spe.getSgmodul().getModSemester() == 5) {
+    	    		scheduleEntry5.add(spe);
+    	        }
+    	        if(spe.getSgmodul().getModSemester() == 6) {
+    	    		scheduleEntry6.add(spe);
+    	        }
+    	        if(spe.getSgmodul().getModSemester() == 7) {
+    	    		scheduleEntry7.add(spe);
+    	        }
+    	        if(spe.getSgmodul().getModSemester() == 8) {
+    	    		scheduleEntry8.add(spe);
+    	        }
         }
         
 	}
@@ -379,7 +451,6 @@ public class ScheduleController implements Serializable {
 	 * Laden aller Listen aus der Datenbank
 	 */
 	public void selection() {
-		try{
             EntityManager em = emf.createEntityManager();
             Query q = em.createNamedQuery("Sgmodul.findAllOrderBy",Sgmodul.class);
             List liste = q.getResultList();
@@ -403,36 +474,16 @@ public class ScheduleController implements Serializable {
                 }
             }
            
-        }
-        catch(Exception e){
-        	
-        }
-		
-		EntityManager em = emf.createEntityManager();
-        Query q = em.createNamedQuery("Lehrveranstaltungsart.findAll");
-        List LList = q.getResultList();
-        for (Object LListitem : LList)
-        {
-        	Lehrveranstaltungsart lva =(Lehrveranstaltungsart)LListitem;
-            teachingEventList.add(lva.getLvname());
-        }
         
-        Query r = em.createNamedQuery("Raum.findAll");
-        List RList = r.getResultList();
-        for (Object RListitem : RList)
-        {
-        	Raum ra =(Raum)RListitem;
-            roomList.add(ra);
-        }
-        
-        Query s = em.createNamedQuery("Sgmodul.findAll");
-        List SList = s.getResultList();
-        for (Object SListitem : SList)
-        {
-        	Sgmodul sg =(Sgmodul)SListitem;
-            sgmodulList.add(sg);
-        }
 		
+		
+        teachingEventList = lvaEJB.findAll();
+        roomList = roomEJB.findAll();
+        sgmodulList = sgModulEJB.findAll();		
+        spsList = spsEJB.findAll();
+        //courseList = courseEJB.findAll();
+        //facultyList = facultyEJB.findAll();
+        
         Query s1 = em.createNamedQuery("Studiengang.findAll");
         List S1List = s1.getResultList();
         for (Object S1Listitem : S1List)
@@ -447,14 +498,6 @@ public class ScheduleController implements Serializable {
         {
         	Faculty f1 =(Faculty)FListitem;
             facultyList.add(f1.getFacName());
-        }
-        
-        Query sps = em.createNamedQuery("Stundenplansemester.findAll");
-        List spssList = sps.getResultList();
-        for (Object spsListitem : spssList)
-        {
-        	Stundenplansemester spss =(Stundenplansemester)spsListitem;
-            spsList.add(spss);
         }
         
         Query sps1 = em.createNamedQuery("Stundenplansemester.findAllGroupBySpsemester");
@@ -476,12 +519,12 @@ public class ScheduleController implements Serializable {
         
         
         
-        spSemesterSelection = sps1List.get(1);
-        spYearSelection = sps2List.get(1);
+        spSemesterSelection = sps1List.get(0);
+        spYearSelection = sps2List.get(0);
         spSemester = findSPSelection(spSemesterSelection, spYearSelection);
         spsId = spSemester.getSpsid();
         
-		facultySelection = facultyList.get(8);
+		facultySelection = facultyList.get(0);
         courseSelection = courseList.get(0);
 
 	}
@@ -523,7 +566,7 @@ public class ScheduleController implements Serializable {
 
         	eventSelected.setSPTermin(spMeeting);
         	eventSelected.setSgmodul(findSgm(sgmodulId));
-        	eventSelected.setLehrveranstaltungsart(findLva(teName));
+        	eventSelected.setLehrveranstaltungsart(findLva(teId));
         	eventSelected.setRaum(findRau(roomId));
         	eventSelected.setStundenplansemester(findSP(spsId));
         	eventSelected.setStudierendenzahl(studentNumber);
@@ -589,7 +632,7 @@ public class ScheduleController implements Serializable {
             
             eventSelected.setSPTermin(eventSelected.getSPTermin());
             eventSelected.setSgmodul(findSgm(sgmodulId));
-            eventSelected.setLehrveranstaltungsart(findLva(teName));
+            eventSelected.setLehrveranstaltungsart(findLva(teId));
             eventSelected.setRaum(findRau(roomId));
             eventSelected.setStundenplansemester(findSP(spsId));
             eventSelected.setStudierendenzahl(eventSelected.getStudierendenzahl());
@@ -623,10 +666,11 @@ public class ScheduleController implements Serializable {
     public void deleteEvent() throws Exception{
         String msg;       
         
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Stundenplaneintrag> q = em.createNamedQuery("Stundenplaneintrag.findById",Stundenplaneintrag.class);
-        q.setParameter("spid", eventSelected.getSpid());
-        eventSelected = (Stundenplaneintrag)q.getSingleResult();
+        //EntityManager em = emf.createEntityManager();
+        //TypedQuery<Stundenplaneintrag> q = em.createNamedQuery("Stundenplaneintrag.findById",Stundenplaneintrag.class);
+        //q.setParameter("spid", eventSelected.getSpid());
+        //eventSelected = (Stundenplaneintrag)q.getSingleResult();
+        eventSelected = speFacadeLocal.find(eventSelected.getSpid());
         
         try{            
             speFacadeLocal.remove(eventSelected);
@@ -650,7 +694,7 @@ public class ScheduleController implements Serializable {
         semesterSelection = eventSelected.getSgmodul().getModSemester();
         
         sgmodulId = eventSelected.getSgmodul().getSgmid();
-        teName = eventSelected.getLehrveranstaltungsart().getLvname();
+        teId = eventSelected.getLehrveranstaltungsart().getLvid();
         roomId = eventSelected.getRaum().getRid();
         spsId = eventSelected.getStundenplansemester().getSpsid();
         
@@ -781,26 +825,84 @@ public class ScheduleController implements Serializable {
     
     //--------------------------------------------------------------
     
-    // Setter und Getter
-    public ArrayList<String> getTeachingEventList() {
+    public ArrayList<Stundenplaneintrag> getScheduleEntry2() {
+		return scheduleEntry2;
+	}
+
+	public void setScheduleEntry2(ArrayList<Stundenplaneintrag> scheduleEntry2) {
+		this.scheduleEntry2 = scheduleEntry2;
+	}
+
+	public ArrayList<Stundenplaneintrag> getScheduleEntry3() {
+		return scheduleEntry3;
+	}
+
+	public void setScheduleEntry3(ArrayList<Stundenplaneintrag> scheduleEntry3) {
+		this.scheduleEntry3 = scheduleEntry3;
+	}
+
+	public ArrayList<Stundenplaneintrag> getScheduleEntry4() {
+		return scheduleEntry4;
+	}
+
+	public void setScheduleEntry4(ArrayList<Stundenplaneintrag> scheduleEntry4) {
+		this.scheduleEntry4 = scheduleEntry4;
+	}
+
+	public ArrayList<Stundenplaneintrag> getScheduleEntry5() {
+		return scheduleEntry5;
+	}
+
+	public void setScheduleEntry5(ArrayList<Stundenplaneintrag> scheduleEntry5) {
+		this.scheduleEntry5 = scheduleEntry5;
+	}
+
+	public ArrayList<Stundenplaneintrag> getScheduleEntry6() {
+		return scheduleEntry6;
+	}
+
+	public void setScheduleEntry6(ArrayList<Stundenplaneintrag> scheduleEntry6) {
+		this.scheduleEntry6 = scheduleEntry6;
+	}
+
+	public ArrayList<Stundenplaneintrag> getScheduleEntry7() {
+		return scheduleEntry7;
+	}
+
+	public void setScheduleEntry7(ArrayList<Stundenplaneintrag> scheduleEntry7) {
+		this.scheduleEntry7 = scheduleEntry7;
+	}
+
+	public ArrayList<Stundenplaneintrag> getScheduleEntry8() {
+		return scheduleEntry8;
+	}
+
+	public void setScheduleEntry8(ArrayList<Stundenplaneintrag> scheduleEntry8) {
+		this.scheduleEntry8 = scheduleEntry8;
+	}
+
+	// Setter und Getter
+    public List<Lehrveranstaltungsart> getTeachingEventList() {
 		return teachingEventList;
 	}
-	public void setTeachingEventList(ArrayList<String> teachingEventList) {
+	
+	public void setTeachingEventList(List<Lehrveranstaltungsart> teachingEventList) {
 		this.teachingEventList = teachingEventList;
 	}
-	public String getTeName() {
-		return teName;
+
+	public int getTeId() {
+		return teId;
 	}
-	public void setTeName(String teName) {
-		this.teName = teName;
+	public void setTeId(int teId) {
+		this.teId = teId;
 	}
 	
 	//--------------------------------------------------------------
 	
-	public ArrayList<Raum> getRoomList() {
+	public List<Raum> getRoomList() {
 		return roomList;
 	}
-	public void setRoomList(ArrayList<Raum> roomList) {
+	public void setRoomList(List<Raum> roomList) {
 		this.roomList = roomList;
 	}
 	public int getRoomId() {
@@ -812,10 +914,10 @@ public class ScheduleController implements Serializable {
 	
 	//--------------------------------------------------------------
     
-	public ArrayList<Sgmodul> getSgmodulList() {
+	public List<Sgmodul> getSgmodulList() {
 		return sgmodulList;
 	}
-	public void setSgmodulListe(ArrayList<Sgmodul> sgmodulList) {
+	public void setSgmodulListe(List<Sgmodul> sgmodulList) {
 		this.sgmodulList = sgmodulList;
 	}
 	
@@ -971,17 +1073,8 @@ public class ScheduleController implements Serializable {
 	 * @param rid
 	 * @return
 	 */
-	private Raum findRau(int rid) {
-        try{
-            EntityManager em = emf.createEntityManager(); 
-            TypedQuery<Raum> query
-                = em.createNamedQuery("Raum.findByRid",Raum.class);
-            query.setParameter("rid", rid);
-            room = (Raum)query.getSingleResult();
-        }
-        catch(Exception e){   
-        }
-        return room;
+	private Raum findRau(int rid) {   
+        return room =  roomEJB.find(rid);
     }
 	
 	/**
@@ -989,17 +1082,8 @@ public class ScheduleController implements Serializable {
 	 * @param lvname
 	 * @return
 	 */
-	private Lehrveranstaltungsart findLva(String lvname) {
-        try{
-            EntityManager em = emf.createEntityManager(); 
-            TypedQuery<Lehrveranstaltungsart> query
-                = em.createNamedQuery("Lehrveranstaltungsart.findByLvname",Lehrveranstaltungsart.class);
-            query.setParameter("lvname", lvname);
-            teachingEvent = (Lehrveranstaltungsart)query.getSingleResult();
-        }
-        catch(Exception e){   
-        }
-        return teachingEvent;
+	private Lehrveranstaltungsart findLva(int lvid) {
+        return teachingEvent = lvaEJB.find(lvid);
     }
 	
 	/**
@@ -1008,6 +1092,7 @@ public class ScheduleController implements Serializable {
 	 * @return
 	 */
 	private Sgmodul findSgm(int sgmid) {
+		/*
         try{
             EntityManager em = emf.createEntityManager(); 
             TypedQuery<Sgmodul> query
@@ -1018,6 +1103,8 @@ public class ScheduleController implements Serializable {
         catch(Exception e){   
         }
         return sgmodul;
+        */
+		return sgmodul = sgModulEJB.find(sgmid);
     }
 	
 	/**
@@ -1026,7 +1113,7 @@ public class ScheduleController implements Serializable {
 	 * @return
 	 */
 	private Stundenplansemester findSP(int sm) {
-        try{
+        /*try{
             EntityManager em = emf.createEntityManager(); 
             TypedQuery<Stundenplansemester> query
                 = em.createNamedQuery("Stundenplansemester.findBySpsid",Stundenplansemester.class);
@@ -1034,8 +1121,8 @@ public class ScheduleController implements Serializable {
             spSemester = (Stundenplansemester)query.getSingleResult();
         }
         catch(Exception e){   
-        }
-        return spSemester;
+        }*/
+        return spSemester = spsEJB.find(sm);
     }
 	
 	/**
@@ -1100,6 +1187,10 @@ public class ScheduleController implements Serializable {
 
 	public void setScheduleEntryList(List<Stundenplaneintrag> scheduleEntryList) {
 		this.scheduleEntryList = scheduleEntryList;
+	}
+
+	public void setScheduleEntry1(ArrayList<Stundenplaneintrag> scheduleEntry1) {
+		this.scheduleEntry1 = scheduleEntry1;
 	}
 
 	public ScheduleModel[] getEvents() {
@@ -1192,11 +1283,11 @@ public class ScheduleController implements Serializable {
 		this.spsId = spsId;
 	}
 
-	public ArrayList<Stundenplansemester> getSpsList() {
+	public List<Stundenplansemester> getSpsList() {
 		return spsList;
 	}
 
-	public void setSpsList(ArrayList<Stundenplansemester> spsList) {
+	public void setSpsList(List<Stundenplansemester> spsList) {
 		this.spsList = spsList;
 	}
 
@@ -1357,6 +1448,8 @@ public class ScheduleController implements Serializable {
 		this.createWeekdayEnd = createWeekdayEnd;
 	}
 
+	
+
 	public Studiengang getCourse() {
 		return course;
 	}
@@ -1444,6 +1537,14 @@ public class ScheduleController implements Serializable {
 	public void setCalendarEnd(GregorianCalendar calendarEnd) {
 		this.calendarEnd = calendarEnd;
 	}
+	
+    
+    
+
+	public ArrayList<Stundenplaneintrag> getScheduleEntry1() {
+		return scheduleEntry1;
+	}
+
 	//--------------------------------------------------------
 	
 	// Exportieren

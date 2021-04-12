@@ -57,7 +57,10 @@ public class ModulController implements Serializable {
 	
 	@Inject 
 	private Modul modul;
+	@Inject
 	private Pruefcode code;
+	@Inject
+	private PruefcodeController pcController;
 	
 	@EJB
 	private ModulFacadeLocal modulFacadeLocal;
@@ -71,16 +74,6 @@ public class ModulController implements Serializable {
     public void init() {
         modulList = getModulListAll();
         listPC = pruefCodeEJB.findAll();
-        /*
-        EntityManager em = emf.createEntityManager();
-        Query q = em.createNamedQuery("Pruefcode.findAll");
-		List FList = q.getResultList();
-        for (Object FListitem : FList)
-        {
-        	Pruefcode pCode =(Pruefcode)FListitem;
-        	codeList.add(pCode);
-        }
-        */
     }
 	
 	ArrayList<Pruefcode> codeList = new ArrayList<>();
@@ -89,9 +82,19 @@ public class ModulController implements Serializable {
 	private String modulShort;
 	private String modulName;
 	private int pcId;
+	private int verifyCode;
 	private boolean modulShortOk = false;
 	private boolean modulNameOk = false;
+	private boolean pCType = false ;
 	
+	public boolean ispCType() {
+		return pCType;
+	}
+
+	public void setpCType(boolean pCType) {
+		this.pCType = pCType;
+	}
+
 	List<Modul> modulList;
 	List<Pruefcode> listPC;
 	
@@ -191,6 +194,14 @@ public class ModulController implements Serializable {
 	        this.pcId = pcId;
 	}
 	
+	public int getVerifyCode() {
+		return verifyCode;
+	}
+
+	public void setVerifyCode(int verifyCode) {
+		this.verifyCode = verifyCode;
+	}
+
 	public UIComponent getReg() {
         return reg;
     }
@@ -211,7 +222,13 @@ public class ModulController implements Serializable {
 		Modul mod = new Modul();  
 		mod.setModName(modulName);    
 		mod.setModKuerzel(modulShort);      
+		if(!pCType) {
 		mod.setPruefcode(findCode(pcId));
+		}
+		if(pCType) {
+		Pruefcode newCode = pcController.createPruefcode(verifyCode, 1);	
+		mod.setPruefcode(newCode);
+		}
 		try {
 			modulFacadeLocal.create(mod);
 			msg = "Eintrag wurde erstellt.";
@@ -221,6 +238,7 @@ public class ModulController implements Serializable {
 	    	msg = "Eintrag wurde nicht erstellt.";
             addMessage("messages", msg);
 	    }
+		modulList = getModulListAll();
 		em.close();
 	}
 	
@@ -248,13 +266,7 @@ public class ModulController implements Serializable {
 	 * @return
 	 */
 	public List<Modul> getModulListAll(){
-		/*
-		return  modulFacadeLocal.findAll();
-		
-		EntityManager em = emf.createEntityManager();
-		TypedQuery<Modul> query = em.createNamedQuery("Modul.findAll", Modul.class);
-		return query.getResultList(); 
-		*/	
+			
 		if (Modulsort==null) {
 			Modulsort=modulFacadeLocal.findAll();
 			if (Modulsort != null) {
@@ -331,7 +343,13 @@ public class ModulController implements Serializable {
  	       modul.setModID(modulSelected.getModID());
  	       modul.setModName(modulSelected.getModName());
  	       modul.setModKuerzel(modulSelected.getModKuerzel());
- 	       modul.setPruefcode(findCode(pcId));
+ 	      if(!pCType) {
+ 	 		modul.setPruefcode(findCode(pcId));
+ 	 		}
+ 	 		if(pCType) {
+ 	 		Pruefcode newPCode = pcController.createPruefcode(verifyCode, 1);	
+ 	 		modul.setPruefcode(newPCode);
+ 	 		}
  	       modulFacadeLocal.edit(modul);
  	       msg = "Eintrag wurde bearbeitet.";
            addMessage("messages", msg);
@@ -350,6 +368,7 @@ public class ModulController implements Serializable {
      * @return
      */
     private Pruefcode findCode(int pcid) {
+    	/*
         try{
             EntityManager em = emf.createEntityManager(); 
             TypedQuery<Pruefcode> query
@@ -359,7 +378,8 @@ public class ModulController implements Serializable {
         }
         catch(Exception e){   
         }
-        return code;
+        */
+        return code = pruefCodeEJB.find(pcId);
     }
    // ---------------------------------------------------------------------------------------------------------------------
 

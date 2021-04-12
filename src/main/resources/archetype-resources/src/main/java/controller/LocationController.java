@@ -178,11 +178,6 @@ public class LocationController implements Serializable {
 	 * @return
 	 */
 	public List<Location> getLocationListAll(){
-		/*
-		EntityManager em = emf.createEntityManager();
-		TypedQuery<Location> query = em.createNamedQuery("Location.findAll", Location.class);
-		return query.getResultList();
-		*/
 		return locationFacadeLocal.findAll();
 	}
 	

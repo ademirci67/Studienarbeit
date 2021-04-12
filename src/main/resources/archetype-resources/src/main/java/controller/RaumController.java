@@ -229,24 +229,14 @@ public class RaumController implements Serializable {
 	 * @return
 	 */
 	public List<Raum> getRaumList(){
-		/*
-		EntityManager em = emf.createEntityManager();
-		TypedQuery<Raum> query = em.createNamedQuery("Raum.findAll", Raum.class);
-		return query.getResultList();
-		*/
 		return raumFacadeLocal.findAll();
 	}
 	
 	/**
-	 * Laden der Standortsliste
+	 * Laden der sortierten Standortsliste
 	 * @return
 	 */
 	public List<Location> getLocationList(){
-		/*
-		EntityManager em = emf.createEntityManager();
-		TypedQuery<Location> query = em.createNamedQuery("Location.findAll", Location.class);
-		return query.getResultList();
-		*/
 		if (locationSort==null) {
 			locationSort = locationEJB.findAll();
 			if (locationSort != null) {

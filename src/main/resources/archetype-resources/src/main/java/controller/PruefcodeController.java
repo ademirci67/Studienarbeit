@@ -67,19 +67,9 @@ public class PruefcodeController implements Serializable {
     public void init() {
         codeList = getCodeListAll();
         courseList = getCourseListAll();
-        /*
-        EntityManager em = emf.createEntityManager();
-        
-        Query s = em.createNamedQuery("Studiengang.findAll");
-        List SList = s.getResultList();
-        for (Object SListitem : SList)
-        {
-        	Studiengang sg =(Studiengang)SListitem;
-        	courseList.add(sg);
-        }*/
     }
  
-	//ArrayList<Studiengang> courseList = new ArrayList<>();
+	
 	List<Studiengang> courseList;
 	private List<Studiengang> courseSort = null;
 	
@@ -130,15 +120,7 @@ public class PruefcodeController implements Serializable {
 	public void setCourseList(List<Studiengang> courseList) {
 		this.courseList = courseList;
 	}
-/*
-	public ArrayList<Studiengang> getCourseList() {
-		return courseList;
-	}
 
-	public void setCourseList(ArrayList<Studiengang> courseList) {
-		this.courseList = courseList;
-	}
-*/
 	public String getSpecializationShort() {
 		return specializationShort;
 	}
@@ -193,7 +175,7 @@ public class PruefcodeController implements Serializable {
 	 * Erstellen eines Prüfcodeeintrag
 	 * @throws Exception
 	 */
-	public void createPruefcode() throws Exception  {
+	public Pruefcode createPruefcode(int verifyCode, int courseId) throws Exception  {
 		String msg;
 		EntityManager em = emf.createEntityManager();
 		Pruefcode pCode = new Pruefcode();  
@@ -210,7 +192,8 @@ public class PruefcodeController implements Serializable {
 	    	msg = "Eintrag wurde nicht erstellt.";
             addMessage("messages", msg);
 	    }
-		em.close();
+		return pCode;
+		
 	}
 	
 	/**
@@ -224,7 +207,7 @@ public class PruefcodeController implements Serializable {
 	 * @throws Exception
 	 */
 	public void createDoPruefcode() throws SecurityException, SystemException, NotSupportedException, RollbackException, HeuristicMixedException, HeuristicRollbackException, Exception{
-			createPruefcode();
+			createPruefcode(verifyCode, courseId);
 			codeList = getCodeListAll();
 		
 	}
@@ -236,14 +219,13 @@ public class PruefcodeController implements Serializable {
 	 * @return
 	 */
 	public List<Pruefcode> getCodeListAll(){
-		/*
-		EntityManager em = emf.createEntityManager();
-		TypedQuery<Pruefcode> query = em.createNamedQuery("Pruefcode.findAll", Pruefcode.class);
-		return query.getResultList();
-		*/
 		return pruefcodeFacadeLocal.findAll();
 	}
 	
+	/**
+	 * Laden der sortierten Studiengangliste
+	 * @return
+	 */
 	public List<Studiengang> getCourseListAll(){
 		
 		if (courseSort==null) {

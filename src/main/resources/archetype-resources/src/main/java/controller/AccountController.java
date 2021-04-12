@@ -73,23 +73,6 @@ public class AccountController implements Serializable {
 		accountList = getAccountListAll();
 		facultyList = facultyEJB.findAll();
 		userGroupList = userGroupEJB.findAll();
-		/*
-        EntityManager em = emf.createEntityManager();
-        Query q = em.createNamedQuery("Faculty.findAll");
-        List FList = q.getResultList();
-        for (Object FListitem : FList)
-        {
-            Faculty fac =(Faculty)FListitem;
-            facultyList.add(fac.getFacName());
-        }
-        Query b = em.createNamedQuery("Benutzergruppe.findAll");
-        List BList = b.getResultList();
-        for (Object BListitem : BList)
-        {
-            Benutzergruppe bg =(Benutzergruppe)BListitem;
-            userGroupList.add(bg.getBGName());
-        }
-        */
     }
 	
 	private String accountName;
@@ -154,22 +137,7 @@ public class AccountController implements Serializable {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
-/*
-	public ArrayList<String> getFacultyList() {
-        return facultyList;
-    }
-
-    public void setFacultyList(ArrayList<String> facultyList) {
-        this.facultyList = facultyList;
-    }
-    public ArrayList<String> getUserGroupList() {
-        return userGroupList;
-    }
-
-    public void setUserGroupList(ArrayList<String> userGroupList) {
-        this.userGroupList = userGroupList;
-    }
-*/	  
+  
 	public String getAccountEmail() {
 		return accountEmail;
 	}
@@ -289,11 +257,6 @@ public class AccountController implements Serializable {
 	 * @return
 	 */
 	public List<Account> getAccountListAll(){
-		/*
-		EntityManager em = emf.createEntityManager();
-		TypedQuery<Account> query = em.createNamedQuery("Account.findAll", Account.class);
-		return query.getResultList();
-		*/
 		return accFacadeLocal.findAll();
 	}
 	

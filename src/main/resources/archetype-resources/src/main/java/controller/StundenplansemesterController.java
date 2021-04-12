@@ -253,11 +253,6 @@ public class StundenplansemesterController implements Serializable {
 	 * @return
 	 */
 	public List<Stundenplansemester> getStundenplansemesterList(){
-		/*
-		EntityManager em = emf.createEntityManager();
-		TypedQuery<Stundenplansemester> query = em.createNamedQuery("Stundenplansemester.findAll", Stundenplansemester.class);
-		return query.getResultList();
-		*/
 		return stundenplansemesterFacadeLocal.findAll();
 	}
 	
@@ -266,11 +261,6 @@ public class StundenplansemesterController implements Serializable {
 	 * @return
 	 */
 	public List<Stundenplanstatus> getScheduleStatusList(){
-		/*
-		EntityManager em = emf.createEntityManager();
-		TypedQuery<Stundenplanstatus> query = em.createNamedQuery("Stundenplanstatus.findAll", Stundenplanstatus.class);
-		return query.getResultList();
-		*/
 		return scheduleStatusEJB.findAll();
 	}
 	

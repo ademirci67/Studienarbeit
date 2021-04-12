@@ -237,11 +237,6 @@ public class StudiengangController implements Serializable {
 	 * @return
 	 */
 	public List<Studiengang> getStudiengangList(){
-		/*
-		EntityManager em = emf.createEntityManager();
-		TypedQuery<Studiengang> query = em.createNamedQuery("Studiengang.findAll", Studiengang.class);
-		return query.getResultList();
-		*/
 		return studiengangFacadeLocal.findAll();
 	}
 	
@@ -250,11 +245,6 @@ public class StudiengangController implements Serializable {
 	 * @return
 	 */
 	public List<Faculty> getFacultyList(){
-		/*
-		EntityManager em = emf.createEntityManager();
-		TypedQuery<Faculty> query = em.createNamedQuery("Faculty.findAll", Faculty.class);
-		return query.getResultList();
-		*/
 		if (facultySort==null) {
 			facultySort = facultyEJB.findAll();
 			if (facultySort != null) {

@@ -202,11 +202,6 @@ public class BenutzergruppeController implements Serializable {
 	 * @return
 	 */
 	public List<Benutzergruppe> getBenutzergruppeList(){
-		/*
-		EntityManager em = emf.createEntityManager();
-		TypedQuery<Benutzergruppe> query = em.createNamedQuery("Benutzergruppe.findAll", Benutzergruppe.class);
-		return query.getResultList();
-		*/
 		return userGroupFacadeLocal.findAll();
 	}
 	
