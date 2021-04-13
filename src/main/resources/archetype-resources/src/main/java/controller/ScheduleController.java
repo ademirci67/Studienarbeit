@@ -55,7 +55,7 @@ import org.primefaces.model.ScheduleModel;
 import java.util.GregorianCalendar;
 
 import java.util.Calendar;
-
+import java.util.Collections;
 
 import javax.ejb.EJB;
 
@@ -164,12 +164,15 @@ public class ScheduleController implements Serializable {
     private Stundenplaneintrag spe;
 	
     List<Lehrveranstaltungsart> teachingEventList ;
+    private List<Lehrveranstaltungsart> teachingEventSort = null;
     private int teId;
     
     List<Raum> roomList;
+    private List<Raum> roomSort = null;
     private int roomId;
     
     List<Sgmodul> sgmodulList;
+    private List<Sgmodul> sgmodulSort = null;
     private int sgmodulId;
     
     ArrayList<Integer> semesterList = new ArrayList<>();
@@ -182,6 +185,7 @@ public class ScheduleController implements Serializable {
     private String facultySelection;
     
     List<Stundenplansemester> spsList;
+    private List<Stundenplansemester> spsSort = null;
     private int spsId;
     
     ArrayList<String> sps1List = new ArrayList<>();
@@ -477,10 +481,10 @@ public class ScheduleController implements Serializable {
         
 		
 		
-        teachingEventList = lvaEJB.findAll();
-        roomList = roomEJB.findAll();
-        sgmodulList = sgModulEJB.findAll();		
-        spsList = spsEJB.findAll();
+        teachingEventList = getTeachingEventAll();
+        roomList = getRoomAll();
+        sgmodulList = getSgmodulAll();		
+        spsList = getSpsAll();
         //courseList = courseEJB.findAll();
         //facultyList = facultyEJB.findAll();
         
@@ -951,6 +955,38 @@ public class ScheduleController implements Serializable {
 		this.sgmodul = sgmodul;
 	}
 	
+	public List<Lehrveranstaltungsart> getTeachingEventSort() {
+		return teachingEventSort;
+	}
+
+	public void setTeachingEventSort(List<Lehrveranstaltungsart> teachingEventSort) {
+		this.teachingEventSort = teachingEventSort;
+	}
+
+	public List<Raum> getRoomSort() {
+		return roomSort;
+	}
+
+	public void setRoomSort(List<Raum> roomSort) {
+		this.roomSort = roomSort;
+	}
+
+	public List<Sgmodul> getSgmodulSort() {
+		return sgmodulSort;
+	}
+
+	public void setSgmodulSort(List<Sgmodul> sgmodulSort) {
+		this.sgmodulSort = sgmodulSort;
+	}
+
+	public List<Stundenplansemester> getSpsSort() {
+		return spsSort;
+	}
+
+	public void setSpsSort(List<Stundenplansemester> spsSort) {
+		this.spsSort = spsSort;
+	}
+
 	public Faculty getFaculty() {
 		return faculty;
 	}
@@ -1145,7 +1181,85 @@ public class ScheduleController implements Serializable {
         return course;
     }
 	
+	/**
+	 * Sortierung der Lehrveranstaltungen und speichern der Liste in TeachingEventALL
+	 * @param sps
+	 * @param sm
+	 * @return
+	 */
+	public List<Lehrveranstaltungsart> getTeachingEventAll(){
+		
+		if (teachingEventSort==null) {
+			teachingEventSort = lvaEJB.findAll();
+			if (teachingEventSort != null) {
+				Collections.sort(teachingEventSort, (a,b) -> {
+					return a.getLvname().compareToIgnoreCase(b.getLvname());
+				});
+				}
+			}
+		
+		return  teachingEventSort;
+	}
 	
+	/**
+	 * Sortierung der Räume und speichern der Liste in RoomALL
+	 * @param sps
+	 * @param sm
+	 * @return
+	 */
+	public List<Raum> getRoomAll(){
+		
+		if (roomSort==null) {
+			roomSort = roomEJB.findAll();
+			if (roomSort != null) {
+				Collections.sort(roomSort, (a,b) -> {
+					return a.getRName().compareToIgnoreCase(b.getRName());
+				});
+				}
+			}
+		
+		return  roomSort;
+	}
+	
+	/**
+	 * Sortierung der Module und speichern der Liste in SgmodulALL
+	 * @param sps
+	 * @param sm
+	 * @return
+	 */
+	public List<Sgmodul> getSgmodulAll(){
+		
+		if (sgmodulSort==null) {
+			sgmodulSort = sgModulEJB.findAll();
+			if (sgmodulSort != null) {
+				Collections.sort(sgmodulSort, (a,b) -> {
+					return a.getModul().getModName().compareToIgnoreCase(b.getModul().getModName());
+				});
+				}
+			}
+		
+		return  sgmodulSort;
+	}
+	
+	/**
+	 * Sortierung der Semester und speichern der Liste in SpsALL
+	 * @param sps
+	 * @param sm
+	 * @return
+	 */
+	public List<Stundenplansemester> getSpsAll(){
+		
+		if (spsSort==null) {
+			spsSort = spsEJB.findAll();
+			if (spsSort != null) {
+				Collections.sort(spsSort, (a,b) -> {
+					return a.getSPSemester().compareToIgnoreCase(b.getSPSemester());
+				});
+				}
+			}
+		
+		return  spsSort;
+	}
 	//--------------------------------------------------------------
 	
 	/**

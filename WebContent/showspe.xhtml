@@ -388,7 +388,7 @@
 		    </p:dialog>    
 		</h:form>
 		<h:form id="exportDetailsForm">
-		    <p:dialog id="exportDialog" widgetVar="exportDialog" header="Exporter" showEffect="clip" hideEffect="clip" width="250">
+		    <p:dialog id="exportDialog" widgetVar="exportDialog" header="Exporter" showEffect="clip" hideEffect="clip" width="1631" height="526,4">
 		        <h:panelGrid id="exportEventDetails" columns="2">
 		 		
 		 			
@@ -398,7 +398,7 @@
 				    	
 		 		<p:dataTable id="SpeListe" var="list" value="#{scheduleController.scheduleEntry1}" >
 		 		<f:facet name="header">
-                Erstes Semester
+                #{scheduleController.courseSelection}, 1.Semester
             	</f:facet>
 		        
 		        <p:column headerText="Tag" >
@@ -411,7 +411,7 @@
                 </h:outputText>
                 </p:column>
 		 		
-		        <p:column headerText="Modulname" >
+		        <p:column headerText="Modul" >
 		                <h:outputText value="#{list.sgmodul.modul.modKuerzel}" />
 		        </p:column>
 		        
@@ -420,7 +420,7 @@
 		        </p:column>
 		        
 		        
-		        <p:column headerText="Veranstaltung" >
+		        <p:column headerText="Ereignis" >
 		                <h:outputText value="#{list.lehrveranstaltungsart.lvkurz}" />
 		        </p:column>
 		        		        
@@ -440,13 +440,22 @@
 		   		 <p:commandButton value="PDF"  ajax="false">
                     	<p:dataExporter type="pdf" target="SpeListe" fileName="#{scheduleController.courseSelection}, 1.Semester" />
                		 </p:commandButton>
+               		 <p:commandButton value="XLS"  ajax="false">
+                    	<p:dataExporter type="xls" target="SpeListe" fileName="#{scheduleController.courseSelection}, 1.Semester" />
+               		 </p:commandButton>
+               		 <p:commandButton value="CSV"  ajax="false">
+                    	<p:dataExporter type="csv" target="SpeListe" fileName="#{scheduleController.courseSelection}, 1.Semester" />
+               		 </p:commandButton>
                		</h:panelGroup>
-               		<h:panelGroup id="panelgroup222" rendered="#{scheduleController.show2}">
+            <h:panelGroup id="panelgroup222" rendered="#{scheduleController.show2}">
 			            <p:outputLabel for="SpeListe2" value="Semester 2: " />               		 
 	               		
 				    	
 		 		<p:dataTable id="SpeListe2" var="list" value="#{scheduleController.scheduleEntry2}" >
-		        
+		        <f:facet name="header">
+                #{scheduleController.courseSelection}, 2.Semester
+            	</f:facet>
+            	
 		        <p:column headerText="Tag" >
 		                <h:outputText value="#{list.wochentag}" />
 		        </p:column>
@@ -457,7 +466,7 @@
                 </h:outputText>
                 </p:column>
 		 		
-		        <p:column headerText="Modulname" >
+		        <p:column headerText="Modul" >
 		                <h:outputText value="#{list.sgmodul.modul.modKuerzel}" />
 		        </p:column>
 		        
@@ -466,7 +475,7 @@
 		        </p:column>
 		        
 		        
-		        <p:column headerText="Veranstaltung" >
+		        <p:column headerText="Ereignis" >
 		                <h:outputText value="#{list.lehrveranstaltungsart.lvkurz}" />
 		        </p:column>
 		        		        
@@ -486,13 +495,22 @@
 		   		 <p:commandButton value="PDF"  ajax="false">
                     	<p:dataExporter type="pdf" target="SpeListe2" fileName="#{scheduleController.courseSelection}, 2.Semester" />
                		 </p:commandButton>
+               		 <p:commandButton value="XLS"  ajax="false">
+                    	<p:dataExporter type="xls" target="SpeListe2" fileName="#{scheduleController.courseSelection}, 2.Semester" />
+               		 </p:commandButton>
+               		 <p:commandButton value="CSV"  ajax="false">
+                    	<p:dataExporter type="csv" target="SpeListe2" fileName="#{scheduleController.courseSelection}, 2.Semester" />
+               		 </p:commandButton>
                		</h:panelGroup>
                		<h:panelGroup id="panelgroup333" rendered="#{scheduleController.show3}">
 			            <p:outputLabel for="SpeListe3" value="Semester 3: " />               		 
 	               		
 				    	
 		 		<p:dataTable id="SpeListe3" var="list" value="#{scheduleController.scheduleEntry3}" >
-		        
+		        <f:facet name="header">
+                #{scheduleController.courseSelection}, 3.Semester
+            	</f:facet>
+            	
 		        <p:column headerText="Tag" >
 		                <h:outputText value="#{list.wochentag}" />
 		        </p:column>
@@ -503,7 +521,7 @@
                 </h:outputText>
                 </p:column>
 		 		
-		        <p:column headerText="Modulname" >
+		        <p:column headerText="Modul" >
 		                <h:outputText value="#{list.sgmodul.modul.modKuerzel}" />
 		        </p:column>
 		        
@@ -512,7 +530,7 @@
 		        </p:column>
 		        
 		        
-		        <p:column headerText="Veranstaltung" >
+		        <p:column headerText="Ereignis" >
 		                <h:outputText value="#{list.lehrveranstaltungsart.lvkurz}" />
 		        </p:column>
 		        		        
@@ -532,13 +550,22 @@
 		   		 <p:commandButton value="PDF"  ajax="false">
                     	<p:dataExporter type="pdf" target="SpeListe3" fileName="#{scheduleController.courseSelection}, 3.Semesters" />
                		 </p:commandButton>
+               		 <p:commandButton value="XLS"  ajax="false">
+                    	<p:dataExporter type="xls" target="SpeListe3" fileName="#{scheduleController.courseSelection}, 3.Semesters" />
+               		 </p:commandButton>
+               		 <p:commandButton value="CSV"  ajax="false">
+                    	<p:dataExporter type="csv" target="SpeListe3" fileName="#{scheduleController.courseSelection}, 3.Semesters" />
+               		 </p:commandButton>
                	</h:panelGroup>
                		<h:panelGroup id="panelgroup444" rendered="#{scheduleController.show4}">
 			            <p:outputLabel for="SpeListe4" value="Semester 4: " />               		 
 	               		
 				    	
 		 		<p:dataTable id="SpeListe4" var="list" value="#{scheduleController.scheduleEntry4}" >
-		        
+		        <f:facet name="header">
+                #{scheduleController.courseSelection}, 4.Semester
+            	</f:facet>
+            	
 		        <p:column headerText="Tag" >
 		                <h:outputText value="#{list.wochentag}" />
 		        </p:column>
@@ -549,7 +576,7 @@
                 </h:outputText>
                 </p:column>
 		 		
-		        <p:column headerText="Modulname" >
+		        <p:column headerText="Modul" >
 		                <h:outputText value="#{list.sgmodul.modul.modKuerzel}" />
 		        </p:column>
 		        
@@ -558,7 +585,7 @@
 		        </p:column>
 		       
 		        
-		        <p:column headerText="Veranstaltung" >
+		        <p:column headerText="Ereignis" >
 		                <h:outputText value="#{list.lehrveranstaltungsart.lvkurz}" />
 		        </p:column>
 		        		        
@@ -578,12 +605,21 @@
 		   		 <p:commandButton value="PDF"  ajax="false">
                     	<p:dataExporter type="pdf" target="SpeListe4" fileName="#{scheduleController.courseSelection}, 4.Semester" />
                		 </p:commandButton>
+               		 <p:commandButton value="XLS"  ajax="false">
+                    	<p:dataExporter type="xls" target="SpeListe4" fileName="#{scheduleController.courseSelection}, 4.Semester" />
+               		 </p:commandButton>
+               		 <p:commandButton value="CSV"  ajax="false">
+                    	<p:dataExporter type="csv" target="SpeListe4" fileName="#{scheduleController.courseSelection}, 4.Semester" />
+               		 </p:commandButton>
                		</h:panelGroup>
                		<h:panelGroup id="panelgroup555" rendered="#{scheduleController.show5}">
 			            <p:outputLabel for="SpeListe5" value="Semester 5: " />               		 
 	               		
 				    	
 		 		<p:dataTable id="SpeListe5" var="list" value="#{scheduleController.scheduleEntry5}" >
+		 		<f:facet name="header">
+                #{scheduleController.courseSelection}, 5.Semester
+            	</f:facet>
 		        
 		        <p:column headerText="Tag" >
 		                <h:outputText value="#{list.wochentag}" />
@@ -595,7 +631,7 @@
                 </h:outputText>
                 </p:column>
 		 		
-		        <p:column headerText="Modulname" >
+		        <p:column headerText="Modul" >
 		                <h:outputText value="#{list.sgmodul.modul.modKuerzel}" />
 		        </p:column>
 		        
@@ -604,7 +640,7 @@
 		        </p:column>
 
 		        
-		        <p:column headerText="Veranstaltung" >
+		        <p:column headerText="Ereignis" >
 		                <h:outputText value="#{list.lehrveranstaltungsart.lvkurz}" />
 		        </p:column>
 		        		        
@@ -624,12 +660,21 @@
 		   		 <p:commandButton value="PDF"  ajax="false">
                     	<p:dataExporter type="pdf" target="SpeListe5" fileName="#{scheduleController.courseSelection}, 5.Semester" />
                		 </p:commandButton>
+               		  <p:commandButton value="XLS"  ajax="false">
+                    	<p:dataExporter type="xls" target="SpeListe5" fileName="#{scheduleController.courseSelection}, 5.Semester" />
+               		 </p:commandButton>
+               		 <p:commandButton value="CSV"  ajax="false">
+                    	<p:dataExporter type="csv" target="SpeListe5" fileName="#{scheduleController.courseSelection}, 5.Semester" />
+               		 </p:commandButton>
                		</h:panelGroup>
                		<h:panelGroup id="panelgroup666" rendered="#{scheduleController.show6}">
 			            <p:outputLabel for="SpeListe6" value="Semester 6: " />               		 
 	               		
 				    	
 		 		<p:dataTable id="SpeListe6" var="list" value="#{scheduleController.scheduleEntry6}" >
+		 		<f:facet name="header">
+                #{scheduleController.courseSelection}, 6.Semester
+            	</f:facet>
 		        
 		        <p:column headerText="Tag" >
 		                <h:outputText value="#{list.wochentag}" />
@@ -641,7 +686,7 @@
                 </h:outputText>
                 </p:column>
 		 		
-		        <p:column headerText="Modulname" >
+		        <p:column headerText="Modul" >
 		                <h:outputText value="#{list.sgmodul.modul.modKuerzel}" />
 		        </p:column>
 		        
@@ -649,7 +694,7 @@
 		                <h:outputText value="#{list.sgmodul.dozenten.DKurz}" />
 		        </p:column>
 		        
-		        <p:column headerText="Veranstaltung" >
+		        <p:column headerText="Ereignis" >
 		                <h:outputText value="#{list.lehrveranstaltungsart.lvkurz}" />
 		        </p:column>
 		        		        
@@ -669,12 +714,21 @@
 		   		 <p:commandButton value="PDF"  ajax="false">
                     	<p:dataExporter type="pdf" target="SpeListe6" fileName="#{scheduleController.courseSelection}, 6.Semester" />
                		 </p:commandButton>
+               		 <p:commandButton value="XLS"  ajax="false">
+                    	<p:dataExporter type="xls" target="SpeListe6" fileName="#{scheduleController.courseSelection}, 6.Semester" />
+               		 </p:commandButton>
+               		 <p:commandButton value="CSV"  ajax="false">
+                    	<p:dataExporter type="csv" target="SpeListe6" fileName="#{scheduleController.courseSelection}, 6.Semester" />
+               		 </p:commandButton>
                		</h:panelGroup>
                		<h:panelGroup id="panelgroup777" rendered="#{scheduleController.show7}">
 			            <p:outputLabel for="SpeListe7" value="Semester 7: " />               		 
 	               		
 				    	
 		 		<p:dataTable id="SpeListe7" var="list" value="#{scheduleController.scheduleEntry7}" >
+		 		<f:facet name="header">
+                #{scheduleController.courseSelection}, 7.Semester
+            	</f:facet>
 		        
 		        <p:column headerText="Tag" >
 		                <h:outputText value="#{list.wochentag}" />
@@ -686,7 +740,7 @@
                 </h:outputText>
                 </p:column>
 		 		
-		        <p:column headerText="Modulname" >
+		        <p:column headerText="Modul" >
 		                <h:outputText value="#{list.sgmodul.modul.modKuerzel}" />
 		        </p:column>
 		        
@@ -695,7 +749,7 @@
 		        </p:column>
 
 		        
-		        <p:column headerText="Veranstaltung" >
+		        <p:column headerText="Ereignis" >
 		                <h:outputText value="#{list.lehrveranstaltungsart.lvkurz}" />
 		        </p:column>
 		        		        
@@ -715,12 +769,21 @@
 		   		 <p:commandButton value="PDF"  ajax="false">
                     	<p:dataExporter type="pdf" target="SpeListe7" fileName="#{scheduleController.courseSelection}, 7.Semester" />
                		 </p:commandButton>
+               		 <p:commandButton value="XLS"  ajax="false">
+                    	<p:dataExporter type="xls" target="SpeListe7" fileName="#{scheduleController.courseSelection}, 7.Semester" />
+               		 </p:commandButton>
+               		 <p:commandButton value="CSV"  ajax="false">
+                    	<p:dataExporter type="csv" target="SpeListe7" fileName="#{scheduleController.courseSelection}, 7.Semester" />
+               		 </p:commandButton>
                		</h:panelGroup>
                		<h:panelGroup id="panelgroup888" rendered="#{scheduleController.show8}">
 			            <p:outputLabel for="SpeListe7" value="Semester 8: " />               		 
 	               		
 				    	
 		 		<p:dataTable id="SpeListe8" var="list" value="#{scheduleController.scheduleEntry8}" >
+		 		<f:facet name="header">
+                #{scheduleController.courseSelection}, 8.Semester
+            	</f:facet>
 		        
 		        <p:column headerText="Tag" >
 		                <h:outputText value="#{list.wochentag}" />
@@ -732,7 +795,7 @@
                 </h:outputText>
                 </p:column>
 		 		
-		        <p:column headerText="Modulname" >
+		        <p:column headerText="Modul" >
 		                <h:outputText value="#{list.sgmodul.modul.modKuerzel}" />
 		        </p:column>
 		        
@@ -741,7 +804,7 @@
 		        </p:column>
 
 		        
-		        <p:column headerText="Veranstaltung" >
+		        <p:column headerText="Ereignis" >
 		                <h:outputText value="#{list.lehrveranstaltungsart.lvkurz}" />
 		        </p:column>
 		        		        
@@ -760,6 +823,12 @@
 		    </p:dataTable> <br />
 		   		 <p:commandButton value="PDF"  ajax="false">
                     	<p:dataExporter type="pdf" target="SpeListe7" fileName="#{scheduleController.courseSelection}, 8.Semester" />
+               		 </p:commandButton>
+               		 <p:commandButton value="XLS"  ajax="false">
+                    	<p:dataExporter type="xls" target="SpeListe7" fileName="#{scheduleController.courseSelection}, 8.Semester" />
+               		 </p:commandButton>
+               		 <p:commandButton value="CSV"  ajax="false">
+                    	<p:dataExporter type="csv" target="SpeListe7" fileName="#{scheduleController.courseSelection}, 8.Semester" />
                		 </p:commandButton>
                		</h:panelGroup>
 		        </h:panelGrid>

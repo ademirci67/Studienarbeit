@@ -311,6 +311,7 @@ public class PruefcodeController implements Serializable {
      * @return
      */
     private Studiengang findSg(int sg) {
+    	/*
         try{
             EntityManager em = emf.createEntityManager(); 
             TypedQuery<Studiengang> query
@@ -320,7 +321,8 @@ public class PruefcodeController implements Serializable {
         }
         catch(Exception e){   
         }
-        return course;
+        */
+        return course = courseEJB.find(sg);
     }
     
    // ---------------------------------------------------------------------------------------------------------------------

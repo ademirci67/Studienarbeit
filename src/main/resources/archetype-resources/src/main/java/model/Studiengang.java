@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 
 @NamedQueries({
-@NamedQuery(name="Studiengang.findAll", query="SELECT s FROM Studiengang s"),
+@NamedQuery(name="Studiengang.findAll", query="SELECT s FROM Studiengang s ORDER BY s.SGName"),
 @NamedQuery(name="Studiengang.findBySgid", query="SELECT s FROM Studiengang s WHERE s.sgid = :sgid"),
 @NamedQuery(name="Studiengang.findBySGKurz", query="SELECT s FROM Studiengang s WHERE s.SGKurz = :SGKurz"),
 @NamedQuery(name="Studiengang.findBySGName", query="SELECT s FROM Studiengang s WHERE s.SGName = :SGName"),

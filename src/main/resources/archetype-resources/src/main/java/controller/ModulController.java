@@ -266,7 +266,7 @@ public class ModulController implements Serializable {
 	 * @return
 	 */
 	public List<Modul> getModulListAll(){
-			
+		/*
 		if (Modulsort==null) {
 			Modulsort=modulFacadeLocal.findAll();
 			if (Modulsort != null) {
@@ -276,20 +276,22 @@ public class ModulController implements Serializable {
 				}
 			}
 		
-		return  Modulsort;
+		return  Modulsort; 
+		*/
+		return modulFacadeLocal.findAll();
 	}
 	/*
 	public List<Pruefcode> getPruefcodeListAll(){
-		/*
+		
 		if (Codesort==null) {
 			Codesort=pruefCodeEJB.findAll();
 			if (Codesort != null) {
 				Collections.sort(Codesort, (a,b) -> {
-					return a.getPrCode().compareTo(b.getPrCode());
+					return a.getPrCode().compareToIgnoreCase(b.getPrCode());
 				});
 				}
 			}
-		/
+		
 		return  pruefCodeEJB.findAll();
 	}*/
 	//----------------------------------------------------------------------------------------------------------------------------------------------
@@ -343,10 +345,10 @@ public class ModulController implements Serializable {
  	       modul.setModID(modulSelected.getModID());
  	       modul.setModName(modulSelected.getModName());
  	       modul.setModKuerzel(modulSelected.getModKuerzel());
- 	      if(!pCType) {
+ 	       if(!pCType) {
  	 		modul.setPruefcode(findCode(pcId));
  	 		}
- 	 		if(pCType) {
+ 	       if(pCType) {
  	 		Pruefcode newPCode = pcController.createPruefcode(verifyCode, 1);	
  	 		modul.setPruefcode(newPCode);
  	 		}
