@@ -6,6 +6,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -102,12 +103,7 @@ public class LocationController implements Serializable {
 			this.locationCity = locationCity;
 			locationCityOk = true;
 		}
-		else{
-			FacesMessage message = new FacesMessage("Stadt ist bereits vorhanden.");
-            FacesContext.getCurrentInstance().addMessage("LocationForm:modKuerzel_reg", message);
-	    }
 	}
-
 	public String getLocationStreet() {
 		return this.locationStreet;
 	}
@@ -117,10 +113,6 @@ public class LocationController implements Serializable {
 			this.locationStreet = locationStreet;
 			locationStreetOk = true;
 		}
-		else{
-			FacesMessage message = new FacesMessage("Straße ist bereits vorhanden.");
-            FacesContext.getCurrentInstance().addMessage("LocationForm:modKuerzel_reg", message);
-	    }
 	}
 	
 	public UIComponent getReg() {
@@ -145,12 +137,14 @@ public class LocationController implements Serializable {
 		loc.setLStreet(locationStreet);      
 		try {
 			locationFacadeLocal.create(loc);
-			msg = "Eintrag wurde erstellt.";
-            addMessage("messages", msg);
+			msg = "entry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 	    catch (Exception e) {
-            msg = "Eintrag wurde nicht erstellt.";
-            addMessage("messages", msg);
+            msg = "notEntry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 		em.close();
 	}
@@ -197,12 +191,14 @@ public class LocationController implements Serializable {
         
         try {
         	locationFacadeLocal.remove(location);
-        	msg = "Eintrag wurde gelöscht.";
-            addMessage("messages", msg);
+        	msg = "delete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 	    catch (Exception e) {
-            msg = "Eintrag wurde nicht gelöscht.";
-            addMessage("messages", msg);
+            msg = "notDelete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 		em.close();
     }
@@ -214,8 +210,8 @@ public class LocationController implements Serializable {
      * @param e
      */
     public void onRowSelect(SelectEvent<Location> e) {
-    	FacesMessage msg = new FacesMessage("Standort ausgewählt.");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+    	String msg = "location";
+        addInfoMessage(msg);
         
         locationSelected = e.getObject();
         
@@ -234,13 +230,15 @@ public class LocationController implements Serializable {
  	        location.setLCity(locationSelected.getLCity());
  	        location.setLStreet(locationSelected.getLStreet());
  	        locationFacadeLocal.edit(location);
- 	        msg = "Eintrag wurde bearbeitet.";
-            addMessage("messages", msg);
- 	    }
- 	    catch (Exception e) {
-            msg = "Eintrag wurde nicht bearbeitet.";
-            addMessage("messages", msg);
- 	    }
+ 	       msg = "edit";
+           //addMessage("messages", msg);
+           addInfoMessage(msg);
+	    }
+	    catch (Exception e) {
+           msg = "notEdit";
+           //addMessage("messages", msg);
+           addInfoMessage(msg);
+	    }
     	locationList = getLocationListAll();
     	em.close();
     }
@@ -253,5 +251,16 @@ public class LocationController implements Serializable {
 	private void addMessage(String loginformidName, String msg) {
 	   FacesMessage message = new FacesMessage(msg);
 	   FacesContext.getCurrentInstance().addMessage(loginformidName, message);     
+	}
+	
+	/**
+	 * Faces messages ausgeben.
+	 * @param str
+	 */
+	public static void addInfoMessage(String str) {
+		  FacesContext context = FacesContext.getCurrentInstance();
+		  ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
+		  String message = bundle.getString(str);
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, ""));
 	}
 }

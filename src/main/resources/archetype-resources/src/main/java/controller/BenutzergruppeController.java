@@ -6,8 +6,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 
 import java.util.List;
-
-
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -107,10 +106,6 @@ public class BenutzergruppeController implements Serializable {
 			this.userGroupName = userGroupName;
 			userGroupNameOk = true;
 		}
-		else{
-			FacesMessage message = new FacesMessage("Benutzergruppe ist bereits vorhanden.");
-            FacesContext.getCurrentInstance().addMessage("BenutzergruppeForm:BGName_reg", message);
-	    }
 	}
 	  
 	public String getUserGroupShortName() {
@@ -122,10 +117,6 @@ public class BenutzergruppeController implements Serializable {
 	        this.userGroupShortName = userGroupShortName;
 	        userGroupShortNameOk=true;
 	    }
-	    else{
-	    	FacesMessage message = new FacesMessage("Benutzergruppenkürzel ist bereits vorhanden.");
-            FacesContext.getCurrentInstance().addMessage("BenutzergruppeForm:BGShortName_reg", message);
-	    }
 	}
 	  
 	public Integer getUserGroupRights() {
@@ -136,10 +127,6 @@ public class BenutzergruppeController implements Serializable {
 		if(userGroupRights!=null){
 	        this.userGroupRights = userGroupRights;
 	        userGroupRightsOk=true;
-	    }
-	    else{
-	    	FacesMessage message = new FacesMessage("Benutzerrechte ist bereits vorhanden.");
-            FacesContext.getCurrentInstance().addMessage("BenutzergruppeForm:BGRechte_reg", message);
 	    }
 	}
 	
@@ -166,12 +153,14 @@ public class BenutzergruppeController implements Serializable {
 		bg.setBGRechte(userGroupRights);
 		try {
 			userGroupFacadeLocal.create(bg);
-			msg = "Eintrag wurde erstellt.";
-            addMessage("messages", msg);
+			msg = "entry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 	    catch (Exception e) {
-	    	msg = "Eintrag wurde nicht erstellt.";
-            addMessage("messages", msg);
+	    	msg = "notEntry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	        
 	    }
 		em.close();
@@ -225,13 +214,14 @@ public class BenutzergruppeController implements Serializable {
         
         try {
         	userGroupFacadeLocal.remove(userGroup);
-        	msg = "Eintrag wurde gelöscht.";
-            addMessage("messages", msg);
+        	msg = "delete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 	    catch (Exception e) {
-	    	msg = "Eintrag wurde nicht gelöscht.";
-            addMessage("messages", msg);
-	        
+	    	msg = "notDelete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 		em.close();
     }
@@ -241,8 +231,8 @@ public class BenutzergruppeController implements Serializable {
      * @param e
      */
     public void onRowSelect(SelectEvent<Benutzergruppe> e) {
-    	FacesMessage msg = new FacesMessage("Benutzergruppe ausgewählt");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+    	String msg = "userGroup";
+        addInfoMessage(msg);
         
         userGroupSelected = e.getObject();
         
@@ -261,13 +251,15 @@ public class BenutzergruppeController implements Serializable {
  	       userGroup.setBGShortName(userGroupSelected.getBGShortName());
  	       userGroup.setBGRechte(userGroupSelected.getBGRechte());
  	       userGroupFacadeLocal.edit(userGroup);
- 	       msg = "Eintrag wurde bearbeitet.";
-           addMessage("messages", msg);
- 	    }
- 	    catch (Exception e) {
- 	    	msg = "Eintrag wurde nicht bearbeitet.";
-            addMessage("messages", msg);
- 	    }
+ 	      msg = "edit";
+          //addMessage("messages", msg);
+          addInfoMessage(msg);
+	    }
+	    catch (Exception e) {
+	    	msg = "notEdit";
+           //addMessage("messages", msg);
+           addInfoMessage(msg);
+	    }
     	userGroupList = getBenutzergruppeList();
     	em.close();
     }
@@ -283,5 +275,15 @@ public class BenutzergruppeController implements Serializable {
 	   FacesContext.getCurrentInstance().addMessage(loginformidName, message);     
 	}
 
+	/**
+	 * Faces messages ausgeben.
+	 * @param str
+	 */
+	public static void addInfoMessage(String str) {
+		  FacesContext context = FacesContext.getCurrentInstance();
+		  ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
+		  String message = bundle.getString(str);
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, ""));
+	}
 	
 }

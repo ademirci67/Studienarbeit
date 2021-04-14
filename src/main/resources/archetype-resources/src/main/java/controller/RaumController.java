@@ -7,6 +7,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -124,10 +125,6 @@ public class RaumController implements Serializable {
 			this.capacity = capacity;
 			capacityOk=true;
 	    }
-	    else{
-	    	FacesMessage message = new FacesMessage("Kapazitaet konnte nicht gesetzt werden.");
-            FacesContext.getCurrentInstance().addMessage("RaumForm:kapazitaet_reg", message);
-	    }
 	}
 
 	public String getRoomNeighbor() {
@@ -143,14 +140,9 @@ public class RaumController implements Serializable {
 	}
 
 	public void setRoomName(String roomName) {
-		
 		if(roomName!=null){
 			this.roomName = roomName;
 	        roomNameOk=true;
-	    }
-		else{
-	    	FacesMessage message = new FacesMessage("Raumname konnte nicht gesetzt werden.");
-            FacesContext.getCurrentInstance().addMessage("RaumForm:RName_reg", message);
 	    }
 	}
 
@@ -194,12 +186,14 @@ public class RaumController implements Serializable {
 		rau.setLocation(findLoc(locationId));
 		try {
 	        raumFacadeLocal.create(rau);
-	        msg = "Eintrag wurde erstellt.";
-            addMessage("messages", msg);
+	        msg = "entry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 	    catch (Exception e) {
-	    	msg = "Eintrag wurde nicht erstellt.";
-            addMessage("messages", msg);
+	    	msg = "notEntry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	        
 	    }
 		em.close();
@@ -254,8 +248,8 @@ public class RaumController implements Serializable {
 	 * @param e
 	 */
 	public void onRowSelect(SelectEvent<Raum> e) {
-    	FacesMessage msg = new FacesMessage("Raum ausgewählt");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+		String msg = "room";
+        addInfoMessage(msg);
         
         roomSelected = e.getObject();
         
@@ -279,12 +273,14 @@ public class RaumController implements Serializable {
         
         try {
         	this.raumFacadeLocal.remove(room);
-        	msg = "Eintrag wurde gelöscht.";
-            addMessage("messages", msg);
+        	msg = "delete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 	    catch (Exception e) {
-	    	msg = "Eintrag wurde nicht gelöscht.";
-            addMessage("messages", msg);
+	    	msg = "notDelete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	        
 	    }
 		em.close();
@@ -322,12 +318,14 @@ public class RaumController implements Serializable {
 	        room.setNachbarRaum(roomSelected.getNachbarRaum());
 	        room.setLocation(findLoc(locationId));
 	        raumFacadeLocal.edit(room);
-	        msg = "Eintrag wurde bearbeitet.";
-	        addMessage("messages", msg);
+	        msg = "edit";
+	        //addMessage("messages", msg);
+	        addInfoMessage(msg);
 		    }
 		    catch (Exception e) {
-		    	msg = "Eintrag wurde nicht bearbeitet.";
-	            addMessage("messages", msg);
+		    	msg = "notEdit";
+	            //addMessage("messages", msg);
+	            addInfoMessage(msg);
 		    }
 	   	roomList = getRaumList();
 	   	em.close();
@@ -343,5 +341,15 @@ public class RaumController implements Serializable {
 	   FacesContext.getCurrentInstance().addMessage(loginformidName, message);     
 	}
     
+	/**
+	 * Faces messages ausgeben.
+	 * @param str
+	 */
+	public static void addInfoMessage(String str) {
+		  FacesContext context = FacesContext.getCurrentInstance();
+		  ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
+		  String message = bundle.getString(str);
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, ""));
+	}
   
 }

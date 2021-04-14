@@ -36,8 +36,8 @@
                     <h:outputLabel for="facShortName_reg" value="Kürzel: "/>
                     <h:inputText id="facShortName_reg" value="#{facultyController.facultySelected.facShortName}" ></h:inputText>
                     
-                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{facultyController.addFaculty()}" update=":form:FacultyList :form:msgs" oncomplete="PF('eventEditDialog').hide();"/> 		 			
-		 			<p:commandButton value="Löschen" update=":form:FacultyList :form:msgs" actionListener="#{facultyController.deleteFaculty()}" oncomplete="PF('eventEditDialog').hide();"/>
+                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{facultyController.addFaculty()}" update=":form:FacultyList" oncomplete="PF('eventEditDialog').hide();"/> 		 			
+		 			<p:commandButton value="Löschen" update=":form:FacultyList" actionListener="#{facultyController.deleteFaculty()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
 		        </h:panelGrid>
 		    </p:dialog>
@@ -48,18 +48,18 @@
 		 
 		            <h:outputLabel styleClass="label" style="font-size:12pt" for="facName_reg" value="Fachbereich: "/>
                     <h:panelGrid columns="3">
-                    	<h:inputText id="facName_reg" styleClass="form-control" value="#{facultyController.facultyName}" required = "true" requiredMessage="Eine Fakultät muss eingegeben werden."></h:inputText>
+                    	<h:inputText id="facName_reg" styleClass="form-control" value="#{facultyController.facultyName}" required = "true" requiredMessage="#{msg['facultyName']}"></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="facName_reg" style="color: red"/>
                     </h:panelGrid>                                                        
                     <h:outputLabel styleClass="label" style="font-size:12pt" for="facShortName_reg" value="Kürzel: "/>
                     <h:panelGrid columns="3">
-                    	<h:inputText id="facShortName_reg" styleClass="form-control" value="#{facultyController.facultyShortName}" required = "true" requiredMessage="Ein Kürzel muss eingegeben werden."></h:inputText>
+                    	<h:inputText id="facShortName_reg" styleClass="form-control" value="#{facultyController.facultyShortName}" required = "true" requiredMessage="#{msg['facultyShortName']}"></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="facShortName_reg" style="color: red"/>
                     </h:panelGrid>
                     
-                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{facultyController.createDoFaculty}" update=":form:FacultyList :form:msgs" oncomplete="PF('eventDialog').hide();"/>		 			
+                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{facultyController.createDoFaculty}" update=":form:FacultyList" oncomplete="PF('eventDialog').hide();"/>		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
 		            
 		        </h:panelGrid>

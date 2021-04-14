@@ -7,6 +7,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -91,12 +92,7 @@ public class StundenplanstatusController implements Serializable {
 			this.statusColor = statusColor;
 			statusColorOk = true;
 		}
-		else{
-			FacesMessage message = new FacesMessage("Farbe ist bereits vorhanden.");
-            FacesContext.getCurrentInstance().addMessage("StundenplanstatusForm:PColor_reg", message);
-	    }
 	}
-
 	public String getStatusDescription() {
 		return statusDescription;
 	}
@@ -106,10 +102,6 @@ public class StundenplanstatusController implements Serializable {
 			this.statusDescription = statusDescription;
 			statusDescriptionOk = true;
 		}
-		else{
-			FacesMessage message = new FacesMessage("Bezeichnung ist bereits vorhanden.");
-            FacesContext.getCurrentInstance().addMessage("StundenplanstatusForm:SPSTBezeichnung_reg", message);
-	    }
 	}
 
 	public String getStatusHint() {
@@ -121,10 +113,6 @@ public class StundenplanstatusController implements Serializable {
 			this.statusHint = statusHint;
 			statusHintOk = true;
 		}
-		else{
-			FacesMessage message = new FacesMessage("Hinweis ist bereits vorhanden.");
-            FacesContext.getCurrentInstance().addMessage("StundenplanstatusForm:SPSTHint_reg", message);
-	    }
 	}
 
 	public Stundenplanstatus getStatusSelected() {
@@ -162,12 +150,14 @@ public class StundenplanstatusController implements Serializable {
 		sps.setPColor(statusColor);
 		try {
 			stundenplanstatusFacadeLocal.create(sps);
-			msg = "Eintrag wurde erstellt.";
-            addMessage("messages", msg);
+			msg = "entry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 	    catch (Exception e) {
-	            msg = "Eintrag wurde nicht erstellt.";
-	            addMessage("messages", msg);
+	            msg = "notEntry";
+	            //addMessage("messages", msg);
+	            addInfoMessage(msg);
 	    }
 		em.close();
 	}
@@ -205,10 +195,10 @@ public class StundenplanstatusController implements Serializable {
 	 * @param e
 	 */
 	public void onRowSelect(SelectEvent<Stundenplanstatus> e) {
-	    	FacesMessage msg = new FacesMessage("Stundenplanstatus ausgewählt.");
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
+		String msg = "courseStatus";
+        addInfoMessage(msg);
 	        
-	        statusSelected = e.getObject();
+	    statusSelected = e.getObject();
 	        
 	    }
 	    
@@ -223,15 +213,17 @@ public class StundenplanstatusController implements Serializable {
  	        stundenplanstatus.setPColor(statusSelected.getPColor());
  	        stundenplanstatus.setSPSTBezeichnung(statusSelected.getSPSTBezeichnung());
  	        stundenplanstatus.setSPSTHint(statusSelected.getSPSTHint());
- 	        try {
- 	        	stundenplanstatusFacadeLocal.edit(stundenplanstatus);
- 	        	msg = "Eintrag wurde bearbeitet.";
-	            addMessage("messages", msg);
- 	        }catch(Exception e) {
- 	        	msg = "Eintrag wurde nicht bearbeitet.";
-	            addMessage("messages", msg);
- 	        	
- 	        }
+ 	       try {
+	        	stundenplanstatusFacadeLocal.edit(stundenplanstatus);
+	        	msg = "edit";
+	            //addMessage("messages", msg);
+	            addInfoMessage(msg);
+	        }catch(Exception e) {
+	        	msg = "notEdit";
+	            //addMessage("messages", msg);
+	            addInfoMessage(msg);
+	        	
+	        }
  	       scheduleStatusList = getStundenplanstatusList();
  	        em.close();
 	 	    
@@ -252,12 +244,14 @@ public class StundenplanstatusController implements Serializable {
         stundenplanstatus = (Stundenplanstatus)q.getSingleResult();
         try {
         	stundenplanstatusFacadeLocal.remove(stundenplanstatus);
-        	msg = "Eintrag wurde gelöscht.";
-            addMessage("messages", msg);
+        	msg = "delete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 	    catch (Exception e) {
-	    	msg = "Eintrag wurde nicht gelöscht.";
-            addMessage("messages", msg);
+	    	msg = "notDelete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
         
 		em.close();
@@ -271,6 +265,17 @@ public class StundenplanstatusController implements Serializable {
 	private void addMessage(String loginformidName, String msg) {
 	   FacesMessage message = new FacesMessage(msg);
 	   FacesContext.getCurrentInstance().addMessage(loginformidName, message);     
+	}
+	
+	/**
+	 * Faces messages ausgeben.
+	 * @param str
+	 */
+	public static void addInfoMessage(String str) {
+		  FacesContext context = FacesContext.getCurrentInstance();
+		  ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
+		  String message = bundle.getString(str);
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, ""));
 	}
 
 }

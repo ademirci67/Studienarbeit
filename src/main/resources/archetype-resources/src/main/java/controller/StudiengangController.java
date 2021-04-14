@@ -8,6 +8,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -131,10 +132,6 @@ public class StudiengangController implements Serializable {
 			this.courseName = courseName;
 			courseNameOk=true;
 	    }
-	    else{
-	    	FacesMessage message = new FacesMessage("Studiengangsname konnte nicht gesetzt werden.");
-            FacesContext.getCurrentInstance().addMessage("StudiengangForm:SGName_reg", message);
-	    }
 	}
 
 	public String getCourseShort() {
@@ -145,10 +142,6 @@ public class StudiengangController implements Serializable {
 		if(courseShort!=null){
 			this.courseShort = courseShort;
 			courseShortOk=true;
-	    }
-	    else{
-	    	FacesMessage message = new FacesMessage("Studiengangskürzel konnte nicht gesetzt werden.");
-            FacesContext.getCurrentInstance().addMessage("StudiengangForm:SGKurz_reg", message);
 	    }
 	}
 
@@ -202,11 +195,13 @@ public class StudiengangController implements Serializable {
 		bg.setFaculty(findFac(facultyID));
 		try {
 			studiengangFacadeLocal.create(bg);
-			msg = "Eintrag wurde erstellt.";
-            addMessage("messages", msg);
+			msg = "entry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 		}catch(Exception e) {
-			msg = "Eintrag wurde nicht erstellt.";
-            addMessage("messages", msg);
+			msg = "notEntry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 		}
 		
 		em.close();
@@ -263,8 +258,8 @@ public class StudiengangController implements Serializable {
 	 * @param e
 	 */
 	public void onRowSelect(SelectEvent<Studiengang> e) {
-    	FacesMessage msg = new FacesMessage("Studiengang ausgewählt");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+		String msg = "course";
+        addInfoMessage(msg);
         
         courseSelected = e.getObject();
         
@@ -289,11 +284,13 @@ public class StudiengangController implements Serializable {
         course = (Studiengang)q.getSingleResult();
         try {
         	studiengangFacadeLocal.remove(course);
-        	msg = "Eintrag wurde gelöscht.";
-            addMessage("messages", msg);
+        	msg = "delete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
         }catch(Exception e) {
-        	msg = "Eintrag wurde nicht gelöscht.";
-            addMessage("messages", msg);
+        	msg = "notDelete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
         }
         
 	    em.close();
@@ -331,11 +328,13 @@ public class StudiengangController implements Serializable {
 	        course.setFaculty(findFac(facultyID));
 	        try {
 	        	studiengangFacadeLocal.edit(course);
-	        	msg = "Eintrag wurde bearbeitet.";
-	            addMessage("messages", msg);
+	        	msg = "edit";
+	            //addMessage("messages", msg);
+	            addInfoMessage(msg);
 	        }catch(Exception e) {
-	        	msg = "Eintrag wurde nicht bearbeitet.";
-	            addMessage("messages", msg);
+	        	msg = "notEdit";
+	            //addMessage("messages", msg);
+	            addInfoMessage(msg);
 	        }
 	        
 	        courseList = getStudiengangList();
@@ -350,5 +349,16 @@ public class StudiengangController implements Serializable {
 	private void addMessage(String loginformidName, String msg) {
 	   FacesMessage message = new FacesMessage(msg);
 	   FacesContext.getCurrentInstance().addMessage(loginformidName, message);     
+	}
+	
+	/**
+	 * Faces messages ausgeben.
+	 * @param str
+	 */
+	public static void addInfoMessage(String str) {
+		  FacesContext context = FacesContext.getCurrentInstance();
+		  ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
+		  String message = bundle.getString(str);
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, ""));
 	}
 }

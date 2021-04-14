@@ -47,8 +47,8 @@
                     <h:inputText id="teachingEventLength_reg" value="#{lehrveranstaltungsartController.teachingEventSelected.lvdauer}" ></h:inputText>                                                  
                     
                     
-                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{lehrveranstaltungsartController.addLehrveranstaltungsart()}" update=":form:LehrveranstaltungsartListe :form:msgs" oncomplete="PF('eventEditDialog').hide();"/> 		 			
-		 			<p:commandButton value="Löschen" update=":form:LehrveranstaltungsartListe :form:msgs" actionListener="#{lehrveranstaltungsartController.deleteLehrveranstaltungsart()}" oncomplete="PF('eventEditDialog').hide();"/>
+                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{lehrveranstaltungsartController.addLehrveranstaltungsart()}" update=":form:LehrveranstaltungsartListe" oncomplete="PF('eventEditDialog').hide();"/> 		 			
+		 			<p:commandButton value="Löschen" update=":form:LehrveranstaltungsartListe" actionListener="#{lehrveranstaltungsartController.deleteLehrveranstaltungsart()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
 		        </h:panelGrid>
 		    </p:dialog>
@@ -60,23 +60,23 @@
 		                                                                    
                     <h:outputLabel styleClass="label" style="font-size:12pt" for="teachingEventName_reg" value="Bezeichnung: "/>
                     <h:panelGrid columns="3">
-                    	<h:inputText id="teachingEventName_reg" styleClass="form-control" value="#{lehrveranstaltungsartController.teachingEventName}" required = "true" requiredMessage="Eine Bezeichnung muss eingegeben werden."></h:inputText>
+                    	<h:inputText id="teachingEventName_reg" styleClass="form-control" value="#{lehrveranstaltungsartController.teachingEventName}" required = "true" requiredMessage="#{msg['teachingEventName']}"></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="teachingEventName_reg" style="color: red"/>
                     </h:panelGrid>
                     <h:outputLabel styleClass="label" style="font-size:12pt" for="teachingEventShort_reg" value="Kurzform: "/>
                     <h:panelGrid columns="3">
-                    	<h:inputText id="teachingEventShort_reg" styleClass="form-control" value="#{lehrveranstaltungsartController.teachingEventShort}" required = "true" requiredMessage="Ein Hinweis muss eingegeben werden."></h:inputText>
+                    	<h:inputText id="teachingEventShort_reg" styleClass="form-control" value="#{lehrveranstaltungsartController.teachingEventShort}" required = "true" requiredMessage="#{msg['teachingEventShort']}"></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="teachingEventShort_reg" style="color: red"/>
                     </h:panelGrid>
                     <h:outputLabel styleClass="label" style="font-size:12pt" for="teachingEventLength_reg" value="Dauer: "/>
                     <h:panelGrid columns="3">
-                    	<h:inputText id="teachingEventLength_reg" styleClass="form-control" value="#{lehrveranstaltungsartController.teachingEventLength}" required = "true" requiredMessage="Eine Farbe muss eingegeben werden."></h:inputText>
+                    	<h:inputText id="teachingEventLength_reg" styleClass="form-control" value="#{lehrveranstaltungsartController.teachingEventLength}" required = "true" requiredMessage="#{msg['teachingEventLength']}"></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="teachingEventLength_reg" style="color: red"/>
                     </h:panelGrid>
-                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{lehrveranstaltungsartController.createDoLehrveranstaltungsart}" oncomplete="PF('eventDialog').hide();" update=":form:LehrveranstaltungsartListe :form:msgs"/>		 			
+                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{lehrveranstaltungsartController.createDoLehrveranstaltungsart}" oncomplete="PF('eventDialog').hide();" update=":form:LehrveranstaltungsartListe"/>		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
 		            
 		        </h:panelGrid>

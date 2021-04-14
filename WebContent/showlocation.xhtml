@@ -36,8 +36,8 @@
                     <h:outputLabel for="lStreet_reg" value="Straße: "/>
                     <h:inputText id="lStreet_reg" value="#{locationController.locationSelected.LStreet}" ></h:inputText>
                     
-                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{locationController.addLocation()}" update=":form:LocationList :form:msgs" oncomplete="PF('eventEditDialog').hide();"/> 		 			
-		 			<p:commandButton value="Löschen" update=":form:LocationList :form:msgs" actionListener="#{locationController.deleteLocation()}" oncomplete="PF('eventEditDialog').hide();"/>
+                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{locationController.addLocation()}" update=":form:LocationList" oncomplete="PF('eventEditDialog').hide();"/> 		 			
+		 			<p:commandButton value="Löschen" update=":form:LocationList" actionListener="#{locationController.deleteLocation()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
 		        </h:panelGrid>
 		    </p:dialog> 
@@ -48,17 +48,17 @@
 		 
 		            <h:outputLabel styleClass="label" style="font-size:12pt;" for="lCity_reg" value="Stadt: "/>
                     <h:panelGrid columns="3">
-                    	<h:inputText id="lCity_reg" styleClass="form-control" value="#{locationController.locationCity}" required = "true" requiredMessage="Eine Stadt muss eingegeben werden."></h:inputText>
+                    	<h:inputText id="lCity_reg" styleClass="form-control" value="#{locationController.locationCity}" required = "true" requiredMessage="#{msg['locationCity']}"></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="modName_reg" style="color: red"/>
                     </h:panelGrid>                                                        
                     <h:outputLabel styleClass="label" style="font-size:12pt;" for="lStreet_reg" value="Straße: "/>
                     <h:panelGrid columns="3">
-                    	<h:inputText id="lStreet_reg" styleClass="form-control" value="#{locationController.locationStreet}" required = "true" requiredMessage="Eine Straße muss eingegeben werden."></h:inputText>
+                    	<h:inputText id="lStreet_reg" styleClass="form-control" value="#{locationController.locationStreet}" required = "true" requiredMessage="#{msg['locationStreet']}"></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="lStreet_reg" style="color: red"/>
                     </h:panelGrid>
-                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{locationController.createDoLocation}" update=":form:LocationList :form:msgs" oncomplete="PF('eventDialog').hide();" />		 			
+                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{locationController.createDoLocation}" update=":form:LocationList" oncomplete="PF('eventDialog').hide();" />		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
 		            
 		        </h:panelGrid>

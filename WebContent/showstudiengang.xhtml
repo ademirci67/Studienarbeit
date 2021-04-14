@@ -60,8 +60,8 @@
 			        </p:selectOneMenu>
 			        
                     
-                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{studiengangController.addStudiengang()}" update=":form:DegreecourseList :form:msgs" oncomplete="PF('eventEditDialog').hide();"/> 		 			
-		 			<p:commandButton value="Löschen" update=":form:DegreecourseList :form:msgs" actionListener="#{studiengangController.deleteStudiengang()}" oncomplete="PF('eventEditDialog').hide();"/>
+                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{studiengangController.addStudiengang()}" update=":form:DegreecourseList" oncomplete="PF('eventEditDialog').hide();"/> 		 			
+		 			<p:commandButton value="Löschen" update=":form:DegreecourseList" actionListener="#{studiengangController.deleteStudiengang()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
 		        </h:panelGrid>
 		    </p:dialog>
@@ -71,21 +71,21 @@
 		        <h:panelGrid id="eventDetails" columns="2">
 		 
 		            <h:outputLabel for="sgname1" value="Studiengang: "/>
-                    <h:inputText id="sgname1" value="#{studiengangController.courseName}" ></h:inputText>                                                  
+                    <h:inputText id="sgname1" value="#{studiengangController.courseName}" required="true" requiredMessage="#{msg['courseName']}"></h:inputText>                                                  
                     
                     <h:outputLabel for="short1" value="Kürzel: "/>
-                    <h:inputText id="short1" value="#{studiengangController.courseShort}" ></h:inputText>   
+                    <h:inputText id="short1" value="#{studiengangController.courseShort}" required="true" requiredMessage="#{msg['courseShort']}"></h:inputText>   
                     
                     <h:outputLabel for="semester1" value="Semesteranzahl (ohne BA-Semester): "/>
-                    <h:inputText id="semeste1r" value="#{studiengangController.semester}" ></h:inputText>   
+                    <h:inputText id="semeste1r" value="#{studiengangController.semester}" required="true" requiredMessage="#{msg['semester']}" ></h:inputText>   
                     
                     <p:outputLabel for="faculty1" value="Fachbereich: " />
-			        <p:selectOneMenu id="faculty1" value="#{studiengangController.facultyID}" style="width:100%">
+			        <p:selectOneMenu id="faculty1" value="#{studiengangController.facultyID}" style="width:100%" required="true" requiredMessage="#{msg['facultyId']}">
 			        	<f:selectItem itemLabel="-----" noSelectionOption="true"/>
                     	<f:selectItems value="#{studiengangController.facultyList}" var="fac" itemLabel="#{fac.facName}" itemValue="#{fac.fbid}"/>
 			        </p:selectOneMenu>
 		            
-                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{studiengangController.createDoStudiengang}" update=":form:DegreecourseList :form:msgs" oncomplete="PF('eventDialog').hide();" />		 			
+                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{studiengangController.createDoStudiengang}" update=":form:DegreecourseList" oncomplete="PF('eventDialog').hide();" />		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
 		            
 		        </h:panelGrid>

@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import java.util.List;
-
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -125,11 +125,13 @@ public class ScheduleControllerCopy implements Serializable {
             speList2 = query1.getResultList();
             delete();
             create();
-            msg = "Einträge wurden erstellt.";
-            addMessage("messages", msg);
+            msg = "entryCopy";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
     	}catch(Exception e) {
-    		msg = "Einträge wurden nicht erstellt.";
-            addMessage("messages", msg);
+    		msg = "notEntryCopy";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
     	}
     	
     }
@@ -496,5 +498,15 @@ public class ScheduleControllerCopy implements Serializable {
         cxt.addMessage(toComponent, msg);
     }
 	
+	/**
+	 * Faces messages ausgeben.
+	 * @param str
+	 */
+	public static void addInfoMessage(String str) {
+		  FacesContext context = FacesContext.getCurrentInstance();
+		  ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
+		  String message = bundle.getString(str);
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, ""));
+	}
 
 }

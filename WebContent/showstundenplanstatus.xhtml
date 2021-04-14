@@ -46,8 +46,8 @@
                     <h:inputText id="statusColor_reg" value="#{stundenplanstatusController.statusSelected.PColor}" ></h:inputText>                                                  
                     
                     
-                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{stundenplanstatusController.addStundenplanstatus()}" update=":form:StundenplanstatusListe :form:msgs" oncomplete="PF('eventEditDialog').hide();"/> 		 			
-		 			<p:commandButton value="Löschen" update=":form:StundenplanstatusListe :form:msgs" actionListener="#{stundenplanstatusController.deleteStundenplanstatus()}" oncomplete="PF('eventEditDialog').hide();"/>
+                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{stundenplanstatusController.addStundenplanstatus()}" update=":form:StundenplanstatusListe" oncomplete="PF('eventEditDialog').hide();"/> 		 			
+		 			<p:commandButton value="Löschen" update=":form:StundenplanstatusListe" actionListener="#{stundenplanstatusController.deleteStundenplanstatus()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
 		        </h:panelGrid>
 		    </p:dialog>
@@ -59,23 +59,22 @@
 		                                                                    
                     <h:outputLabel styleClass="label" style="font-size:12pt" for="statusDescription_reg" value="Bezeichnung: "/>
                     <h:panelGrid columns="3">
-                    	<h:inputText id="statusDescription_reg" styleClass="form-control" value="#{stundenplanstatusController.statusDescription}" required = "true" requiredMessage="Eine Bezeichnung muss eingegeben werden."></h:inputText>
+                    	<h:inputText id="statusDescription_reg" styleClass="form-control" value="#{stundenplanstatusController.statusDescription}" required = "true" requiredMessage="#{msg['statusDescription']}"></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="statusDescription_reg" style="color: red"/>
                     </h:panelGrid>
                     <h:outputLabel styleClass="label" style="font-size:12pt" for="statusHint_reg" value="Hinweis: "/>
                     <h:panelGrid columns="3">
-                    	<h:inputText id="statusHint_reg" styleClass="form-control" value="#{stundenplanstatusController.statusHint}" required = "true" requiredMessage="Ein Hinweis muss eingegeben werden."></h:inputText>
+                    	<h:inputText id="statusHint_reg" styleClass="form-control" value="#{stundenplanstatusController.statusHint}" required = "true" requiredMessage="#{msg['statusHint']}"></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="statusHint_reg" style="color: red"/>
                     </h:panelGrid>
                     <h:outputLabel styleClass="label" style="font-size:12pt" for="statusColor_reg" value="Farbe: "/>
-                    <h:panelGrid columns="3">
-                    	<h:inputText id="statusColor_reg" styleClass="form-control" value="#{stundenplanstatusController.statusColor}" required = "true" requiredMessage="Eine Farbe muss eingegeben werden."></h:inputText>
+                    <h:panelGrid columns="2">
+                    	<h:inputText id="statusColor_reg" styleClass="form-control" value="#{stundenplanstatusController.statusColor}"></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
-                    	<h:messages for="statusColor_reg" style="color: red"/>
                     </h:panelGrid>
-                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{stundenplanstatusController.createDoStundenplanstatus}" oncomplete="PF('eventDialog').hide();" update=":form:StundenplanstatusListe :form:msgs"/>		 			
+                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{stundenplanstatusController.createDoStundenplanstatus}" oncomplete="PF('eventDialog').hide();" update=":form:StundenplanstatusListe"/>		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
 		            
 		        </h:panelGrid>

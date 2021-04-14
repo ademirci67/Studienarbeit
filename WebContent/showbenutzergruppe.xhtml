@@ -46,8 +46,8 @@
                     	<f:selectItem itemValue="64" itemLabel="64"/>
                     	<f:selectItem itemValue="96" itemLabel="96"/>
                     </p:selectOneMenu> 
-                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{benutzergruppeController.addBenutzergruppe()}" update=":form:BenutzergruppeListe :form:msgs" oncomplete="PF('eventEditDialog').hide();"/> 		 			
-		 			<p:commandButton value="Löschen" update=":form:BenutzergruppeListe :form:msgs" actionListener="#{benutzergruppeController.deleteBenutzergruppe()}" oncomplete="PF('eventEditDialog').hide();"/>
+                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{benutzergruppeController.addBenutzergruppe()}" update=":form:BenutzergruppeListe" oncomplete="PF('eventEditDialog').hide();"/> 		 			
+		 			<p:commandButton value="Löschen" update=":form:BenutzergruppeListe" actionListener="#{benutzergruppeController.deleteBenutzergruppe()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
 		        </h:panelGrid>
 		    </p:dialog>
@@ -58,19 +58,19 @@
 		 
 		            <h:outputLabel styleClass="label" style="font-size:12pt" for="userGroupName_reg" value="Benutzergruppe: "/>
                     <h:panelGrid columns="3">
-                    	<h:inputText id="userGroupName_reg" styleClass="form-control" value="#{benutzergruppeController.userGroupName}" required = "true" requiredMessage="Eine Benutzergruppe muss eingegeben werden."></h:inputText>
+                    	<h:inputText id="userGroupName_reg" styleClass="form-control" value="#{benutzergruppeController.userGroupName}" required = "true" requiredMessage="#{msg['userGroupName']"></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="userGroupName_reg" style="color: red"/>
                     </h:panelGrid>                                                        
                     <h:outputLabel styleClass="label" style="font-size:12pt" for="userGroupShortName_reg" value="Kürzel: "/>
                     <h:panelGrid columns="3">
-                    	<h:inputText id="userGroupShortName_reg" styleClass="form-control" value="#{benutzergruppeController.userGroupShortName}" required = "true" requiredMessage="Ein Kürzel muss eingegeben werden."></h:inputText>
+                    	<h:inputText id="userGroupShortName_reg" styleClass="form-control" value="#{benutzergruppeController.userGroupShortName}" required = "true" requiredMessage="#{msg['userGroupShortName']}"></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="userGroupShortName_reg" style="color: red"/>
                     </h:panelGrid>
                     <h:outputLabel styleClass="label" style="font-size:12pt" for="userGroupRights_reg" value="Rechte: "/>
                     <h:panelGrid columns="3">
-                    	<p:selectOneMenu id="userGroupRights_reg" styleClass="form-control" value="#{benutzergruppeController.userGroupRights}" required = "true" requiredMessage="Ein Kürzel muss eingegeben werden.">
+                    	<p:selectOneMenu id="userGroupRights_reg" styleClass="form-control" value="#{benutzergruppeController.userGroupRights}" required = "true" requiredMessage="#{msg['userGroupRights']}">
                     	<f:selectItem itemLabel="-----" noSelectionOption="true"/>
                     	<f:selectItem itemValue="16" itemLabel="16"/>
                     	<f:selectItem itemValue="32" itemLabel="32"/>
@@ -80,7 +80,7 @@
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="userGroupRights_reg" style="color: red"/>
                     </h:panelGrid>
-                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{benutzergruppeController.createDoBenutzergruppe}" oncomplete="PF('eventDialog').hide();" update=":form:BenutzergruppeListe :form:msgs"/>		 			
+                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{benutzergruppeController.createDoBenutzergruppe}" oncomplete="PF('eventDialog').hide();" update=":form:BenutzergruppeListe"/>		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
 		            
 		        </h:panelGrid>

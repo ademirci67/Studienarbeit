@@ -9,8 +9,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 
 import java.util.List;
-
-
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -110,10 +109,6 @@ public class FacultyController implements Serializable {
 			this.facultyName = facultyName;
 			facultyNameOk = true;
 		}
-		else{
-			FacesMessage message = new FacesMessage("Fachbereichsname ist bereits vorhanden.");
-            FacesContext.getCurrentInstance().addMessage("FacultyList:facName_reg", message);
-	    }
 	}
 	  
 	public String getFacultyShortName() {
@@ -124,10 +119,6 @@ public class FacultyController implements Serializable {
 	    if(facultyShortName!=null){
 	        this.facultyShortName = facultyShortName;
 	        facultyShortNameOk=true;
-	    }
-	    else{
-	    	FacesMessage message = new FacesMessage("Fachbereichskürzel ist bereits vorhanden.");
-            FacesContext.getCurrentInstance().addMessage("FacultyList:facShortName_reg", message);
 	    }
 	}
 	  
@@ -154,12 +145,14 @@ public class FacultyController implements Serializable {
 		fac.setFacShortName(facultyShortName);      
 		try {
 			facFacadeLocal.create(fac);
-			msg = "Eintrag wurde erstellt.";
-            addMessage("messages", msg);
+			msg = "entry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 	    catch (Exception e) {
-	    	msg = "Eintrag wurde nicht erstellt.";
-            addMessage("messages", msg);
+	    	msg = "notEntry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	       
 	    }
 		em.close();
@@ -210,12 +203,14 @@ public class FacultyController implements Serializable {
         
         try {
         	this.facFacadeLocal.remove(faculty);
-        	msg = "Eintrag wurde gelöscht.";
-            addMessage("messages", msg);
+        	msg = "delete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 	    catch (Exception e) {
-	    	msg = "Eintrag wurde nicht gelöscht.";
-            addMessage("messages", msg);
+	    	msg = "notDelete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	        
 	    }       
 		em.close();
@@ -226,8 +221,8 @@ public class FacultyController implements Serializable {
      * @param e
      */
     public void onRowSelect(SelectEvent<Faculty> e) {
-    	FacesMessage msg = new FacesMessage("Fakultät ausgewählt");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+    	String msg = "faculty";
+        addInfoMessage(msg);
         
         facultySelected = e.getObject();
         
@@ -245,13 +240,15 @@ public class FacultyController implements Serializable {
  	       faculty.setFacName(facultySelected.getFacName());
  	       faculty.setFacShortName(facultySelected.getFacShortName());
  	       facFacadeLocal.edit(faculty);
- 	       msg = "Eintrag wurde bearbeitet.";
-           addMessage("messages", msg);
- 	    }
- 	    catch (Exception e) {
- 	    	msg = "Eintrag wurde nicht bearbeitet.";
-            addMessage("messages", msg);
- 	    }
+ 	      msg = "edit";
+          //addMessage("messages", msg);
+          addInfoMessage(msg);
+	    }
+	    catch (Exception e) {
+	    	msg = "notEdit";
+           //addMessage("messages", msg);
+           addInfoMessage(msg);
+	    }
     	facultyList = getFacultyListAll();
     	em.close();
     }
@@ -268,5 +265,15 @@ public class FacultyController implements Serializable {
 	   FacesContext.getCurrentInstance().addMessage(loginformidName, message);     
 	}
 
+	/**
+	 * Faces messages ausgeben.
+	 * @param str
+	 */
+	public static void addInfoMessage(String str) {
+		  FacesContext context = FacesContext.getCurrentInstance();
+		  ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
+		  String message = bundle.getString(str);
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, ""));
+	}
   
 }

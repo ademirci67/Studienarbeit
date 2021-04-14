@@ -29,6 +29,16 @@
                 </ui:insert>
             </p:layoutUnit>
             
+            <p:layoutUnit  position="east" id="language">
+	            <h:form>
+	            	<h:outputText value = "#{msg['language']}" />
+		            <h:selectOneMenu value = "#{languageController.locale}" onchange = "submit()"
+		               valueChangeListener = "#{languageController.localeChanged}">
+		               <f:selectItems value = "#{languageController.countries}" /> 
+		            </h:selectOneMenu>
+	            </h:form>	            
+            </p:layoutUnit>
+            
            <p:layoutUnit position="center" id="content" resizable="true" collapsible="true">					            
             <p:scrollPanel mode="native" style="width:1469px;">               
                 <ui:insert name="content">               

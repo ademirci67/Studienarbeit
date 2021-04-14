@@ -75,7 +75,7 @@
                     	<f:selectItems value="#{accountController.facultyList}" />
 			        </p:selectOneMenu>
                     
-                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{accountController.addAccount()}" update=":form:AccountList :form:msgs" oncomplete="PF('eventEditDialog').hide();"/> 		 			
+                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{accountController.addAccount()}" update=":form:AccountList" oncomplete="PF('eventEditDialog').hide();"/> 		 			
 		 			<p:commandButton value="Löschen" update=":form:AccountList" actionListener="#{accountController.deleteAccount()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
 		        </h:panelGrid>
@@ -87,21 +87,21 @@
 		        
                      <h:outputLabel styleClass="label" style="font-size:12pt;" for="idName" value="Benutzername: "/>
                      <h:panelGrid columns="3">
-                         <h:inputText id="idName_reg" styleClass="form-control" value="#{accountController.accountName}" required = "true" requiredMessage="Bitte einen Benutzernamen eingeben">
+                         <h:inputText id="idName_reg" styleClass="form-control" value="#{accountController.accountName}" required = "true" requiredMessage="#{msg['accountName']}">
                          </h:inputText>
                          <h:outputLabel value="" style="margin: 10px;"/>
                          <h:message for="idName_reg" style="color: red"/>
                      </h:panelGrid>
                      <h:outputLabel styleClass="label" style="font-size:12pt;" for="idPwd" value="Passwort: "/>
                      <h:panelGrid columns="3">
-                         <h:inputSecret id="idPwd_reg" styleClass="form-control" value="#{accountController.accountPassword}" required = "true" requiredMessage="Bitte ein Passwort eingeben">
+                         <h:inputSecret id="idPwd_reg" styleClass="form-control" value="#{accountController.accountPassword}" required = "true" requiredMessage="#{msg['accountPassword']}">
                          </h:inputSecret>
                          <h:outputLabel value="" style="margin: 10px;"/>
                          <h:message for="idPwd_reg" style="color: red"/>
                      </h:panelGrid>
                      <h:outputLabel styleClass="label" style="font-size:12pt;" for="idEmail" value="Email: "/>
                      <h:panelGrid columns="3">
-                         <h:inputText id="idMail_reg" styleClass="form-control" value="#{accountController.accountEmail}" required = "true" requiredMessage="Bitte eine Email Adresse angeben">
+                         <h:inputText id="idMail_reg" styleClass="form-control" value="#{accountController.accountEmail}" required = "true" requiredMessage="#{msg['accountEmail']}">
                          </h:inputText>
                          <h:outputLabel value="" style="margin: 10px;"/>
                          <h:message for="idMail_reg" style="color: red"/>
@@ -109,7 +109,7 @@
                      
                      <h:outputLabel styleClass="label" style="font-size:12pt;" for="bg" value="Benutzergruppe: "/>
                      <h:panelGrid columns="3">
-                         <h:selectOneMenu styleClass="form-control" id="bg" required="true" requiredMessage="Bitte eine Benutzergruppe wählen" value="#{accountController.userGroupName}">
+                         <h:selectOneMenu styleClass="form-control" id="bg" required="true" requiredMessage="#{msg['accountUserGroup']}" value="#{accountController.userGroupName}">
                              <f:selectItem itemLabel="-----" noSelectionOption="true"/>
                                  <f:selectItems value="#{accountController.userGroupList}"/>
                             </h:selectOneMenu>
@@ -120,7 +120,7 @@
                      
                      <h:outputLabel styleClass="label" style="font-size:12pt;" for="Gruppe" value="Fachbereich: "/>
                      <h:panelGrid columns="3">
-                         <h:selectOneMenu styleClass="form-control" id="Gruppe" required="true" requiredMessage="Bitte einen Fachbereich wählen" value="#{accountController.facultyName}">
+                         <h:selectOneMenu styleClass="form-control" id="Gruppe" required="true" requiredMessage="#{msg['accountSubjectArea']}" value="#{accountController.facultyName}">
                              <f:selectItem itemLabel="-----" noSelectionOption="true"/>
                                  <f:selectItems value="#{accountController.facultyList}"/>
                             </h:selectOneMenu>
@@ -129,7 +129,7 @@
                      </h:panelGrid>
 
 	        
-                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{accountController.registerUser2()}" update=":form :form:msgs" oncomplete="PF('eventDialog').hide();" />		 			
+                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{accountController.registerUser2()}" update=":form:AccountList" oncomplete="PF('eventDialog').hide();" />		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
 		            
 		        </h:panelGrid>

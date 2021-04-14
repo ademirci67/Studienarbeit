@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -127,10 +128,6 @@ public class StundenplansemesterController implements Serializable {
 			this.scheduleCalendarWeek = scheduleCalendarWeek;
 			scheduleCalendarWeekOk=true;
 	    }
-		else{
-	    	FacesMessage message = new FacesMessage("Stundenplankalenderwoche konnte nicht gesetzt werden.");
-            FacesContext.getCurrentInstance().addMessage("StundenplansemesterForm:SPKw_reg", message);
-	    }
 	}
 
 	public String getScheduleSemesterSection() {
@@ -141,10 +138,6 @@ public class StundenplansemesterController implements Serializable {
 		if(scheduleSemesterSection!=null){
 			this.scheduleSemesterSection = scheduleSemesterSection;
 			scheduleSemesterSectionOk=true;
-	    }
-		else{
-	    	FacesMessage message = new FacesMessage("Stundenplansemester konnte nicht gesetzt werden.");
-            FacesContext.getCurrentInstance().addMessage("StundenplansemesterForm:SPSemester_reg", message);
 	    }
 	}
 
@@ -157,10 +150,6 @@ public class StundenplansemesterController implements Serializable {
 			this.startDate = startDate;
 			startDateOk=true;
 	    }
-		else{
-	    	FacesMessage message = new FacesMessage("Startdatum konnte nicht gesetzt werden.");
-            FacesContext.getCurrentInstance().addMessage("StundenplansemesterForm:startDatum_reg", message);
-	    }
 	}
 	
 	public Date getEndDate() {
@@ -171,10 +160,6 @@ public class StundenplansemesterController implements Serializable {
 		if(endDate!=null){
 			this.endDate = endDate;
 			endDateOk=true;
-	    }
-		else{
-	    	FacesMessage message = new FacesMessage("Enddatum konnte nicht gesetzt werden.");
-            FacesContext.getCurrentInstance().addMessage("StundenplansemesterForm:endDatum_reg", message);
 	    }
 	}
 
@@ -219,11 +204,14 @@ public class StundenplansemesterController implements Serializable {
 		sps.setStundenplanstatus(findSps(scheduleSemesterId));
 		try {
 			stundenplansemesterFacadeLocal.create(sps);
-			msg = "Eintrag wurde erstellt.";
-            addMessage("messages", msg);
+			msg = "entry";
+           // addMessage("messages", msg);
+            addInfoMessage(msg);
+            
 		}catch(Exception e) {
-			msg = "Eintrag wurde nicht erstellt.";
-            addMessage("messages", msg);
+			msg = "notEntry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 		}
 		
 		
@@ -269,8 +257,8 @@ public class StundenplansemesterController implements Serializable {
 	 * @param e
 	 */
 	public void onRowSelect(SelectEvent<Stundenplansemester> e) {
-    	FacesMessage msg = new FacesMessage("Stundenplansemester ausgewählt");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+		String msg = "courseSemester";
+        addInfoMessage(msg);
         
         scheduleSemesterSelected = e.getObject();
         
@@ -292,11 +280,13 @@ public class StundenplansemesterController implements Serializable {
         scheduleSemester = (Stundenplansemester)q.getSingleResult();
         try {
         	stundenplansemesterFacadeLocal.remove(scheduleSemester);
-        	msg = "Eintrag wurde gelöscht.";
-            addMessage("messages", msg);
+        	msg = "delete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
         }catch(Exception e) {
-        	msg = "Eintrag wurde nicht gelöscht.";
-            addMessage("messages", msg);
+        	msg = "notDelete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
         }
         
 		em.close();
@@ -336,11 +326,13 @@ public class StundenplansemesterController implements Serializable {
         scheduleSemester.setStundenplanstatus(findSps(scheduleSemesterId));
         try {
         	stundenplansemesterFacadeLocal.edit(scheduleSemester);
-        	msg = "Eintrag wurde bearbeitet.";
-            addMessage("messages", msg);
+        	msg = "edit";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
         }catch(Exception e) {
-        	msg = "Eintrag wurde nicht bearbeitet.";
-            addMessage("messages", msg);
+        	msg = "notEdit";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
         }
         
       	scheduleSemesterList = getStundenplansemesterList();
@@ -355,6 +347,17 @@ public class StundenplansemesterController implements Serializable {
 	private void addMessage(String loginformidName, String msg) {
 	   FacesMessage message = new FacesMessage(msg);
 	   FacesContext.getCurrentInstance().addMessage(loginformidName, message);     
+	}
+	
+	/**
+	 * Faces messages ausgeben.
+	 * @param str
+	 */
+	public static void addInfoMessage(String str) {
+		  FacesContext context = FacesContext.getCurrentInstance();
+		  ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
+		  String message = bundle.getString(str);
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, ""));
 	}
   
 }

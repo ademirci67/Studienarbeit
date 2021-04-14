@@ -10,8 +10,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 
 import java.util.List;
-
-
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -122,10 +121,6 @@ public class DozentenController implements Serializable {
 			this.professorShortName = professorShortName;
 			professorShortNameOk = true;
 		}
-		else{
-			FacesMessage message = new FacesMessage("Bitte Dozentenkürzel eingeben.");
-            FacesContext.getCurrentInstance().addMessage("DozentenForm:DKurz_reg", message);
-	    }
 	}
 	  
 	public String getProfessorName() {
@@ -133,14 +128,10 @@ public class DozentenController implements Serializable {
 	}
 	  
 	public void setProfessorName(String professorName) {	   
-	        if(professorName!=null){
-	        	this.professorName = professorName;
-	        	professorNameOk = true;
-			}
-			else{
-				FacesMessage message = new FacesMessage("Bitte Dozentennamen eingeben.");
-	            FacesContext.getCurrentInstance().addMessage("DozentenForm:DName_reg", message);
-		    }
+        if(professorName!=null){
+        	this.professorName = professorName;
+        	professorNameOk = true;
+		}
 	}
 	  
 	public String getProfessorTitle() {
@@ -181,11 +172,13 @@ public class DozentenController implements Serializable {
 		doz.setDKurz(professorShortName);
 		try {
 			dozentenFacadeLocal.create(doz);
-			msg = "Eintrag wurde erstellt.";
-            addMessage("messages", msg);
+			msg = "entry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 		}catch(Exception e) {
-			msg = "Eintrag wurde nicht erstellt.";
-            addMessage("messages", msg);
+			msg = "notEntry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 		}
 	    
 	}
@@ -222,8 +215,8 @@ public class DozentenController implements Serializable {
      * @param e
      */
     public void onRowSelect(SelectEvent<Dozenten> e) {
-    	FacesMessage msg = new FacesMessage("Dozenten ausgewählt");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+    	String msg = "professor";
+        addInfoMessage(msg);
         
         professorSelected = e.getObject();
         
@@ -244,12 +237,14 @@ public class DozentenController implements Serializable {
         professor = (Dozenten)q.getSingleResult();
         try {
         	dozentenFacadeLocal.remove(professor);
-        	msg = "Eintrag wurde gelöscht.";
-            addMessage("messages", msg);
+        	msg = "delete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
         
         }catch(Exception e) {
-        	msg = "Eintrag wurde nicht gelöscht.";
-            addMessage("messages", msg);
+        	msg = "notDelete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
         }
         
 		em.close();
@@ -269,11 +264,13 @@ public class DozentenController implements Serializable {
             professor.setDVorname(professorSelected.getDVorname());
             professor.setDTitel(professorSelected.getDTitel());
             dozentenFacadeLocal.edit(professor);
-        	msg = "Eintrag wurde bearbeitet.";
-            addMessage("messages", msg);
+            msg = "edit";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
         }catch(Exception e) {
-        	msg = "Eintrag wurde nicht bearbeitet.";
-            addMessage("messages", msg);
+        	msg = "notEdit";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
         }
         
       	professorList = getDozentenList();
@@ -293,6 +290,15 @@ public class DozentenController implements Serializable {
 	}
   
   
-  
+	/**
+	 * Faces messages ausgeben.
+	 * @param str
+	 */
+	public static void addInfoMessage(String str) {
+		  FacesContext context = FacesContext.getCurrentInstance();
+		  ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
+		  String message = bundle.getString(str);
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, ""));
+	}
   
 }

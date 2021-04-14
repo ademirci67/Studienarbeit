@@ -77,8 +77,8 @@
                     	<f:selectItems value="#{stundenplansemesterController.scheduleStatusList}" var="sps" itemLabel="#{sps.SPSTBezeichnung}" itemValue="#{sps.spstid}"/>
 			        </p:selectOneMenu>
                     
-                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{stundenplansemesterController.addStundenPlanSemester()}" update=":form:StundenplansemesterList :form:msgs" oncomplete="PF('eventEditDialog').hide();"/> 		 			
-		 			<p:commandButton value="Löschen" update=":form:StundenplansemesterList :form:msgs" actionListener="#{stundenplansemesterController.deleteStundenplansemester()}" oncomplete="PF('eventEditDialog').hide();"/>
+                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{stundenplansemesterController.addStundenPlanSemester()}" update=":form:StundenplansemesterList" oncomplete="PF('eventEditDialog').hide();"/> 		 			
+		 			<p:commandButton value="Löschen" update=":form:StundenplansemesterList" actionListener="#{stundenplansemesterController.deleteStundenplansemester()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
 		        </h:panelGrid>
 		    </p:dialog>
@@ -88,10 +88,10 @@
 		        <h:panelGrid id="eventDetails" columns="2">
 		 
 		            <h:outputLabel for="stundenplansemester1" value="Stundenplansemester: "/>
-                    <h:inputText id="stundenplansemester1" value="#{stundenplansemesterController.scheduleSemesterSection}" ></h:inputText>                                                  
+                    <h:inputText id="stundenplansemester1" value="#{stundenplansemesterController.scheduleSemesterSection}" required = "true" requiredMessage="#{msg['scheduleSemesterSection']}"></h:inputText>                                                  
                     
                     <h:outputLabel for="stundenplansemesterjahr1" value="Jahr: "/>
-                    <h:inputText id="stundenplansemesterjahr1" value="#{stundenplansemesterController.scheduleYear}" ></h:inputText>    
+                    <h:inputText id="stundenplansemesterjahr1" value="#{stundenplansemesterController.scheduleYear}" required = "true" requiredMessage="#{msg['scheduleYear']}"></h:inputText>    
                     
                     <h:outputLabel for="stundenplansemesterkalenderwoche1" value="Kalenderwoche: "/>
                     <h:inputText id="stundenplansemesterkalenderwoche1" value="#{stundenplansemesterController.scheduleCalendarWeek}" ></h:inputText>    
@@ -105,10 +105,10 @@
                     <p:outputLabel for="stundenplanstatus1" value="Status: " />
 			        <p:selectOneMenu id="stundenplanstatus1" value="#{stundenplansemesterController.scheduleSemesterId}" style="width:100%">
 			        	<f:selectItem itemLabel="-----" noSelectionOption="true"/>
-                    	<f:selectItems value="#{stundenplansemesterController.scheduleStatusList}" var="sps" itemLabel="#{sps.SPSTBezeichnung}" itemValue="#{sps.spstid}"/>
+                    	<f:selectItems value="#{stundenplansemesterController.scheduleStatusList}" var="sps" itemLabel="#{sps.spstid}, #{sps.SPSTBezeichnung}" itemValue="#{sps.spstid}"/>
 			        </p:selectOneMenu>
 		            
-                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{stundenplansemesterController.createDoStundenplansemester}" update=":form:StundenplansemesterList :form:msgs" oncomplete="PF('eventDialog').hide();" />		 			
+                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{stundenplansemesterController.createDoStundenplansemester}" update=":form:StundenplansemesterList" oncomplete="PF('eventDialog').hide();" />		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
 		            
 		        </h:panelGrid>

@@ -16,14 +16,7 @@
 		        <p:ajax event="rowSelect" listener="#{pruefcodeController.onRowSelect}" update=":eventEditDetailsForm:eventEditDialog" oncomplete="PF('eventEditDialog').show();" process="CodeList"/>
 	           
 	           <p:column headerText="Studiengang" sortBy="#{list.studiengang.SGName}">
-		           <p:cellEditor>
-		                <f:facet name="output"><h:outputText value="#{list.studiengang.faculty.facName}, #{list.studiengang.SGName}" /></f:facet>
-		                <f:facet name="input">
-		                    <h:selectOneMenu value="#{list.studiengang.faculty.facName}, #{list.studiengang.SGName}" style="width:100%">
-		                        <f:selectItems value="#{pruefcodeController.courseList}" var="#{studiengang.sgid}" itemLabel="#{studiengang.sgid}" itemValue="#{studiengang.sgid}" />
-		                    </h:selectOneMenu>
-		                </f:facet>
-		            </p:cellEditor>
+				<h:outputText value="#{list.studiengang.faculty.facName}, #{list.studiengang.SGName}" />       
 		        </p:column>
 		        	 
 		        <p:column headerText="Prüfcode" sortBy="#{list.prCode}">
@@ -59,8 +52,8 @@
                     	<f:selectItems value="#{pruefcodeController.courseList}" var="course" itemLabel="#{course.faculty.facName}, #{course.SGName}" itemValue="#{course.sgid}"/>
 			        </p:selectOneMenu>
                     
-                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{pruefcodeController.addPruefcode()}" update=":form:CodeList :form:msgs" oncomplete="PF('eventEditDialog').hide();"/> 		 			
-		 			<p:commandButton value="Löschen" update=":form:CodeList :form:msgs" actionListener="#{pruefcodeController.deletePruefcode()}" oncomplete="PF('eventEditDialog').hide();"/>
+                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{pruefcodeController.addPruefcode()}" update=":form:CodeList" oncomplete="PF('eventEditDialog').hide();"/> 		 			
+		 			<p:commandButton value="Löschen" update=":form:CodeList" actionListener="#{pruefcodeController.deletePruefcode()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
 		        </h:panelGrid>
 		    </p:dialog>
@@ -68,24 +61,35 @@
 		 <h:form id="eventDetailsForm">
 		    <p:dialog id="eventDialog" widgetVar="eventDialog" header="Pruefcode" showEffect="clip" hideEffect="clip" width="800">
 		        <h:panelGrid id="eventDetails" columns="2">
-		 
-		 			<h:outputLabel for="pruefcode1" value="Pruefcode: "/>
-                    <h:inputText id="pruefcode1" value="#{pruefcodeController.verifyCode}" ></h:inputText>                                                  
+		        	
+		        	<h:outputLabel for="pruefcode1" value="Pruefcode: "/>
+		 			<h:panelGrid columns="3">
+	                    <h:inputText id="pruefcode1" value="#{pruefcodeController.verifyCode}" required = "true" requiredMessage="#{msg['verifyCode}']}"></h:inputText>
+	                    <h:outputLabel value="" style="margin: 10px;"/>
+	                    <h:messages for="pruefcode1" style="color: red"/> 
+                    </h:panelGrid>                                        
                     
                     <h:outputLabel for="vertiefungsrichtung1" value="Vertiefungsrichtung: "/>
-                    <h:inputText id="vertiefungsrichtung1" value="#{pruefcodeController.specializationShort}" ></h:inputText>
+                    <h:panelGrid columns="3">
+	                    <h:inputText id="vertiefungsrichtung1" value="#{pruefcodeController.specializationShort}" required = "true" requiredMessage="#{msg['specializationShort']}"></h:inputText>
+	                    <h:outputLabel value="" style="margin: 10px;"/>
+	                    <h:messages for="vertiefungsrichtung1" style="color: red"/>
+                    </h:panelGrid>
                     
                     <h:outputLabel for="modulart1" value="Modulart (P/W): "/>
-                    <h:inputText id="modulart1" value="#{pruefcodeController.dutyOrChoice}" ></h:inputText>
+                    <h:panelGrid columns="3">
+	                    <h:inputText id="modulart1" value="#{pruefcodeController.dutyOrChoice}" required = "true" requiredMessage="#{msg['dutyOrChoice']}"></h:inputText>
+	                    <h:outputLabel value="" style="margin: 10px;"/>
+	                    <h:messages for="modulart1" style="color: red"/>
+			        </h:panelGrid>
 			        
 			        <p:outputLabel for="studiengang1" value="Studiengang: " />
-			        <p:selectOneMenu id="studiengang1" value="#{pruefcodeController.courseId}" style="width:100%">
+			        <p:selectOneMenu id="studiengang1" value="#{pruefcodeController.courseId}" style="width:100%" required="true" requiredMessage="#{msg['courseId']}">
 			        	<f:selectItem itemLabel="-----" noSelectionOption="true"/>
                     	<f:selectItems value="#{pruefcodeController.courseList}" var="course" itemLabel="#{course.faculty.facName}, #{course.SGName}" itemValue="#{course.sgid}"/>
 			        </p:selectOneMenu>
-			        
 		            
-                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{pruefcodeController.createDoPruefcode}" update=":form:CodeList :form:msgs" oncomplete="PF('eventDialog').hide();" />		 			
+                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{pruefcodeController.createDoPruefcode}" update=":form:CodeList" oncomplete="PF('eventDialog').hide();" />		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
 		            
 		        </h:panelGrid>

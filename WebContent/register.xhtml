@@ -25,7 +25,7 @@
 	                                styleClass="form-control"                                 
 	                                value="#{registerController.accountName}"
 	                                required = "true"  
-	                                requiredMessage="Bitte einen Benutzernamen eingeben">
+	                                requiredMessage="#{msg['accountName']}">
 	                            </h:inputText>
 	                            <h:outputLabel  
 	                                value="" 
@@ -44,7 +44,7 @@
 	                                styleClass="form-control"                                 
 	                                value="#{registerController.accountPassword}"
 	                                required = "true"  
-	                                requiredMessage="Bitte ein Passwort eingeben">
+	                                requiredMessage="#{msg['accountPassword']}">
 	                            </h:inputSecret>
 	                            <h:outputLabel      
 	                                value="" 
@@ -63,7 +63,7 @@
 	                                styleClass="form-control"                                 
 	                                value="#{registerController.accountEmail}"
 	                                required = "true"  
-	                                requiredMessage="Bitte eine Email Adresse angeben">
+	                                requiredMessage="#{msg['accountEmail']}">
 	                            </h:inputText>
 	                            <h:outputLabel     
 	                                value="" 
@@ -81,7 +81,7 @@
 	                                styleClass="form-control" 
 	                                id="Gruppe"
 	                                required="true"
-	                                requiredMessage="Bitte einen Fachbereich wählen"
+	                                requiredMessage="#{msg['accountSubjectArea']}"
 	                                value="#{registerController.facultyName}">
 	                                <f:selectItem
 	                                    itemLabel="-----"

@@ -8,6 +8,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -97,10 +98,6 @@ public class LehrveranstaltungsartController implements Serializable {
 			this.teachingEventLength = teachingEventLength;
 			teachingEventLengthOk=true;
 	    }
-	    else{
-	    	FacesMessage message = new FacesMessage("Lehrveranstaltungsdauer konnte nicht gesetzt werden.");
-            FacesContext.getCurrentInstance().addMessage("LehrveranstaltungsartForm:lvdauer_reg", message);
-	    }
 	}
 
 	public String getTeachingEventShort() {
@@ -112,10 +109,6 @@ public class LehrveranstaltungsartController implements Serializable {
 			this.teachingEventShort = teachingEventShort;
 			teachingEventShortOk=true;
 	    }
-	    else{
-	    	FacesMessage message = new FacesMessage("Lehrveranstaltungskurzform konnte nicht gesetzt werden.");
-            FacesContext.getCurrentInstance().addMessage("LehrveranstaltungsartForm:lvkurz_reg", message);
-	    }
 	}
 
 	public String getTeachingEventName() {
@@ -126,10 +119,6 @@ public class LehrveranstaltungsartController implements Serializable {
 		if(teachingEventName!=null){
 			this.teachingEventName = teachingEventName;
 			teachingEventNameOk=true;
-	    }
-	    else{
-	    	FacesMessage message = new FacesMessage("Lehrveranstaltungsname konnte nicht gesetzt werden.");
-            FacesContext.getCurrentInstance().addMessage("LehrveranstaltungsartForm:lvname_reg", message);
 	    }
 	}
 
@@ -172,12 +161,14 @@ public class LehrveranstaltungsartController implements Serializable {
 		lva.setLvkurz(teachingEventShort);
 		try {
 			teachingEventFacadeLocal.create(lva);
-			msg = "Eintrag wurde erstellt.";
-            addMessage("messages", msg);
+			msg = "entry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 	    catch (Exception e) {
-	    	msg = "Eintrag wurde nicht erstellt.";
-            addMessage("messages", msg);
+	    	msg = "notEntry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	        
 	    }
 		em.close();
@@ -217,8 +208,8 @@ public class LehrveranstaltungsartController implements Serializable {
 	 * @param e
 	 */
 	public void onRowSelect(SelectEvent<Lehrveranstaltungsart> e) {
-    	FacesMessage msg = new FacesMessage("Lehrveranstaltungsart ausgewählt");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+		String msg = "teachingEvent";
+        addInfoMessage(msg);
         
         teachingEventSelected = e.getObject();
         
@@ -238,13 +229,15 @@ public class LehrveranstaltungsartController implements Serializable {
  	       teachingEvent.setLvdauer(teachingEventSelected.getLvdauer());
  	       teachingEvent.setLvkurz(teachingEventSelected.getLvkurz());
  	       teachingEventFacadeLocal.edit(teachingEvent);
- 	       msg = "Eintrag wurde bearbeitet.";
-           addMessage("messages", msg);
- 	    }
- 	    catch (Exception e) {
- 	    	msg = "Eintrag wurde nicht bearbeitet.";
-            addMessage("messages", msg);
- 	    }
+ 	      msg = "edit";
+          //addMessage("messages", msg);
+          addInfoMessage(msg);
+	    }
+	    catch (Exception e) {
+	    	msg = "notEdit";
+           //addMessage("messages", msg);
+           addInfoMessage(msg);
+	    }
     	teachingEventList = getLehrveranstaltungsartList();
     	em.close();
     }
@@ -266,12 +259,14 @@ public class LehrveranstaltungsartController implements Serializable {
         
         try {
         	teachingEventFacadeLocal.remove(teachingEvent);
-        	msg = "Eintrag wurde gelöscht.";
-            addMessage("messages", msg);
+        	msg = "delete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 	    catch (Exception e) {
-	    	msg = "Eintrag wurde nicht gelöscht.";
-            addMessage("messages", msg);
+	    	msg = "notDelete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	        
 	    }
 		em.close();
@@ -287,5 +282,15 @@ public class LehrveranstaltungsartController implements Serializable {
 	   FacesContext.getCurrentInstance().addMessage(loginformidName, message);     
 	}
 	
+	/**
+	 * Faces messages ausgeben.
+	 * @param str
+	 */
+	public static void addInfoMessage(String str) {
+		  FacesContext context = FacesContext.getCurrentInstance();
+		  ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
+		  String message = bundle.getString(str);
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, ""));
+	}
 	
 }

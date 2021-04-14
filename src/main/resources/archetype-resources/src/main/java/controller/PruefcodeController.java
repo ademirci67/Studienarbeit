@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -185,13 +186,16 @@ public class PruefcodeController implements Serializable {
 		pCode.setStudiengang(findSg(courseId));
 		try {
 			pruefcodeFacadeLocal.create(pCode);
-			msg = "Eintrag wurde erstellt.";
-            addMessage("messages", msg);
+			msg = "entry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 	    catch (Exception e) {
-	    	msg = "Eintrag wurde nicht erstellt.";
-            addMessage("messages", msg);
+	    	msg = "notEntry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
+		codeList = getCodeListAll();
 		return pCode;
 		
 	}
@@ -256,12 +260,14 @@ public class PruefcodeController implements Serializable {
         
         try {
         	pruefcodeFacadeLocal.remove(code);
-        	msg = "Eintrag wurde gelöscht.";
-            addMessage("messages", msg);
+        	msg = "delete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 	    catch (Exception e) {
-	    	msg = "Eintrag wurde nicht gelöscht.";
-            addMessage("messages", msg);
+	    	msg = "notDelete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
         
 		em.close();
@@ -272,8 +278,8 @@ public class PruefcodeController implements Serializable {
      * @param e
      */
     public void onRowSelect(SelectEvent<Pruefcode> e) {
-    	FacesMessage msg = new FacesMessage("Pruefcode ausgewählt");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+    	String msg = "verifyCodeSelected";
+        addInfoMessage(msg);
         
         codeSelected = e.getObject();
         courseId = codeSelected.getStudiengang().getSgid();
@@ -294,12 +300,14 @@ public class PruefcodeController implements Serializable {
 	       code.setPcid(codeSelected.getPcid());
 	       code.setStudiengang(findSg(courseId));
 	       pruefcodeFacadeLocal.edit(code);
- 	       msg = "Eintrag wurde bearbeitet.";
-           addMessage("messages", msg);
+	       msg = "edit";
+           //addMessage("messages", msg);
+           addInfoMessage(msg);
  	    }
  	    catch (Exception e) {
- 	    	msg = "Eintrag wurde nicht bearbeitet.";
-            addMessage("messages", msg);
+ 	    	msg = "notEdit";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
  	    }
     	 codeList = getCodeListAll();
     	 em.close();
@@ -335,6 +343,17 @@ public class PruefcodeController implements Serializable {
 	private void addMessage(String loginformidName, String msg) {
 	   FacesMessage message = new FacesMessage(msg);
 	   FacesContext.getCurrentInstance().addMessage(loginformidName, message);     
+	}
+	
+	/**
+	 * Faces messages ausgeben.
+	 * @param str
+	 */
+	public static void addInfoMessage(String str) {
+		  FacesContext context = FacesContext.getCurrentInstance();
+		  ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
+		  String message = bundle.getString(str);
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, ""));
 	}
 	
   

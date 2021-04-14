@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -267,12 +268,14 @@ public class SgmodulController implements Serializable {
 		sgm.setStudiengang(findSg(courseId));
 		try {
 			sgModulFacadeLocal.create(sgm);
-			msg = "Eintrag wurde erstellt.";
-            addMessage("messages", msg);
+			msg = "entry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 	    catch (Exception e) {
-	    	msg = "Eintrag wurde nicht erstellt.";
-            addMessage("messages", msg);
+	    	msg = "notEntry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 		em.close();
 	}
@@ -362,8 +365,8 @@ public class SgmodulController implements Serializable {
 	 * @param e
 	 */
 	public void onRowSelect(SelectEvent<Sgmodul> e) {
-    	FacesMessage msg = new FacesMessage("Studiengangmodul ausgewählt");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+		String msg = "sgmodule";
+        addInfoMessage(msg);
         
         sgmodulSelected = e.getObject();
         
@@ -389,12 +392,14 @@ public class SgmodulController implements Serializable {
         
         try {
         	sgModulFacadeLocal.remove(sgmodul);
-        	msg = "Eintrag wurde gelöscht.";
-            addMessage("messages", msg);
+        	msg = "delete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    }
 	    catch (Exception e) {
-	    	msg = "Eintrag wurde nicht gelöscht.";
-            addMessage("messages", msg);
+	    	msg = "notDelete";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
 	    	
 	    }
 		em.close();
@@ -474,12 +479,14 @@ public class SgmodulController implements Serializable {
 	        sgmodul.setDozenten(findDoz(professorId));
 	        sgmodul.setStudiengang(findSg(courseId));
 	        sgModulFacadeLocal.edit(sgmodul);
-	        msg = "Eintrag wurde bearbeitet.";
-            addMessage("messages", msg);
+	        msg = "edit";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
    	    }
    	    catch (Exception e) {
-   	    	msg = "Eintrag wurde nicht bearbeitet.";
-            addMessage("messages", msg);
+   	    	msg = "notEdit";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
    	    }
       	sgmodulList = getSgmodulListAll();
       	em.close();
@@ -494,5 +501,16 @@ public class SgmodulController implements Serializable {
   	   FacesMessage message = new FacesMessage(msg);
   	   FacesContext.getCurrentInstance().addMessage(loginformidName, message);     
   	}
+  	
+  	/**
+	 * Faces messages ausgeben.
+	 * @param str
+	 */
+	public static void addInfoMessage(String str) {
+		  FacesContext context = FacesContext.getCurrentInstance();
+		  ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
+		  String message = bundle.getString(str);
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, ""));
+	}
     
 }

@@ -66,8 +66,8 @@
 			        </p:fragment>
                     </h:panelGrid>
                     
-                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{modulController.addModul()}" update=":form:ModulListe :form:msgs" oncomplete="PF('eventEditDialog').hide();"/> 		 			
-		 			<p:commandButton value="Löschen" update=":form:ModulListe :form:msgs" actionListener="#{modulController.deleteModul()}" oncomplete="PF('eventEditDialog').hide();"/>
+                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{modulController.addModul()}" update=":form:ModulListe" oncomplete="PF('eventEditDialog').hide();"/> 		 			
+		 			<p:commandButton value="Löschen" update=":form:ModulListe" actionListener="#{modulController.deleteModul()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
 		        </h:panelGrid>
 		    </p:dialog>
@@ -78,33 +78,33 @@
 		 
 		            <h:outputLabel styleClass="label" style="font-size:12pt" for="modulName_reg" value="Modul: "/>
                     <h:panelGrid columns="2">
-                    	<h:inputText id="modulName_reg" styleClass="form-control" value="#{modulController.modulName}" required = "true" requiredMessage="Eine Fakultät muss eingegeben werden."></h:inputText>
+                    	<h:inputText id="modulName_reg" styleClass="form-control" value="#{modulController.modulName}" required = "true" requiredMessage="#{msg['moduleName']}"></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="modulName_reg" style="color: red"/>
                     </h:panelGrid>                                                        
                     <h:outputLabel styleClass="label" style="font-size:12pt" for="modulShortName_reg" value="Kürzel: "/>
                     <h:panelGrid columns="2">
-                    	<h:inputText id="modulShortName_reg" styleClass="form-control" value="#{modulController.modulShort}" required = "true" requiredMessage="Ein Kürzel muss eingegeben werden."></h:inputText>
+                    	<h:inputText id="modulShortName_reg" styleClass="form-control" value="#{modulController.modulShort}" required = "true" requiredMessage="#{msg['moduleShort']}"></h:inputText>
                    		<h:outputLabel value="" style="margin: 10px;"/>
                     	<h:messages for="modulShortName_reg" style="color: red"/>
                     </h:panelGrid>
                     <h:outputLabel styleClass="label" style="font-size:12pt" for="pcid_reg" value="Prüfcode: "/>
                     <h:panelGrid columns="2">                 
                     <p:fragment id="pruefcode">
-			        	<p:selectOneMenu id="pcid_reg" value="#{modulController.pcId}" style="width:90%" rendered="#{!modulController.pCType}">
+			        	<p:selectOneMenu id="pcid_reg" value="#{modulController.pcId}" style="width:90%" rendered="#{!modulController.pCType}" required="true" requiredMessage="#{msg['prCode']}">
 			        		<f:selectItem itemLabel="-----" noSelectionOption="true"/>
                     		<f:selectItems value="#{modulController.listPC}" var="code" itemLabel="#{code.prCode}" itemValue="#{code.pcid}"/>
 			        	</p:selectOneMenu>
-			        	<p:inputText id="pcinput" style="width:90%" rendered="#{modulController.pCType}" value="#{modulController.verifyCode}"> 	
+			        	<p:inputText id="pcinput" style="width:90%" rendered="#{modulController.pCType}" value="#{modulController.verifyCode}" required="true" requiredMessage="#{msg['prCode']}"> 	
 			        	</p:inputText>
-			        <p:selectOneRadio id="choice" value="#{modulController.pCType}" style="width:90%">
+			        <p:selectOneRadio id="choice" value="#{modulController.pCType}" style="width:90%" required="true" requiredMessage="#{msg['prCode']}">
 			        <f:selectItem itemLabel="Eingabe" itemValue="true" />
 			        <f:selectItem itemLabel="Auswahl" itemValue="false" />
 			        <p:ajax process="@this" update="@this, pruefcode" />
 			        </p:selectOneRadio>
 			        </p:fragment>
                     </h:panelGrid>
-                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{modulController.createDoModul}" oncomplete="PF('eventDialog').hide();" update=":form:ModulListe :form:msgs"/>		 			
+                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{modulController.createDoModul}" oncomplete="PF('eventDialog').hide();" update=":form:ModulListe"/>		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
 		            
 		        </h:panelGrid>

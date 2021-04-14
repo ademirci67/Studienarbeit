@@ -25,7 +25,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import java.util.ResourceBundle;
 import java.util.TimeZone;
 
 
@@ -583,14 +583,16 @@ public class ScheduleController implements Serializable {
             
             loadModule();
             
-            msg = "Ereignis wurde hinzugefügt!";         
-            addMessage("messages", msg);
+            msg = "entry";         
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
             
             event = new DefaultScheduleEvent();
         }
         catch(Exception e){
-            msg = "Eventdaten wurden nicht übergeben!";
-            addMessage("messages", msg);
+        	msg = "notEntry";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
             
         }
         
@@ -647,8 +649,9 @@ public class ScheduleController implements Serializable {
             
             speFacadeLocal.edit(eventSelected);
             
-            msg = "Ereignis wurde geändert!";
-            addMessage("messages", msg);
+            msg = "edit";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
             
             loadModule();
             
@@ -656,8 +659,9 @@ public class ScheduleController implements Serializable {
        
 		}
 		catch(Exception e){
-		    msg = "Eventdaten wurden nicht übergeben!";
-		    addMessage("messages", msg);
+			msg = "notEdit";
+		    //addMessage("messages", msg);
+		    addInfoMessage(msg);
 		    
 		}
 		
@@ -679,12 +683,14 @@ public class ScheduleController implements Serializable {
         try{            
             speFacadeLocal.remove(eventSelected);
             
-            msg = "Ereignis wurde gelöscht!";
+            msg = "delete";
+            
         }
         catch(Exception e){
-            msg = "Ereignis konnte nicht gelöscht werden!";    
+            msg = "notDelete";    
         }
-        addMessage("messages", msg);
+        //addMessage("messages", msg);
+        addInfoMessage(msg);
         events[semesterSelection].deleteEvent(event);
     }
     
@@ -767,12 +773,14 @@ public class ScheduleController implements Serializable {
                 eventSelected.setZeitStempel(timeStamp);
                 
                 speFacadeLocal.edit(eventSelected);
-                msg = "Ereignis wurde geändert!";
-                addMessage("messages", msg);
+                msg = "edit";
+                //addMessage("messages", msg);
+                addInfoMessage(msg);
         }
         catch(Exception e){
-            msg = "Eventdaten wurden nicht übergeben!";
-            addMessage("messages", msg);
+            msg = "notEdit";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
         }
     }
     
@@ -804,12 +812,14 @@ public class ScheduleController implements Serializable {
                 timeStamp = new Timestamp(time);
                 eventSelected.setZeitStempel(timeStamp);
                 speFacadeLocal.edit(eventSelected);
-                msg = "Ereignis wurde geändert!";
-                addMessage("messages", msg);
+                msg = "edit";
+                //addMessage("messages", msg);
+                addInfoMessage(msg);
         }
         catch(Exception e){
-            msg = "Eventdaten wurden nicht übergeben!";
-            addMessage("messages", msg);
+            msg = "notEdit";
+            //addMessage("messages", msg);
+            addInfoMessage(msg);
         }
         
         
@@ -826,6 +836,17 @@ public class ScheduleController implements Serializable {
         FacesContext cxt = FacesContext.getCurrentInstance();
         cxt.addMessage(toComponent, msg);
     }
+    
+    /**
+	 * Faces messages ausgeben.
+	 * @param str
+	 */
+	public static void addInfoMessage(String str) {
+		  FacesContext context = FacesContext.getCurrentInstance();
+		  ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
+		  String message = bundle.getString(str);
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, ""));
+	}
     
     //--------------------------------------------------------------
     

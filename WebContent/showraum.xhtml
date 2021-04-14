@@ -58,8 +58,8 @@
                     	<f:selectItems value="#{raumController.locationList}" var="loc" itemLabel="#{loc.LCity}, #{loc.LStreet}" itemValue="#{loc.lid}"/>
 			        </p:selectOneMenu>
                     
-                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{raumController.addRoom()}" update=":form:RoomList :form:msgs" oncomplete="PF('eventEditDialog').hide();"/> 		 			
-		 			<p:commandButton value="Löschen" update=":form:RoomList :form:msgs" actionListener="#{raumController.deleteRoom()}" oncomplete="PF('eventEditDialog').hide();"/>
+                    <p:commandButton id="submit" type="submit" value="Speichern" action="#{raumController.addRoom()}" update=":form:RoomList" oncomplete="PF('eventEditDialog').hide();"/> 		 			
+		 			<p:commandButton value="Löschen" update=":form:RoomList" actionListener="#{raumController.deleteRoom()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
 		        </h:panelGrid>
 		    </p:dialog>
@@ -68,22 +68,35 @@
 		    <p:dialog id="eventDialog" widgetVar="eventDialog" header="Raum" showEffect="clip" hideEffect="clip" width="350">
 		        <h:panelGrid id="eventDetails" columns="2">
 		 
-		            <h:outputLabel for="roomname1" value="Raumname: "/>
-                    <h:inputText id="roomname1" value="#{raumController.roomName}" ></h:inputText>                                                  
-                    
-                    <h:outputLabel for="capacity1" value="Kapazität: "/>
-                    <h:inputText id="capacity1" value="#{raumController.capacity}" ></h:inputText>
-                    
-                    <h:outputLabel for="neighborroom1" value="Nachbarraum: "/>
-                    <h:inputText id="neighborroom1" value="#{raumController.roomNeighbor}" ></h:inputText>
+		 			
+					<h:outputLabel styleClass="label" style="font-size:12pt;" for="RName_reg" value="Raumname: "/>
+                    <h:panelGrid columns="3">
+                        <h:inputText id="RName_reg" styleClass="form-control" value="#{raumController.roomName}" required = "true" requiredMessage="#{msg['roomName']}"></h:inputText>
+                        <h:outputLabel value="" style="margin: 10px;"/>
+                        <h:messages for="RName_reg" style="color: red"/>
+                    </h:panelGrid>                                                        
+                    <h:outputLabel styleClass="label" style="font-size:12pt;" for="kapazitaet_reg" value="Kapazität: "/>
+                    <h:panelGrid columns="3">
+                        <h:inputText id="kapazitaet_reg" styleClass="form-control" value="#{raumController.capacity}" required = "true" requiredMessage="#{msg['capacity']}">
+                        </h:inputText>
+                        <h:outputLabel value="" style="margin: 10px;"/>
+                        <h:messages for="kapazitaet_reg" style="color: red"/>
+                    </h:panelGrid>
+                    <h:outputLabel styleClass="label" style="font-size:12pt;" for="nachbarRaum_reg" value="Nachbarraum: "/>
+                    <h:panelGrid columns="3">
+                        <h:inputText id="nachbarRaum_reg" styleClass="form-control" value="#{raumController.roomNeighbor}" required = "true" requiredMessage="#{msg['capacity']}">
+                        </h:inputText>
+                        <h:outputLabel value="" style="margin: 10px;"/>
+                        <h:messages for="nachbarRaum_reg" style="color: red"/>
+                    </h:panelGrid>
                     
                     <p:outputLabel for="room1" value="Straße: " />
-			        <p:selectOneMenu id="room1" value="#{raumController.locationId}" style="width:100%">
+			        <p:selectOneMenu id="room1" value="#{raumController.locationId}" style="width:100%" required="true" requiredMessage="#{msg['locationId']}">
 			        	<f:selectItem itemLabel="-----" noSelectionOption="true"/>
                     	<f:selectItems value="#{raumController.locationList}" var="loc" itemLabel="#{loc.LCity}, #{loc.LStreet}" itemValue="#{loc.lid}"/>
 			        </p:selectOneMenu>
 		            
-                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{raumController.createDoRoom}" update=":form:RoomList :form:msgs" oncomplete="PF('eventDialog').hide();" />		 			
+                    <p:commandButton id="submit" value="Hinzufügen" actionListener="#{raumController.createDoRoom}" update=":form:RoomList" oncomplete="PF('eventDialog').hide();" />		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
 		            
 		        </h:panelGrid>
