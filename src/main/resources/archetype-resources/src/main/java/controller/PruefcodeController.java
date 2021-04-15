@@ -253,11 +253,11 @@ public class PruefcodeController implements Serializable {
     public void deletePruefcode() throws Exception {
     	String msg;
         codeList.remove(codeSelected);
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Pruefcode> q = em.createNamedQuery("Pruefcode.findByPcid",Pruefcode.class);
-        q.setParameter("pcid", codeSelected.getPcid());
-        code = (Pruefcode)q.getSingleResult();
-        
+        //EntityManager em = emf.createEntityManager();
+        //TypedQuery<Pruefcode> q = em.createNamedQuery("Pruefcode.findByPcid",Pruefcode.class);
+        //q.setParameter("pcid", codeSelected.getPcid());
+        //code = (Pruefcode)q.getSingleResult();
+        code = pruefcodeFacadeLocal.find(codeSelected.getPcid());
         try {
         	pruefcodeFacadeLocal.remove(code);
         	msg = "delete";
@@ -270,7 +270,7 @@ public class PruefcodeController implements Serializable {
             addInfoMessage(msg);
 	    }
         
-		em.close();
+		//em.close();
     }
     
     /**

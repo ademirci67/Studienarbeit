@@ -82,12 +82,12 @@
 	                                id="Gruppe"
 	                                required="true"
 	                                requiredMessage="#{msg['accountSubjectArea']}"
-	                                value="#{registerController.facultyName}">
+	                                value="#{registerController.facultyID}">
 	                                <f:selectItem
 	                                    itemLabel="-----"
 	                                    noSelectionOption="true"/>
 	                                    <f:selectItems
-	                                        value="#{registerController.facultyList}"/>
+	                                        value="#{registerController.facultyList}" var="faculty" itemLabel="#{faculty.facName}" itemValue="#{faculty.fbid}"/>
 	                               </h:selectOneMenu>
 	                            <h:outputLabel     
 	                                value="" 

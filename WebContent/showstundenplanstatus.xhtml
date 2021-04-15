@@ -33,51 +33,57 @@
 		 </h:form>
 		 <h:form id="eventEditDetailsForm">
 		 	<p:dialog id="eventEditDialog" widgetVar="eventEditDialog" header="Stundenplanstatus" showEffect="clip" hideEffect="clip">
-		        <h:panelGrid id="eventEditDetails" columns="2">
+		        <p:outputPanel id="dialogPanel">
+		       	<p:growl life="5000" id="messages" />
+		        <p:panelGrid id="eventEditDetails" columns="3" style="margin-bottom:10px; width:100%">
 		 
 		            
-                    <h:outputLabel for="statusDescription_reg" value="Bezeichnung: "/>
-                    <h:inputText id="statusDescription_reg" value="#{stundenplanstatusController.statusSelected.SPSTBezeichnung}" ></h:inputText>
+                    <p:outputLabel for="statusDescription_reg" value="Bezeichnung: "/>
+                    <p:inputText style="width:90%" id="statusDescription_reg" value="#{stundenplanstatusController.statusSelected.SPSTBezeichnung}" ></p:inputText>
+                    <p:message for="statusDescription_reg" />
                     
-                    <h:outputLabel for="statusHint_reg" value="Hinweis: "/>
-                    <h:inputText id="statusHint_reg" value="#{stundenplanstatusController.statusSelected.SPSTHint}" ></h:inputText>
+                    <p:outputLabel for="statusHint_reg" value="Hinweis: "/>
+                    <p:inputText style="width:90%" id="statusHint_reg" value="#{stundenplanstatusController.statusSelected.SPSTHint}" ></p:inputText>
+                    <p:message for="statusHint_reg" />
                     
-                    <h:outputLabel for="statusColor_reg" value="Farbe: "/>
-                    <h:inputText id="statusColor_reg" value="#{stundenplanstatusController.statusSelected.PColor}" ></h:inputText>                                                  
+                    <p:outputLabel for="statusColor_reg" value="Farbe: "/>
+                    <p:inputText style="width:90%" id="statusColor_reg" value="#{stundenplanstatusController.statusSelected.PColor}" ></p:inputText>                                                  
+                    <p:message for="statusColor_reg" />
                     
-                    
+                    <f:facet name="footer">
                     <p:commandButton id="submit" type="submit" value="Speichern" action="#{stundenplanstatusController.addStundenplanstatus()}" update=":form:StundenplanstatusListe" oncomplete="PF('eventEditDialog').hide();"/> 		 			
 		 			<p:commandButton value="Löschen" update=":form:StundenplanstatusListe" actionListener="#{stundenplanstatusController.deleteStundenplanstatus()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
-		        </h:panelGrid>
+		        </f:facet>
+		        </p:panelGrid>
+		        </p:outputPanel>
 		    </p:dialog>
 		 </h:form>
 		 <h:form id="eventDetailsForm">
 		    <p:dialog id="eventDialog" widgetVar="eventDialog" header="Stundenplanstatus" showEffect="clip" hideEffect="clip">
-		        <h:panelGrid id="eventDetails" columns="2">
+		        <p:outputPanel id="dialogPanel">
+		        <p:growl life="5000" id="messages" />
+		        <p:panelGrid id="eventDetails" columns="3" style="margin-bottom:10px; width:100%">
 		 
 		                                                                    
-                    <h:outputLabel styleClass="label" style="font-size:12pt" for="statusDescription_reg" value="Bezeichnung: "/>
-                    <h:panelGrid columns="3">
-                    	<h:inputText id="statusDescription_reg" styleClass="form-control" value="#{stundenplanstatusController.statusDescription}" required = "true" requiredMessage="#{msg['statusDescription']}"></h:inputText>
-                   		<h:outputLabel value="" style="margin: 10px;"/>
-                    	<h:messages for="statusDescription_reg" style="color: red"/>
-                    </h:panelGrid>
-                    <h:outputLabel styleClass="label" style="font-size:12pt" for="statusHint_reg" value="Hinweis: "/>
-                    <h:panelGrid columns="3">
-                    	<h:inputText id="statusHint_reg" styleClass="form-control" value="#{stundenplanstatusController.statusHint}" required = "true" requiredMessage="#{msg['statusHint']}"></h:inputText>
-                   		<h:outputLabel value="" style="margin: 10px;"/>
-                    	<h:messages for="statusHint_reg" style="color: red"/>
-                    </h:panelGrid>
-                    <h:outputLabel styleClass="label" style="font-size:12pt" for="statusColor_reg" value="Farbe: "/>
-                    <h:panelGrid columns="2">
-                    	<h:inputText id="statusColor_reg" styleClass="form-control" value="#{stundenplanstatusController.statusColor}"></h:inputText>
-                   		<h:outputLabel value="" style="margin: 10px;"/>
-                    </h:panelGrid>
+                    <p:outputLabel for="statusDescription_reg" value="Bezeichnung: "/>
+                    <p:inputText style="width:90%" id="statusDescription_reg" styleClass="form-control" value="#{stundenplanstatusController.statusDescription}" required = "true" requiredMessage="#{msg['statusDescription']}"></p:inputText>
+                   	<p:message for="statusDescription_reg" style="color: red"/>
+                    
+                    <p:outputLabel for="statusHint_reg" value="Hinweis: "/>
+                    <p:inputText style="width:90%" id="statusHint_reg" styleClass="form-control" value="#{stundenplanstatusController.statusHint}" required = "true" requiredMessage="#{msg['statusHint']}"></p:inputText>
+                   	<p:message for="statusHint_reg" style="color: red"/>
+                    
+                    <p:outputLabel for="statusColor_reg" value="Farbe: "/>
+                    <p:inputText style="width:90%" id="statusColor_reg" styleClass="form-control" value="#{stundenplanstatusController.statusColor}"></p:inputText>
+                   	<p:message for="statusColor_reg" style="color: red"/>	
+                    
+                    <f:facet name="footer">
                     <p:commandButton id="submit" value="Hinzufügen" actionListener="#{stundenplanstatusController.createDoStundenplanstatus}" oncomplete="PF('eventDialog').hide();" update=":form:StundenplanstatusListe"/>		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
-		            
-		        </h:panelGrid>
+		            </f:facet>
+		        </p:panelGrid>
+		        </p:outputPanel>
 		    </p:dialog>
 		 </h:form>
 		 </ui:define>

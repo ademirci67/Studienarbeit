@@ -39,75 +39,88 @@
 		 </h:form>
 		 <h:form id="eventEditDetailsForm">
 		 	<p:dialog id="eventEditDialog" widgetVar="eventEditDialog" header="Modul Editiert Details" showEffect="clip" hideEffect="clip" width="800">
-		        <h:panelGrid id="eventEditDetails" columns="2">
+		        <p:outputPanel id="dialogPanel">
+		       	<p:growl life="5000" id="messages" />
+		        <p:panelGrid id="eventEditDetails" columns="3" style="margin-bottom:10px; width:100%">
 		 			
 		 			<p:outputLabel for="modul" value="Modul: " />
-			        <p:selectOneMenu id="modul" value="#{sgmodulController.moduleId}" style="width:100%">
+			        <p:selectOneMenu id="modul" value="#{sgmodulController.moduleId}" style="width:90%">
                     	<f:selectItems value="#{sgmodulController.moduleList}" var="modul" itemLabel="#{modul.modName}, #{modul.modKuerzel}" itemValue="#{modul.modID}"/>
 			        </p:selectOneMenu>
+			        <p:message for="modul" /> 
 			        
 			        <p:outputLabel for="studiengang" value="Studiengang: " />
-			        <p:selectOneMenu id="studiengang" value="#{sgmodulController.courseId}" style="width:100%">
+			        <p:selectOneMenu id="studiengang" value="#{sgmodulController.courseId}" style="width:90%">
                     	<f:selectItems value="#{sgmodulController.courseList}" var="course" itemLabel="#{course.faculty.facName}, #{course.SGName}" itemValue="#{course.sgid}"/>
 			        </p:selectOneMenu>
+			        <p:message for="studiengang" /> 
 			        
 			        <p:outputLabel for="dozent" value="Dozent: " />
-			        <p:selectOneMenu id="dozent" value="#{sgmodulController.professorId}" style="width:100%">
+			        <p:selectOneMenu id="dozent" value="#{sgmodulController.professorId}" style="width:90%">
                     	<f:selectItems value="#{sgmodulController.professorList}" var="prof" itemLabel="#{prof.DName}, #{prof.DVorname}" itemValue="#{prof.did}"/>
 			        </p:selectOneMenu>
+		 			<p:message for="dozent" /> 
 		 			
 		            <h:outputLabel for="modulSemester" value="Modul Semester: "/>
-                    <h:inputText id="modulSemester" value="#{sgmodulController.sgmodulSelected.modSemester}" ></h:inputText>                                                  
+                    <p:inputText id="modulSemester" value="#{sgmodulController.sgmodulSelected.modSemester}" style="width:90%" ></p:inputText>                                                  
+                    <p:message for="modulSemester" /> 
                     
                     <h:outputLabel for="studiengangNotiz" value="Studiengang Notiz: "/>
-                    <h:inputTextarea id="studiengangNotiz" value="#{sgmodulController.sgmodulSelected.SGMNotiz}" row = "10" col = "10"></h:inputTextarea>  
+                    <h:inputTextarea style="width:90%" id="studiengangNotiz" value="#{sgmodulController.sgmodulSelected.SGMNotiz}" row = "10" col = "10"></h:inputTextarea>  
+                    <p:message for="studiengangNotiz" /> 
                     
+                    <f:facet name="footer">
                     <p:commandButton id="submit" type="submit" value="Speichern" action="#{sgmodulController.addSgmodul()}" update=":form:SgmodulList" oncomplete="PF('eventEditDialog').hide();"/> 		 			
 		 			<p:commandButton value="Löschen" update=":form:SgmodulList" actionListener="#{sgmodulController.deleteSgmodul()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
-		        </h:panelGrid>
+		        </f:facet>
+		        </p:panelGrid>
+		        </p:outputPanel>
 		    </p:dialog>
 		 </h:form>
 		 <h:form id="eventDetailsForm">
 		    <p:dialog id="eventDialog" widgetVar="eventDialog" header="Modul" showEffect="clip" hideEffect="clip" width="800">
-		        <h:panelGrid id="eventDetails" columns="2">
+		        <p:outputPanel id="dialogPanel">
+		        <p:growl life="5000" id="messages" />
+		        <p:panelGrid id="eventDetails" columns="3" style="margin-bottom:10px; width:100%">
 		 
 		            <p:outputLabel for="modul1" value="Modul: " />
-			        <p:selectOneMenu id="modul1" value="#{sgmodulController.moduleId}" style="width:100%" required="true" requiredMessage="#{msg['moduleId']}">
+			        <p:selectOneMenu id="modul1" value="#{sgmodulController.moduleId}" style="width:90%" required="true" requiredMessage="#{msg['moduleId']}">
 			        	<f:selectItem itemLabel="-----" noSelectionOption="true"/>
                     	<f:selectItems value="#{sgmodulController.moduleList}" var="modul" itemLabel="#{modul.modID}, #{modul.modName}" itemValue="#{modul.modID}"/>
 			        </p:selectOneMenu>
+			        <p:message for="modul1" style="color: red"/>
 			        
 			        <p:outputLabel for="studiengang1" value="Studiengang: " />
-			        <p:selectOneMenu id="studiengang1" value="#{sgmodulController.courseId}" style="width:100%" required="true" requiredMessage="#{msg['courseId']}">
+			        <p:selectOneMenu id="studiengang1" value="#{sgmodulController.courseId}" style="width:90%" required="true" requiredMessage="#{msg['courseId']}">
 			        	<f:selectItem itemLabel="-----" noSelectionOption="true"/>
                     	<f:selectItems value="#{sgmodulController.courseList}" var="course" itemLabel="#{course.faculty.facName}, #{course.SGName}" itemValue="#{course.sgid}"/>
 			        </p:selectOneMenu>
+			        <p:message for="studiengang1" style="color: red"/>
 			        
 			        <p:outputLabel for="dozent1" value="Dozent: " />
-			        <p:selectOneMenu id="dozent1" value="#{sgmodulController.professorId}" style="width:100%" required="true" requiredMessage="#{msg['professorId']}">
+			        <p:selectOneMenu id="dozent1" value="#{sgmodulController.professorId}" style="width:90%" required="true" requiredMessage="#{msg['professorId']}">
 			        	<f:selectItem itemLabel="-----" noSelectionOption="true"/>
                     	<f:selectItems value="#{sgmodulController.professorList}" var="prof" itemLabel="#{prof.DName}, #{prof.DVorname}" itemValue="#{prof.did}"/>
 			        </p:selectOneMenu>
+			        <p:message for="dozent1" style="color: red"/>
 		 			
 		 			
-					<h:outputLabel styleClass="label" style="font-size:12pt;" for="modSemester_reg" value="Modul Semester: "/>
-	                <h:panelGrid columns="3">
-	                    <h:inputText id="modSemester_reg" styleClass="form-control" value="#{sgmodulController.moduleSemester}"></h:inputText>
-	                    <h:outputLabel value="" style="margin: 10px;"/>
-	                    <h:messages for="modSemester_reg" style="color: red"/>
-	                </h:panelGrid>                                                        
-	                <h:outputLabel styleClass="label" style="font-size:12pt;" for="SGMNotiz_reg" value="Notiz: "/>
-	                <h:panelGrid columns="3">
-	                    <h:inputTextarea id="SGMNotiz_reg" styleClass="form-control" value="#{sgmodulController.sgmodulNote}" row = "10" col = "10" required = "true" requiredMessage="#{msg['sgmodulNote']}"></h:inputTextarea>
-	                    <h:outputLabel value="" style="margin: 10px;"/>
-	                    <h:messages for="SGMNotiz_reg" style="color: red"/>
-	                </h:panelGrid>
+					<p:outputLabel for="modSemester_reg" value="Modul Semester: "/>
+	                <p:inputText id="modSemester_reg" styleClass="form-control" style="width:90%" value="#{sgmodulController.moduleSemester}"></p:inputText>
+	                 <p:message for="modSemester_reg" style="color: red"/>
+	                                                                       
+	                <p:outputLabel for="SGMNotiz_reg" value="Notiz: "/>
+	                <h:inputTextarea id="SGMNotiz_reg" styleClass="form-control" style="width:90%" value="#{sgmodulController.sgmodulNote}" row = "10" col = "10" required = "true" requiredMessage="#{msg['sgmodulNote']}"></h:inputTextarea>
+	                <p:message for="SGMNotiz_reg" style="color: red"/>
+	               
 		            
+		            <f:facet name="footer">
                     <p:commandButton id="submit" value="Hinzufügen" actionListener="#{sgmodulController.createDoSgmodul}" update=":form:SgmodulList" oncomplete="PF('eventDialog').hide();" />		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
-		            
-		        </h:panelGrid>
+		            </f:facet>
+		        </p:panelGrid>
+		        </p:outputPanel>
 		    </p:dialog>    
 		</h:form>
 		 </ui:define>

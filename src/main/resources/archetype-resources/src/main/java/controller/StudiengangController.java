@@ -278,10 +278,11 @@ public class StudiengangController implements Serializable {
     public void deleteStudiengang() throws Exception {
     	String msg;
     	courseList.remove(courseSelected);        
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Studiengang> q = em.createNamedQuery("Studiengang.findBySgid",Studiengang.class);
-        q.setParameter("sgid", courseSelected.getSgid());
-        course = (Studiengang)q.getSingleResult();
+        //EntityManager em = emf.createEntityManager();
+        //TypedQuery<Studiengang> q = em.createNamedQuery("Studiengang.findBySgid",Studiengang.class);
+        //q.setParameter("sgid", courseSelected.getSgid());
+        //course = (Studiengang)q.getSingleResult();
+    	course = studiengangFacadeLocal.find(courseSelected.getSgid());
         try {
         	studiengangFacadeLocal.remove(course);
         	msg = "delete";
@@ -293,7 +294,7 @@ public class StudiengangController implements Serializable {
             addInfoMessage(msg);
         }
         
-	    em.close();
+	    //em.close();
     }
     
     /**
@@ -302,7 +303,8 @@ public class StudiengangController implements Serializable {
      * @return
      */
     private Faculty findFac(int facultyID) {
-        try{
+        /*
+    	try{
             EntityManager em = emf.createEntityManager(); 
             TypedQuery<Faculty> query
                 = em.createNamedQuery("Faculty.findByFbid",Faculty.class);
@@ -311,7 +313,8 @@ public class StudiengangController implements Serializable {
         }
         catch(Exception e){   
         }
-        return faculty;
+        */
+        return faculty =  facultyEJB.find(facultyID);
     }
    
     /**

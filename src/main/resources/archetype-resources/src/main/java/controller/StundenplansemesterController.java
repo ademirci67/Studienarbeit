@@ -274,10 +274,11 @@ public class StundenplansemesterController implements Serializable {
     public void deleteStundenplansemester() {
     	String msg;
     	scheduleSemesterList.remove(scheduleSemesterSelected);        
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Stundenplansemester> q = em.createNamedQuery("Stundenplansemester.findBySpsid",Stundenplansemester.class);
-        q.setParameter("spsid", scheduleSemesterSelected.getSpsid());
-        scheduleSemester = (Stundenplansemester)q.getSingleResult();
+        //EntityManager em = emf.createEntityManager();
+        //TypedQuery<Stundenplansemester> q = em.createNamedQuery("Stundenplansemester.findBySpsid",Stundenplansemester.class);
+        //q.setParameter("spsid", scheduleSemesterSelected.getSpsid());
+        //scheduleSemester = (Stundenplansemester)q.getSingleResult();
+    	scheduleSemester = stundenplansemesterFacadeLocal.find(scheduleSemesterSelected.getSpsid());
         try {
         	stundenplansemesterFacadeLocal.remove(scheduleSemester);
         	msg = "delete";
@@ -289,7 +290,7 @@ public class StundenplansemesterController implements Serializable {
             addInfoMessage(msg);
         }
         
-		em.close();
+		//em.close();
     }
     
     /**
@@ -298,7 +299,8 @@ public class StundenplansemesterController implements Serializable {
      * @return
      */
     private Stundenplanstatus findSps(int spsId) {
-        try{
+        /*
+    	try{
             EntityManager em = emf.createEntityManager(); 
             TypedQuery<Stundenplanstatus> query
                 = em.createNamedQuery("Stundenplanstatus.findBySpsid",Stundenplanstatus.class);
@@ -307,7 +309,8 @@ public class StundenplansemesterController implements Serializable {
         }
         catch(Exception e){   
         }
-        return scheduleStatus;
+        */
+        return scheduleStatus =  scheduleStatusEJB.find(spsId);
     }
     
     /**

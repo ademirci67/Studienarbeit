@@ -31,59 +31,66 @@
 		 </h:form>
 		 <h:form id="eventEditDetailsForm">
 		 	<p:dialog id="eventEditDialog" widgetVar="eventEditDialog" header="Benutzergruppe Editiert Details" showEffect="clip" hideEffect="clip">
-		        <h:panelGrid id="eventEditDetails" columns="2">
+		        <p:outputPanel id="dialogPanel">
+		       	<p:growl life="5000" id="messages" />
+		        <p:panelGrid id="eventEditDetails" columns="3" style="margin-bottom:10px; width:100%">
 		 
-		            <h:outputLabel for="userGroupName_reg" value="Benutzergruppe: "/>
-                    <h:inputText id="userGroupName_reg" value="#{benutzergruppeController.userGroupSelected.BGName}" ></h:inputText>                                                  
+		            <p:outputLabel for="userGroupName_reg" value="Benutzergruppe: "/>
+                    <p:inputText id="userGroupName_reg" value="#{benutzergruppeController.userGroupSelected.BGName}" style="width:90%"></p:inputText>                                                  
+                    <p:message for="userGroupName_reg" /> 
                     
-                    <h:outputLabel for="userGroupShortName_reg" value="Kürzel: "/>
-                    <h:inputText id="userGroupShortName_reg" value="#{benutzergruppeController.userGroupSelected.BGShortName}" ></h:inputText>
+                    <p:outputLabel for="userGroupShortName_reg" value="Kürzel: "/>
+                    <p:inputText id="userGroupShortName_reg" value="#{benutzergruppeController.userGroupSelected.BGShortName}" style="width:90%"></p:inputText>
+                    <p:message for="userGroupShortName_reg" />
                     
-                    <h:outputLabel for="userGroupRights_reg" value="Rechte: "/>
-                    <p:selectOneMenu id="userGroupRights_reg" value="#{benutzergruppeController.userGroupSelected.BGRechte}" >
+                    <p:outputLabel for="userGroupRights_reg" value="Rechte: "/>
+                    <p:selectOneMenu id="userGroupRights_reg" value="#{benutzergruppeController.userGroupSelected.BGRechte}" style="width:90%">
                     	<f:selectItem itemValue="16" itemLabel="16"/>
                     	<f:selectItem itemValue="32" itemLabel="32"/>
                     	<f:selectItem itemValue="64" itemLabel="64"/>
                     	<f:selectItem itemValue="96" itemLabel="96"/>
-                    </p:selectOneMenu> 
+                    </p:selectOneMenu>
+                    <p:message for="userGroupRights_reg" />
+                     
+                     <f:facet name="footer">
                     <p:commandButton id="submit" type="submit" value="Speichern" action="#{benutzergruppeController.addBenutzergruppe()}" update=":form:BenutzergruppeListe" oncomplete="PF('eventEditDialog').hide();"/> 		 			
 		 			<p:commandButton value="Löschen" update=":form:BenutzergruppeListe" actionListener="#{benutzergruppeController.deleteBenutzergruppe()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
-		        </h:panelGrid>
+		            </f:facet>   
+		        </p:panelGrid>
+		        </p:outputPanel>
 		    </p:dialog>
 		 </h:form>
 		 <h:form id="eventDetailsForm">
 		    <p:dialog id="eventDialog" widgetVar="eventDialog" header="Benutzergruppe" showEffect="clip" hideEffect="clip">
-		        <h:panelGrid id="eventDetails" columns="2">
+		        <p:outputPanel id="dialogPanel">
+		        <p:growl life="5000" id="messages" />
+		        <p:panelGrid id="eventDetails" columns="3" style="margin-bottom:10px; width:100%">
 		 
-		            <h:outputLabel styleClass="label" style="font-size:12pt" for="userGroupName_reg" value="Benutzergruppe: "/>
-                    <h:panelGrid columns="3">
-                    	<h:inputText id="userGroupName_reg" styleClass="form-control" value="#{benutzergruppeController.userGroupName}" required = "true" requiredMessage="#{msg['userGroupName']"></h:inputText>
-                   		<h:outputLabel value="" style="margin: 10px;"/>
-                    	<h:messages for="userGroupName_reg" style="color: red"/>
-                    </h:panelGrid>                                                        
-                    <h:outputLabel styleClass="label" style="font-size:12pt" for="userGroupShortName_reg" value="Kürzel: "/>
-                    <h:panelGrid columns="3">
-                    	<h:inputText id="userGroupShortName_reg" styleClass="form-control" value="#{benutzergruppeController.userGroupShortName}" required = "true" requiredMessage="#{msg['userGroupShortName']}"></h:inputText>
-                   		<h:outputLabel value="" style="margin: 10px;"/>
-                    	<h:messages for="userGroupShortName_reg" style="color: red"/>
-                    </h:panelGrid>
-                    <h:outputLabel styleClass="label" style="font-size:12pt" for="userGroupRights_reg" value="Rechte: "/>
-                    <h:panelGrid columns="3">
-                    	<p:selectOneMenu id="userGroupRights_reg" styleClass="form-control" value="#{benutzergruppeController.userGroupRights}" required = "true" requiredMessage="#{msg['userGroupRights']}">
+		            <p:outputLabel for="userGroupName_reg" value="Benutzergruppe: "/>
+                    <p:inputText id="userGroupName_reg" styleClass="form-control" style="width:90%" value="#{benutzergruppeController.userGroupName}" required = "true" requiredMessage="#{msg['userGroupName']}"></p:inputText>
+                    <p:message for="userGroupName_reg" style="color: red"/>
+                                                                            
+                    <p:outputLabel for="userGroupShortName_reg" value="Kürzel: "/>
+                    <p:inputText id="userGroupShortName_reg" styleClass="form-control" style="width:90%" value="#{benutzergruppeController.userGroupShortName}" required = "true" requiredMessage="#{msg['userGroupShortName']}"></p:inputText>
+                   	<p:messages for="userGroupShortName_reg" style="color: red"/>
+                   
+                    <p:outputLabel for="userGroupRights_reg" value="Rechte: "/>
+                    <p:selectOneMenu id="userGroupRights_reg" styleClass="form-control" style="width:90%" value="#{benutzergruppeController.userGroupRights}" required = "true" requiredMessage="#{msg['userGroupRights']}">
                     	<f:selectItem itemLabel="-----" noSelectionOption="true"/>
                     	<f:selectItem itemValue="16" itemLabel="16"/>
                     	<f:selectItem itemValue="32" itemLabel="32"/>
                     	<f:selectItem itemValue="64" itemLabel="64"/>
                     	<f:selectItem itemValue="96" itemLabel="96"/>
                     	</p:selectOneMenu>
-                   		<h:outputLabel value="" style="margin: 10px;"/>
-                    	<h:messages for="userGroupRights_reg" style="color: red"/>
-                    </h:panelGrid>
+                   	<p:message for="userGroupRights_reg" style="color: red"/>
+                   		
+                    <f:facet name="footer">
                     <p:commandButton id="submit" value="Hinzufügen" actionListener="#{benutzergruppeController.createDoBenutzergruppe}" oncomplete="PF('eventDialog').hide();" update=":form:BenutzergruppeListe"/>		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
-		            
-		        </h:panelGrid>
+		            </f:facet>
+		        </p:panelGrid>
+		        </p:outputPanel>
 		    </p:dialog>    
 		</h:form>
 		 </ui:define>

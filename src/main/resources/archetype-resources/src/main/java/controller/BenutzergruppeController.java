@@ -207,10 +207,11 @@ public class BenutzergruppeController implements Serializable {
     public void deleteBenutzergruppe() throws Exception {
     	String msg;
         userGroupList.remove(userGroupSelected);        
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Benutzergruppe> q = em.createNamedQuery("Benutzergruppe.findByID",Benutzergruppe.class);
-        q.setParameter("groupID", userGroupSelected.getGroupID());
-        userGroup = (Benutzergruppe)q.getSingleResult();
+        //EntityManager em = emf.createEntityManager();
+        //TypedQuery<Benutzergruppe> q = em.createNamedQuery("Benutzergruppe.findByID",Benutzergruppe.class);
+        //q.setParameter("groupID", userGroupSelected.getGroupID());
+        //userGroup = (Benutzergruppe)q.getSingleResult();
+        userGroup = userGroupFacadeLocal.find(userGroupSelected.getGroupID());
         
         try {
         	userGroupFacadeLocal.remove(userGroup);
@@ -223,7 +224,7 @@ public class BenutzergruppeController implements Serializable {
             //addMessage("messages", msg);
             addInfoMessage(msg);
 	    }
-		em.close();
+		//em.close();
     }
     
     /**

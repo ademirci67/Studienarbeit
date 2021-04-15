@@ -28,41 +28,49 @@
 		 </h:form>
 		 <h:form id="eventEditDetailsForm">
 		 	<p:dialog id="eventEditDialog" widgetVar="eventEditDialog" header="Fachbereich Editiert Details" showEffect="clip" hideEffect="clip">
-		        <h:panelGrid id="eventEditDetails" columns="2">
+		        <p:outputPanel id="dialogPanel">
+		       	<p:growl life="5000" id="messages" />
+		        <p:panelGrid id="eventEditDetails" columns="3" style="margin-bottom:10px; width:100%">
 		 
-		            <h:outputLabel for="facName_reg" value="Fachbereich: "/>
-                    <h:inputText id="facName_reg" value="#{facultyController.facultySelected.facName}" ></h:inputText>                                                  
+		            <p:outputLabel for="facName_reg" value="Fachbereich: "/>
+                    <p:inputText style="width:90%" id="facName_reg" value="#{facultyController.facultySelected.facName}" ></p:inputText>                                                  
+                    <p:message for="facName_reg" /> 
                     
-                    <h:outputLabel for="facShortName_reg" value="Kürzel: "/>
-                    <h:inputText id="facShortName_reg" value="#{facultyController.facultySelected.facShortName}" ></h:inputText>
+                    <p:outputLabel for="facShortName_reg" value="Kürzel: "/>
+                    <p:inputText style="width:90%" id="facShortName_reg" value="#{facultyController.facultySelected.facShortName}" ></p:inputText>
+                    <p:message for="facShortName_reg" /> 
                     
+                    <f:facet name="footer">
                     <p:commandButton id="submit" type="submit" value="Speichern" action="#{facultyController.addFaculty()}" update=":form:FacultyList" oncomplete="PF('eventEditDialog').hide();"/> 		 			
 		 			<p:commandButton value="Löschen" update=":form:FacultyList" actionListener="#{facultyController.deleteFaculty()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
-		        </h:panelGrid>
+		        	</f:facet>
+		        </p:panelGrid>
+		        </p:outputPanel>
 		    </p:dialog>
 		 </h:form>
 		 <h:form id="eventDetailsForm">
 		    <p:dialog id="eventDialog" widgetVar="eventDialog" header="Fachbereich" showEffect="clip" hideEffect="clip">
-		        <h:panelGrid id="eventDetails" columns="2">
+		        <p:outputPanel id="dialogPanel">
+		        <p:growl life="5000" id="messages" />
+		        <p:panelGrid id="eventDetails" columns="3" style="margin-bottom:10px; width:100%">
 		 
-		            <h:outputLabel styleClass="label" style="font-size:12pt" for="facName_reg" value="Fachbereich: "/>
-                    <h:panelGrid columns="3">
-                    	<h:inputText id="facName_reg" styleClass="form-control" value="#{facultyController.facultyName}" required = "true" requiredMessage="#{msg['facultyName']}"></h:inputText>
-                   		<h:outputLabel value="" style="margin: 10px;"/>
-                    	<h:messages for="facName_reg" style="color: red"/>
-                    </h:panelGrid>                                                        
-                    <h:outputLabel styleClass="label" style="font-size:12pt" for="facShortName_reg" value="Kürzel: "/>
-                    <h:panelGrid columns="3">
-                    	<h:inputText id="facShortName_reg" styleClass="form-control" value="#{facultyController.facultyShortName}" required = "true" requiredMessage="#{msg['facultyShortName']}"></h:inputText>
-                   		<h:outputLabel value="" style="margin: 10px;"/>
-                    	<h:messages for="facShortName_reg" style="color: red"/>
-                    </h:panelGrid>
+		            <p:outputLabel for="facName_reg" value="Fachbereich: "/>
+                    <p:inputText style="width:90%" id="facName_reg" styleClass="form-control" value="#{facultyController.facultyName}" required = "true" requiredMessage="#{msg['facultyName']}"></p:inputText>
+                   	<p:message for="facName_reg" style="color: red"/>
+                                                                           
+                    <p:outputLabel for="facShortName_reg" value="Kürzel: "/>
+                    <p:inputText style="width:90%" id="facShortName_reg" styleClass="form-control" value="#{facultyController.facultyShortName}" required = "true" requiredMessage="#{msg['facultyShortName']}"></p:inputText>
+                   	<p:message for="facShortName_reg" style="color: red"/>
                     
+                    
+                    <f:facet name="footer">
                     <p:commandButton id="submit" value="Hinzufügen" actionListener="#{facultyController.createDoFaculty}" update=":form:FacultyList" oncomplete="PF('eventDialog').hide();"/>		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
 		            
-		        </h:panelGrid>
+		        </f:facet>
+		        </p:panelGrid>
+		        </p:outputPanel>
 		    </p:dialog>    
 		</h:form>
 		 </ui:define>

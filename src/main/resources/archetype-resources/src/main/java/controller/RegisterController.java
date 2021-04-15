@@ -74,9 +74,9 @@ public class RegisterController implements Serializable {
 
     private String accountPassword;
     private String accountName;
-    private String facultyName;
+    private int facultyID;
     private String accountEmail;
-    private String userGroupName;
+    private int userGroupID;
     private boolean accountNameOk=false;
     private boolean accountPasswordOk = false;
     private boolean accountEmailOk = false;
@@ -150,12 +150,12 @@ public class RegisterController implements Serializable {
         }
     }
 
-    public String getFacultyName() {
-        return facultyName;
+    public int getFacultyID() {
+        return facultyID;
     }
 
-    public void setFacultyName(String facultyName) {
-        this.facultyName = facultyName;
+    public void setFacultyID(int facultyID) {
+        this.facultyID = facultyID;
     }
     
 
@@ -207,13 +207,13 @@ public class RegisterController implements Serializable {
         this.userGroup = userGroup;
     }
 
-	public String getUserGroupName() {
-		return userGroupName;
+	public int getUserGroupID() {
+		return userGroupID;
 	}
 
 
-	public void setUserGroupName(String userGroupName) {
-		this.userGroupName = userGroupName;
+	public void setUserGroupID(int userGroupID) {
+		this.userGroupID = userGroupID;
 	}
     
     //weitere Methoden
@@ -269,9 +269,9 @@ public class RegisterController implements Serializable {
                 newUser.setAccPwd(accountPassword);      
                 newUser.setAccEmail(accountEmail);
                 //Alle User sind als erstes Nobodys
-                newUser.setBenutzergruppe(findBGID());
+                newUser.setBenutzergruppe(findBGID(2));
                 //Dropdown Menü
-                newUser.setFaculty(findFac(facultyName));
+                newUser.setFaculty(findFac(facultyID));
                 try {
                 	accFacadeLocal.create(newUser);
                 }
@@ -315,8 +315,11 @@ public class RegisterController implements Serializable {
      * Setzen einer Benutzergruppe auf Nobody
      * @return
      */
-    private Benutzergruppe findBGID() {
-        try{
+    private Benutzergruppe findBGID(int bg) {
+        /*
+         * try{
+        
+    	
         	EntityManager em;
         	String query;
         	Query q;
@@ -327,7 +330,8 @@ public class RegisterController implements Serializable {
         }
         catch(Exception e){   
         }
-        return userGroup;
+        */
+        return userGroup = userGroupEJB.find(bg);
     }
     
     
@@ -336,8 +340,9 @@ public class RegisterController implements Serializable {
      * @param fac
      * @return
      */
-    private Faculty findFac(String fac) {
-        try{
+    private Faculty findFac(int fac) {
+        /*
+    	try{
             EntityManager em = emf.createEntityManager(); 
             TypedQuery<Faculty> query
                 = em.createNamedQuery("Faculty.findByFacName",Faculty.class);
@@ -346,7 +351,8 @@ public class RegisterController implements Serializable {
         }
         catch(Exception e){   
         }
-        return faculty;
+        */
+        return faculty = facultyEJB.find(fac);
     }
     
      /**

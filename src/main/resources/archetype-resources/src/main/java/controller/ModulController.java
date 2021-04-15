@@ -298,11 +298,11 @@ public class ModulController implements Serializable {
     public void deleteModul() throws Exception {
     	String msg;
         modulList.remove(modulSelected);
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Modul> q = em.createNamedQuery("Modul.findByModID",Modul.class);
-        q.setParameter("modID", modulSelected.getModID());
-        modul = (Modul)q.getSingleResult();
-        
+        //EntityManager em = emf.createEntityManager();
+        //TypedQuery<Modul> q = em.createNamedQuery("Modul.findByModID",Modul.class);
+        //q.setParameter("modID", modulSelected.getModID());
+        //modul = (Modul)q.getSingleResult();
+        modul = modulFacadeLocal.find(modulSelected.getModID());
         try {
         	modulFacadeLocal.remove(modul);
         	msg = "delete";
@@ -315,7 +315,7 @@ public class ModulController implements Serializable {
             addInfoMessage(msg);
 	    }
         
-		em.close();
+		//em.close();
     }
     
     /**

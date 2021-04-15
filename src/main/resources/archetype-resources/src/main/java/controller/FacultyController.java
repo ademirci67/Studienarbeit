@@ -196,11 +196,11 @@ public class FacultyController implements Serializable {
     public void deleteFaculty() throws Exception {
     	String msg;
         facultyList.remove(facultySelected);        
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Faculty> q = em.createNamedQuery("Faculty.findByFbid",Faculty.class);
-        q.setParameter("fbid", facultySelected.getFbid());
-        faculty = (Faculty)q.getSingleResult();
-        
+        //EntityManager em = emf.createEntityManager();
+        //TypedQuery<Faculty> q = em.createNamedQuery("Faculty.findByFbid",Faculty.class);
+        //q.setParameter("fbid", facultySelected.getFbid());
+        //faculty = (Faculty)q.getSingleResult();
+        faculty = facFacadeLocal.find(facultySelected.getFbid());
         try {
         	this.facFacadeLocal.remove(faculty);
         	msg = "delete";
@@ -213,7 +213,7 @@ public class FacultyController implements Serializable {
             addInfoMessage(msg);
 	        
 	    }       
-		em.close();
+		//em.close();
     }
      
     /**

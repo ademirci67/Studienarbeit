@@ -230,98 +230,106 @@
 		</h:form>
 		<h:form id="eventDetailsForm">
 		    <p:dialog id="eventDialog" widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip" width="600">
-		        <h:panelGrid id="eventDetails" columns="2">
+		        <p:outputPanel id="dialogPanel">
+		       	<p:growl life="5000" id="messages" />
+		        <p:panelGrid id="eventDetails" columns="2" style="margin-bottom:10px; width:100%">
 		 
 		            <p:outputLabel for="von" value="Von:" />
-		            <p:datePicker id="von" value="#{scheduleController.createWeekdayStart}" timeOnly="true" pattern="HH:mm"/>
+		            <p:datePicker id="von" value="#{scheduleController.createWeekdayStart}" style="width:90%" timeOnly="true" pattern="HH:mm"/>
 		 
 		            <p:outputLabel for="bis" value="Bis:" />
-		            <p:datePicker id="bis" value="#{scheduleController.createWeekdayEnd}" timeOnly="true" pattern="HH:mm"/>
+		            <p:datePicker id="bis" value="#{scheduleController.createWeekdayEnd}" style="width:90%" timeOnly="true" pattern="HH:mm"/>
 		            
 		            <p:outputLabel for="weekday" value="Wochentag:" />
-		            <p:selectOneMenu id="weekday" value="#{scheduleController.day}" style="width:100%">
+		            <p:selectOneMenu id="weekday" value="#{scheduleController.day}" style="width:90%">
 		            	<f:selectItems value="#{scheduleController.weekDays}" var="weekday" itemValue="#{weekDay}" itemLabel="#{weekDay.label}" />
 		 			</p:selectOneMenu>
 		 			
 		 			<p:outputLabel for="termin" value="Termin:" />
-		            <p:inputText id="termin" value="#{scheduleController.spMeeting}" />
+		            <p:inputText id="termin" value="#{scheduleController.spMeeting}" style="width:90%"/>
 		        	
 		        	<p:outputLabel for="Sgmodul" value="Modul:" />
-		        	<p:selectOneMenu id="Sgmodul" value="#{scheduleController.sgmodulId}" style="width:100%">
+		        	<p:selectOneMenu id="Sgmodul" value="#{scheduleController.sgmodulId}" style="width:90%">
                         <f:selectItems value="#{scheduleController.sgmodulList}" var="sgmodule" itemLabel="#{sgmodule.modul.modName}, #{sgmodule.studiengang.SGName}, #{sgmodule.dozenten.DName}" itemValue="#{sgmodule.sgmid}"/>
                     </p:selectOneMenu>
 		        	
 			        <p:outputLabel for="teachingEvent" value="Lehrveranstaltungsart:" />
-			        <p:selectOneMenu id="teachingEvent" value="#{scheduleController.teId}" style="width:100%">
+			        <p:selectOneMenu id="teachingEvent" value="#{scheduleController.teId}" style="width:90%">
                         <f:selectItems value="#{scheduleController.teachingEventList}" var="lva" itemLabel="#{lva.lvname}, #{lva.lvkurz}" itemValue="#{lva.lvid}"/>
                     </p:selectOneMenu>
 			        
 			        <p:outputLabel for="room" value="Raum:" />
-			        <p:selectOneMenu id="room" value="#{scheduleController.roomId}" style="width:100%">
+			        <p:selectOneMenu id="room" value="#{scheduleController.roomId}" style="width:90%">
                     	<f:selectItems value="#{scheduleController.roomList}" var="rau" itemLabel="#{rau.RName}, #{rau.location.LCity}, #{rau.location.LStreet}" itemValue="#{rau.rid}"/>
 			        </p:selectOneMenu>
 			        
 			        <p:outputLabel for="sps" value="Semester:" />
-			        <p:selectOneMenu id="sps" value="#{scheduleController.spsId}" style="width:100%">
+			        <p:selectOneMenu id="sps" value="#{scheduleController.spsId}" style="width:90%">
                     	<f:selectItems value="#{scheduleController.spsList}" var="sps" itemLabel="#{sps.SPSemester}, #{sps.SPJahr}" itemValue="#{sps.spsid}"/>
 			        </p:selectOneMenu>
 			        
 			        <p:outputLabel for="studentNumber" value="Studierendenanzahl:" />
-		            <p:inputText id="studentNumber" value="#{scheduleController.studentNumber}" />
+		            <p:inputText id="studentNumber" value="#{scheduleController.studentNumber}" style="width:90%"/>
 		 			
+		 			<f:facet name="footer">
 		 			<p:commandButton id="addButton" value="Speichern" process="@parent" update=":idForm" actionListener="#{scheduleController.addEvent}" oncomplete="PF('eventDialog').hide();" />
 		            <p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" rendered="#{(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}"/>
-		            
-		        </h:panelGrid>
+		            </f:facet>
+		        </p:panelGrid>
+		        </p:outputPanel>
 		    </p:dialog>    
 		</h:form>
 		<h:form id="eventDetailsEditForm">
 		    <p:dialog id="eventEditDialog" widgetVar="eventEditDialog" header="Event Edit Details" showEffect="clip" hideEffect="clip" width="600">
-		        <h:panelGrid id="eventEditDetails" columns="2">
+		        <p:outputPanel id="dialogPanel">
+		       	<p:growl life="5000" id="messages" />
+		        <p:panelGrid id="eventEditDetails" columns="2" style="margin-bottom:10px; width:100%">
 		 
 		            <p:outputLabel for="von1" value="Von:" />               		 
-               		<p:datePicker id="von1" value="#{scheduleController.createWeekdayStart}" timeOnly="true" pattern="HH:mm"/>
+               		<p:datePicker id="von1" value="#{scheduleController.createWeekdayStart}" style="width:90%" timeOnly="true" pattern="HH:mm"/>
 		 
 		            <p:outputLabel for="bis1" value="Bis:" />
-               		<p:datePicker id="bis1" value="#{scheduleController.createWeekdayEnd}" timeOnly="true" pattern="HH:mm"/>
+               		<p:datePicker id="bis1" value="#{scheduleController.createWeekdayEnd}" timeOnly="true" pattern="HH:mm" style="width:90%"/>
                		
                		<p:outputLabel for="weekday" value="Wochentag:" />
-		            <p:selectOneMenu id="weekday" value="#{scheduleController.day}" style="width:100%">
+		            <p:selectOneMenu id="weekday" value="#{scheduleController.day}" style="width:90%">
 		            	<f:selectItems value="#{scheduleController.weekDays}" var="weekday" itemValue="#{weekDay}" itemLabel="#{weekDay.label}" />
 		 			</p:selectOneMenu>
 		 			
 		 			<p:outputLabel for="termin1" value="Termin:" />
-		            <p:inputText id="termin1" value="#{scheduleController.eventSelected.SPTermin}" />
+		            <p:inputText id="termin1" value="#{scheduleController.eventSelected.SPTermin}" style="width:90%"/>
 		        	
 		        	<p:outputLabel for="Sgmodul1" value="Modul:" />
-		        	<p:selectOneMenu id="Sgmodul1" value="#{scheduleController.sgmodulId}" style="width:100%">
+		        	<p:selectOneMenu id="Sgmodul1" value="#{scheduleController.sgmodulId}" style="width:90%">
                         <f:selectItems value="#{scheduleController.sgmodulList}" var="sgmodule" itemLabel="#{sgmodule.modul.modName}, #{sgmodule.studiengang.SGName}, #{sgmodule.dozenten.DName}" itemValue="#{sgmodule.sgmid}"/>
                     </p:selectOneMenu>
 		        	
 			        <p:outputLabel for="teachingEvent1" value="Lehrveranstaltungsart:" />
-			        <p:selectOneMenu id="teachingEvent1" value="#{scheduleController.teId}" style="width:100%">
+			        <p:selectOneMenu id="teachingEvent1" value="#{scheduleController.teId}" style="width:90%">
                         <f:selectItems value="#{scheduleController.teachingEventList}" var="lva" itemLabel="#{lva.lvname}, #{lva.lvkurz}" itemValue="#{lva.lvid}"/>/>
                     </p:selectOneMenu>
 			        
 			        <p:outputLabel for="room1" value="Raum:" />
-			        <p:selectOneMenu id="room1" value="#{scheduleController.roomId}" style="width:100%">
+			        <p:selectOneMenu id="room1" value="#{scheduleController.roomId}" style="width:90%">
                     	<f:selectItems value="#{scheduleController.roomList}" var="rau" itemLabel="#{rau.RName}, #{rau.location.LCity}, #{rau.location.LStreet}" itemValue="#{rau.rid}" />
 			        </p:selectOneMenu>
 			        
 			        <p:outputLabel for="sps1" value="Semester:" />
-			        <p:selectOneMenu id="sps1" value="#{scheduleController.spsId}" style="width:100%">
+			        <p:selectOneMenu id="sps1" value="#{scheduleController.spsId}" style="width:90%">
                     	<f:selectItems value="#{scheduleController.spsList}" var="sps" itemLabel="#{sps.SPSemester}, #{sps.SPJahr}" itemValue="#{sps.spsid}"/>
 			        </p:selectOneMenu>
 			        
 			        <p:outputLabel for="studentNumber1" value="Studierendenanzahl:" />
-		            <p:inputText id="studentNumber1" value="#{scheduleController.eventSelected.studierendenzahl}" />
+		            <p:inputText id="studentNumber1" value="#{scheduleController.eventSelected.studierendenzahl}" style="width:90%"/>
 		 			
+		 			<f:facet name="footer">
 		 			<p:commandButton id="addButton1" value="Speichern" process="@parent" update=":idForm" actionListener="#{scheduleController.editEvent}" oncomplete="PF('eventEditDialog').hide();" rendered="#{(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}"/>
 		            
 		            <p:commandButton value="Löschen" process="@parent" update=":idForm" actionListener="#{scheduleController.deleteEvent()}" oncomplete="PF('eventEditDialog').hide();" rendered="#{(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}"/>
                     <p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" rendered="#{(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}"/>
-		            
-		        </h:panelGrid>
+		            </f:facet>
+		        </p:panelGrid>
+		        </p:outputPanel>
 		    </p:dialog>    
 		</h:form>
 		<h:form id="printDetailsForm">

@@ -184,11 +184,11 @@ public class LocationController implements Serializable {
     public void deleteLocation() throws Exception {
     	String msg;
     	locationList.remove(locationSelected);        
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Location> q = em.createNamedQuery("Location.findByLid",Location.class);
-        q.setParameter("lid", locationSelected.getLid());
-        location = (Location)q.getSingleResult();
-        
+        //EntityManager em = emf.createEntityManager();
+        //TypedQuery<Location> q = em.createNamedQuery("Location.findByLid",Location.class);
+        //q.setParameter("lid", locationSelected.getLid());
+        //location = (Location)q.getSingleResult();
+        location = locationFacadeLocal.find(locationSelected.getLid());
         try {
         	locationFacadeLocal.remove(location);
         	msg = "delete";
@@ -200,7 +200,7 @@ public class LocationController implements Serializable {
             //addMessage("messages", msg);
             addInfoMessage(msg);
 	    }
-		em.close();
+		//em.close();
     }
     
     //----------------------------------------------------------------------------------------------------------------------------------------------

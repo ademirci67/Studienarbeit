@@ -266,11 +266,11 @@ public class RaumController implements Serializable {
     public void deleteRoom() throws Exception {
     	String msg;
         roomList.remove(roomSelected);        
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Raum> q = em.createNamedQuery("Raum.findByRid",Raum.class);
-        q.setParameter("rid", roomSelected.getRid());
-        room = (Raum)q.getSingleResult();
-        
+        //EntityManager em = emf.createEntityManager();
+        //TypedQuery<Raum> q = em.createNamedQuery("Raum.findByRid",Raum.class);
+        //q.setParameter("rid", roomSelected.getRid());
+        //room = (Raum)q.getSingleResult();
+        room = raumFacadeLocal.find(roomSelected.getRid());
         try {
         	this.raumFacadeLocal.remove(room);
         	msg = "delete";
@@ -283,7 +283,7 @@ public class RaumController implements Serializable {
             addInfoMessage(msg);
 	        
 	    }
-		em.close();
+		//em.close();
     }
     
     /**
@@ -292,6 +292,7 @@ public class RaumController implements Serializable {
      * @return
      */
     private Location findLoc(int locationId) {
+    	/*
         try{
             EntityManager em = emf.createEntityManager(); 
             TypedQuery<Location> query
@@ -301,7 +302,8 @@ public class RaumController implements Serializable {
         }
         catch(Exception e){   
         }
-        return location;
+        */
+        return location = locationEJB.find(locationId);
     }
     
     /**

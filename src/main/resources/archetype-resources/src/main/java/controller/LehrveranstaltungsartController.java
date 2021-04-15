@@ -252,11 +252,11 @@ public class LehrveranstaltungsartController implements Serializable {
     public void deleteLehrveranstaltungsart() throws Exception {
     	String msg;
         teachingEventList.remove(teachingEventSelected);        
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Lehrveranstaltungsart> q = em.createNamedQuery("Lehrveranstaltungsart.findByLvid",Lehrveranstaltungsart.class);
-        q.setParameter("lvid", teachingEventSelected.getLvid());
-        teachingEvent = (Lehrveranstaltungsart)q.getSingleResult();
-        
+        //EntityManager em = emf.createEntityManager();
+        //TypedQuery<Lehrveranstaltungsart> q = em.createNamedQuery("Lehrveranstaltungsart.findByLvid",Lehrveranstaltungsart.class);
+        //q.setParameter("lvid", teachingEventSelected.getLvid());
+        //teachingEvent = (Lehrveranstaltungsart)q.getSingleResult();
+        teachingEvent = teachingEventFacadeLocal.find(teachingEventSelected.getLvid());
         try {
         	teachingEventFacadeLocal.remove(teachingEvent);
         	msg = "delete";
@@ -269,7 +269,7 @@ public class LehrveranstaltungsartController implements Serializable {
             addInfoMessage(msg);
 	        
 	    }
-		em.close();
+		//em.close();
     }
 
 	/**

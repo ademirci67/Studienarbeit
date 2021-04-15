@@ -35,64 +35,72 @@
 		 </h:form>
 		 <h:form id="eventEditDetailsForm">
 		 	<p:dialog id="eventEditDialog" widgetVar="eventEditDialog" header="Prüfcode Editiert Details" showEffect="clip" hideEffect="clip" width="800">
-		        <h:panelGrid id="eventEditDetails" columns="2">
+		        <p:outputPanel id="dialogPanel">
+		       	<p:growl life="5000" id="messages" />
+		        <p:panelGrid id="eventEditDetails" columns="3" style="margin-bottom:10px; width:100%">
 		 			
 			        
-		            <h:outputLabel for="prüfcode" value="Prüfcode: "/>
-                    <h:inputText id="prüfcode" value="#{pruefcodeController.codeSelected.prCode}" ></h:inputText>                                                  
+		            <p:outputLabel for="prüfcode" value="Prüfcode: "/>
+                    <p:inputText style="width:90%" id="prüfcode" value="#{pruefcodeController.codeSelected.prCode}" ></p:inputText>                                                  
+                    <p:message for="prüfcode" />
                     
-                    <h:outputLabel for="vertiefungsrichtung" value="Vertiefungsrichtung: "/>
-                    <h:inputText id="vertiefungsrichtung" value="#{pruefcodeController.codeSelected.vertiefungsrichtungShortName}" ></h:inputText>  
+                    <p:outputLabel for="vertiefungsrichtung" value="Vertiefungsrichtung: "/>
+                    <p:inputText style="width:90%" id="vertiefungsrichtung" value="#{pruefcodeController.codeSelected.vertiefungsrichtungShortName}" ></p:inputText>  
+                    <p:message for="vertiefungsrichtung" />
                     
-                    <h:outputLabel for="modulart" value="Modulart (P/W): "/>
-                    <h:inputText id="modulart" value="#{pruefcodeController.codeSelected.pflichtOderWahl}" ></h:inputText> 
+                    <p:outputLabel for="modulart" value="Modulart (P/W): "/>
+                    <p:inputText style="width:90%" id="modulart" value="#{pruefcodeController.codeSelected.pflichtOderWahl}" ></p:inputText> 
+                    <p:message for="modulart" />
                     
                     <p:outputLabel for="studiengang" value="Studiengang: " />
-			        <p:selectOneMenu id="studiengang" value="#{pruefcodeController.courseId}" style="width:100%">
+			        <p:selectOneMenu style="width:90%" id="studiengang" value="#{pruefcodeController.courseId}">
                     	<f:selectItems value="#{pruefcodeController.courseList}" var="course" itemLabel="#{course.faculty.facName}, #{course.SGName}" itemValue="#{course.sgid}"/>
 			        </p:selectOneMenu>
+			        <p:message for="studiengang" />
                     
+                    <f:facet name="footer">
                     <p:commandButton id="submit" type="submit" value="Speichern" action="#{pruefcodeController.addPruefcode()}" update=":form:CodeList" oncomplete="PF('eventEditDialog').hide();"/> 		 			
 		 			<p:commandButton value="Löschen" update=":form:CodeList" actionListener="#{pruefcodeController.deletePruefcode()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
-		        </h:panelGrid>
+		        </f:facet>
+		        </p:panelGrid>
+		        </p:outputPanel>
 		    </p:dialog>
 		 </h:form>
 		 <h:form id="eventDetailsForm">
 		    <p:dialog id="eventDialog" widgetVar="eventDialog" header="Pruefcode" showEffect="clip" hideEffect="clip" width="800">
-		        <h:panelGrid id="eventDetails" columns="2">
+		        <p:outputPanel id="dialogPanel">
+		        <p:growl life="5000" id="messages" />
+		        <p:panelGrid id="eventDetails" columns="3" style="margin-bottom:10px; width:100%">
 		        	
-		        	<h:outputLabel for="pruefcode1" value="Pruefcode: "/>
-		 			<h:panelGrid columns="3">
-	                    <h:inputText id="pruefcode1" value="#{pruefcodeController.verifyCode}" required = "true" requiredMessage="#{msg['verifyCode}']}"></h:inputText>
-	                    <h:outputLabel value="" style="margin: 10px;"/>
-	                    <h:messages for="pruefcode1" style="color: red"/> 
-                    </h:panelGrid>                                        
+		        	<p:outputLabel for="pruefcode1" value="Pruefcode: "/>
+		 			<p:inputText style="width:90%" id="pruefcode1" value="#{pruefcodeController.verifyCode}" required = "true" requiredMessage="#{msg['verifyCode}']}"></p:inputText>
+	                 <p:message for="pruefcode1" style="color: red"/> 
+                                                     
                     
-                    <h:outputLabel for="vertiefungsrichtung1" value="Vertiefungsrichtung: "/>
-                    <h:panelGrid columns="3">
-	                    <h:inputText id="vertiefungsrichtung1" value="#{pruefcodeController.specializationShort}" required = "true" requiredMessage="#{msg['specializationShort']}"></h:inputText>
-	                    <h:outputLabel value="" style="margin: 10px;"/>
-	                    <h:messages for="vertiefungsrichtung1" style="color: red"/>
-                    </h:panelGrid>
+                    <p:outputLabel for="vertiefungsrichtung1" value="Vertiefungsrichtung: "/>
+                    <p:inputText style="width:90%" id="vertiefungsrichtung1" value="#{pruefcodeController.specializationShort}" required = "true" requiredMessage="#{msg['specializationShort']}"></p:inputText>
+	                 <p:message for="vertiefungsrichtung1" style="color: red"/>
                     
-                    <h:outputLabel for="modulart1" value="Modulart (P/W): "/>
-                    <h:panelGrid columns="3">
-	                    <h:inputText id="modulart1" value="#{pruefcodeController.dutyOrChoice}" required = "true" requiredMessage="#{msg['dutyOrChoice']}"></h:inputText>
-	                    <h:outputLabel value="" style="margin: 10px;"/>
-	                    <h:messages for="modulart1" style="color: red"/>
-			        </h:panelGrid>
+                    
+                    <p:outputLabel for="modulart1" value="Modulart (P/W): "/>
+                    <p:inputText style="width:90%" id="modulart1" value="#{pruefcodeController.dutyOrChoice}" required = "true" requiredMessage="#{msg['dutyOrChoice']}"></p:inputText>
+	                 <p:message for="modulart1" style="color: red"/>
+			        
 			        
 			        <p:outputLabel for="studiengang1" value="Studiengang: " />
-			        <p:selectOneMenu id="studiengang1" value="#{pruefcodeController.courseId}" style="width:100%" required="true" requiredMessage="#{msg['courseId']}">
+			        <p:selectOneMenu style="width:90%" id="studiengang1" value="#{pruefcodeController.courseId}"  required="true" requiredMessage="#{msg['courseId']}">
 			        	<f:selectItem itemLabel="-----" noSelectionOption="true"/>
                     	<f:selectItems value="#{pruefcodeController.courseList}" var="course" itemLabel="#{course.faculty.facName}, #{course.SGName}" itemValue="#{course.sgid}"/>
 			        </p:selectOneMenu>
+		            <p:message for="studiengang1" style="color: red"/>
 		            
+		            <f:facet name="footer">
                     <p:commandButton id="submit" value="Hinzufügen" actionListener="#{pruefcodeController.createDoPruefcode}" update=":form:CodeList" oncomplete="PF('eventDialog').hide();" />		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
-		            
-		        </h:panelGrid>
+		            </f:facet>
+		        </p:panelGrid>
+		        </p:outputPanel>
 		    </p:dialog>    
 		</h:form>
 		 </ui:define>

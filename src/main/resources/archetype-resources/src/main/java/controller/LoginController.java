@@ -33,6 +33,7 @@ import javax.transaction.UserTransaction;
 
 
 import EJB.AccountFacadeLocal;
+import EJB.BenutzergruppeFacadeLocal;
 
 /**
  *
@@ -57,6 +58,8 @@ public class LoginController implements Serializable {
     
     @EJB
 	private AccountFacadeLocal accFacadeLocal;
+    @EJB
+    private BenutzergruppeFacadeLocal userGroupEJB;
     
 
     
@@ -298,6 +301,7 @@ public class LoginController implements Serializable {
      * @return
      */
     private Benutzergruppe findBGID(int id) {
+    	/*
         try{
             EntityManager em = emf.createEntityManager(); 
             TypedQuery<Benutzergruppe> query
@@ -307,7 +311,8 @@ public class LoginController implements Serializable {
         }
         catch(Exception e){   
         }
-        return userGroup;
+        */
+        return userGroup = userGroupEJB.find(id);
     }
     
     /**

@@ -28,40 +28,47 @@
 		 </h:form>
 		 <h:form id="eventEditDetailsForm">
 		 	<p:dialog id="eventEditDialog" widgetVar="eventEditDialog" header="Standort Editiert Details" showEffect="clip" hideEffect="clip">
-		        <h:panelGrid id="eventEditDetails" columns="2">
+		        <p:outputPanel id="dialogPanel">
+		       	<p:growl life="5000" id="messages" />
+		        <p:panelGrid id="eventEditDetails" columns="3" style="margin-bottom:10px; width:100%">
 		 
-		            <h:outputLabel for="lCity_reg" value="Stadt: "/>
-                    <h:inputText id="lCity_reg" value="#{locationController.locationSelected.LCity}" ></h:inputText>                                                  
+		            <p:outputLabel for="lCity_reg" value="Stadt: "/>
+                    <p:inputText style="width:90%" id="lCity_reg" value="#{locationController.locationSelected.LCity}" ></p:inputText>                                                  
+                    <p:messages for="lCity_reg" style="color: red"/>
                     
-                    <h:outputLabel for="lStreet_reg" value="Straße: "/>
-                    <h:inputText id="lStreet_reg" value="#{locationController.locationSelected.LStreet}" ></h:inputText>
+                    <p:outputLabel for="lStreet_reg" value="Straße: "/>
+                    <p:inputText style="width:90%" id="lStreet_reg" value="#{locationController.locationSelected.LStreet}" ></p:inputText>
+                    <p:messages for="lStreet_reg" style="color: red"/>
                     
+                    <f:facet name="footer">
                     <p:commandButton id="submit" type="submit" value="Speichern" action="#{locationController.addLocation()}" update=":form:LocationList" oncomplete="PF('eventEditDialog').hide();"/> 		 			
 		 			<p:commandButton value="Löschen" update=":form:LocationList" actionListener="#{locationController.deleteLocation()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
-		        </h:panelGrid>
+		        </f:facet>
+		        </p:panelGrid>
+		        </p:outputPanel>
 		    </p:dialog> 
 		 </h:form>
 		 <h:form id="eventDetailsForm">
 		    <p:dialog id="eventDialog" widgetVar="eventDialog" header="Standort" showEffect="clip" hideEffect="clip">
-		        <h:panelGrid id="eventDetails" columns="2">
+		        <p:outputPanel id="dialogPanel">
+		        <p:growl life="5000" id="messages" />
+		        <p:panelGrid id="eventDetails" columns="3" style="margin-bottom:10px; width:100%">
 		 
-		            <h:outputLabel styleClass="label" style="font-size:12pt;" for="lCity_reg" value="Stadt: "/>
-                    <h:panelGrid columns="3">
-                    	<h:inputText id="lCity_reg" styleClass="form-control" value="#{locationController.locationCity}" required = "true" requiredMessage="#{msg['locationCity']}"></h:inputText>
-                   		<h:outputLabel value="" style="margin: 10px;"/>
-                    	<h:messages for="modName_reg" style="color: red"/>
-                    </h:panelGrid>                                                        
-                    <h:outputLabel styleClass="label" style="font-size:12pt;" for="lStreet_reg" value="Straße: "/>
-                    <h:panelGrid columns="3">
-                    	<h:inputText id="lStreet_reg" styleClass="form-control" value="#{locationController.locationStreet}" required = "true" requiredMessage="#{msg['locationStreet']}"></h:inputText>
-                   		<h:outputLabel value="" style="margin: 10px;"/>
-                    	<h:messages for="lStreet_reg" style="color: red"/>
-                    </h:panelGrid>
+		            <p:outputLabel for="lCity_reg" value="Stadt: "/>
+                    <p:inputText id="lCity_reg" styleClass="form-control" style="width:90%" value="#{locationController.locationCity}" required = "true" requiredMessage="#{msg['locationCity']}"></p:inputText>
+                   	<p:messages for="modName_reg" style="color: red"/>
+                                                                       
+                    <p:outputLabel for="lStreet_reg" value="Straße: "/>
+                    <p:inputText id="lStreet_reg" styleClass="form-control" style="width:90%" value="#{locationController.locationStreet}" required = "true" requiredMessage="#{msg['locationStreet']}"></p:inputText>
+                   	<p:messages for="lStreet_reg" style="color: red"/>
+                    
+                    <f:facet name="footer">
                     <p:commandButton id="submit" value="Hinzufügen" actionListener="#{locationController.createDoLocation}" update=":form:LocationList" oncomplete="PF('eventDialog').hide();" />		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
-		            
-		        </h:panelGrid>
+		            </f:facet>
+		        </p:panelGrid>
+		        </p:outputPanel>
 		    </p:dialog>    
 		</h:form>
 		 </ui:define>

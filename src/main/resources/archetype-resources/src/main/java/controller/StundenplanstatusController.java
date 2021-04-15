@@ -238,10 +238,11 @@ public class StundenplanstatusController implements Serializable {
     public void deleteStundenplanstatus() throws Exception {
     	String msg;
         scheduleStatusList.remove(statusSelected);        
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Stundenplanstatus> q = em.createNamedQuery("Stundenplanstatus.findBySpsid",Stundenplanstatus.class);
-        q.setParameter("spstid", statusSelected.getSpstid());
-        stundenplanstatus = (Stundenplanstatus)q.getSingleResult();
+        //EntityManager em = emf.createEntityManager();
+        //TypedQuery<Stundenplanstatus> q = em.createNamedQuery("Stundenplanstatus.findBySpsid",Stundenplanstatus.class);
+        //q.setParameter("spstid", statusSelected.getSpstid());
+        //stundenplanstatus = (Stundenplanstatus)q.getSingleResult();
+        stundenplanstatus = stundenplanstatusFacadeLocal.find(statusSelected.getSpstid());
         try {
         	stundenplanstatusFacadeLocal.remove(stundenplanstatus);
         	msg = "delete";
@@ -254,7 +255,7 @@ public class StundenplanstatusController implements Serializable {
             addInfoMessage(msg);
 	    }
         
-		em.close();
+		//em.close();
     }
 
 	/**

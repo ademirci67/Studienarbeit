@@ -35,61 +35,64 @@
 		 </h:form>
 		 <h:form id="eventEditDetailsForm">
 		 	<p:dialog id="eventEditDialog" widgetVar="eventEditDialog" header="Dozent Editiert Details" showEffect="clip" hideEffect="clip" width="350">
-		        <h:panelGrid id="eventEditDetails" columns="2">
+		        <p:outputPanel id="dialogPanel">
+		       	<p:growl life="5000" id="messages" />
+		        <p:panelGrid id="eventEditDetails" columns="3" style="margin-bottom:10px; width:100%">
 		 
-		            <h:outputLabel for="professorName" value="Name: "/>
-                    <h:inputText id="professorName" value="#{dozentenController.professorSelected.DName}" ></h:inputText>                                                  
+		            <p:outputLabel for="professorName" value="Name: "/>
+                    <p:inputText id="professorName" value="#{dozentenController.professorSelected.DName}" style="width:90%"></p:inputText>                                                  
+                    <p:message for="professorName" />
                     
-                    <h:outputLabel for="professorFirstName" value="Vorname: "/>
-                    <h:inputText id="professorFirstName" value="#{dozentenController.professorSelected.DVorname}" ></h:inputText>
+                    <p:outputLabel for="professorFirstName" value="Vorname: "/>
+                    <p:inputText id="professorFirstName" value="#{dozentenController.professorSelected.DVorname}" style="width:90%"></p:inputText>
+                    <p:message for="professorFirstName" />
+                   
+                    <p:outputLabel for="title" value="Titel: "/>
+                    <p:inputText id="title" value="#{dozentenController.professorSelected.DTitel}" style="width:90%"></p:inputText>
+                    <p:message for="title" />
                     
-                    <h:outputLabel for="title" value="Titel: "/>
-                    <h:inputText id="title" value="#{dozentenController.professorSelected.DTitel}" ></h:inputText>
+                    <p:outputLabel for="professorShort" value="Kürzel: "/>
+                    <p:inputText id="professorShort" value="#{dozentenController.professorSelected.DKurz}" style="width:90%"></p:inputText>
+                 	<p:message for="professorShort" />
                     
-                    <h:outputLabel for="professorShort" value="Kürzel: "/>
-                    <h:inputText id="professorShort" value="#{dozentenController.professorSelected.DKurz}" ></h:inputText>
-                 
-                    
+                    <f:facet name="footer">
                     <p:commandButton id="submit" type="submit" value="Speichern" action="#{dozentenController.addDozent()}" update=":form:ProfessorList" oncomplete="PF('eventEditDialog').hide();"/> 		 			
 		 			<p:commandButton value="Löschen" update=":form:ProfessorList" actionListener="#{dozentenController.deleteDozent()}" oncomplete="PF('eventEditDialog').hide();"/>
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" />
-		        </h:panelGrid>
+					</f:facet>	        
+		        </p:panelGrid>
+		        </p:outputPanel>
 		    </p:dialog>
 		 </h:form>
 		<h:form id="eventDetailsForm">
 		    <p:dialog id="eventDialog" widgetVar="eventDialog" header="Dozenten" showEffect="clip" hideEffect="clip" width="350">
-		        <h:panelGrid id="eventDetails" columns="2">
+		        <p:outputPanel id="dialogPanel">
+		        <p:growl life="5000" id="messages" />
+		        <p:panelGrid id="eventDetails" columns="3" style="margin-bottom:10px; width:100%">
 		        
 		        
-     				<h:outputLabel styleClass="label" style="font-size:12pt;" for="DName_reg" value="Dozentenname: "/>
-                    <h:panelGrid columns="3">
-                        <h:inputText id="DName_reg" styleClass="form-control" value="#{dozentenController.professorName}" required = "true" requiredMessage="#{msg['professorName']}"></h:inputText>
-                        <h:outputLabel value="" style="margin: 10px;"/>
-                        <h:message for="DName_reg" style="color: red"/>
-                    </h:panelGrid>
-                    <h:outputLabel styleClass="label" style="font-size:12pt;" for="DVorname_reg" value="Dozentenvorname : "/>
-                    <h:panelGrid columns="3">
-                        <h:inputText id="DVorname_reg" styleClass="form-control"  value="#{dozentenController.professorFirstName}" required = "true" requiredMessage="#{msg['professorName']}"></h:inputText>
-                        <h:outputLabel value="" style="margin: 10px;"/>
-                        <h:message for="DVorname_reg" style="color: red"/>
-                    </h:panelGrid>
-                    <h:outputLabel styleClass="label" style="font-size:12pt;" for="DTitel_reg" value="Titel: "/>
-                    <h:panelGrid columns="3">
-                        <h:inputText id="DTitel_reg" styleClass="form-control" value="#{dozentenController.professorTitle}"></h:inputText>
-                        <h:outputLabel value="" style="margin: 10px;"/>
-                        <h:message for="DTitel_reg" style="color: red"/>
-                    </h:panelGrid>
-                    <h:outputLabel styleClass="label" style="font-size:12pt;" for="DKurz_reg" value="Kürzel: "/>
-                    <h:panelGrid columns="3">
-                        <h:inputText id="DKurz_reg" styleClass="form-control" value="#{dozentenController.professorShortName}" required = "true" requiredMessage="#{msg['professorShortName']}"></h:inputText>
-                        <h:outputLabel value="" style="margin: 10px;"/>
-                        <h:message for="DKurz_reg" style="color: red"/>
-                    </h:panelGrid>
-		            
+     				<p:outputLabel for="DName_reg" value="Dozentenname: "/>
+                    <p:inputText id="DName_reg" styleClass="form-control" style="width:90%" value="#{dozentenController.professorName}" required = "true" requiredMessage="#{msg['professorName']}"></p:inputText>
+                    <p:message for="DName_reg" style="color: red"/>
+                   
+                    <p:outputLabel for="DVorname_reg" value="Dozentenvorname : "/>
+                    <p:inputText id="DVorname_reg" styleClass="form-control" style="width:90%" value="#{dozentenController.professorFirstName}" required = "true" requiredMessage="#{msg['professorName']}"></p:inputText>
+                     <p:message for="DVorname_reg" style="color: red"/>
+                    
+                    <p:outputLabel for="DTitel_reg" value="Titel: "/>
+                    <p:inputText id="DTitel_reg" styleClass="form-control" style="width:90%" value="#{dozentenController.professorTitle}"></p:inputText>
+                     <p:message for="DTitel_reg" style="color: red"/>
+                    
+                    <p:outputLabel for="DKurz_reg" value="Kürzel: "/>
+                    <p:inputText id="DKurz_reg" styleClass="form-control" style="width:90%" value="#{dozentenController.professorShortName}" required = "true" requiredMessage="#{msg['professorShortName']}"></p:inputText>
+                    <p:message for="DKurz_reg" style="color: red"/>
+                    
+		            <f:facet name="footer">
                     <p:commandButton id="submit" value="Hinzufügen" actionListener="#{dozentenController.createDoDozent}" update=":form:ProfessorList" oncomplete="PF('eventDialog').hide();" />		 			
 		 			<p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" />
-		            
-		        </h:panelGrid>
+		            </f:facet>
+		        </p:panelGrid>
+		        </p:outputPanel>
 		    </p:dialog>    
 		</h:form>
 		 </ui:define>

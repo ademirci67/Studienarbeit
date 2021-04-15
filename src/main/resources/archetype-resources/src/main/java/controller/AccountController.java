@@ -78,8 +78,8 @@ public class AccountController implements Serializable {
 	private String accountName;
 	private String accountPassword;
 	private String accountEmail;
-	private String userGroupName;
-	private String facultyName;
+	private int userGroupID;
+	private int facultyID;
 	private boolean accountEmailOk = false;
 	private boolean accountNameOk = false;
 	private boolean accountPasswordOk = false;
@@ -97,8 +97,8 @@ public class AccountController implements Serializable {
 		this.accountSelected = accountSelected;
 	}
 	
-	public String getUserGroupName() {
-		return userGroupName;
+	public int getUserGroupID() {
+		return userGroupID;
 	}
 	
 	public List<Faculty> getFacultyList() {
@@ -117,8 +117,8 @@ public class AccountController implements Serializable {
 		this.userGroupList = userGroupList;
 	}
 
-	public void setUserGroupName(String userGroupName) {
-		this.userGroupName = userGroupName;
+	public void setUserGroupID(int userGroupID) {
+		this.userGroupID = userGroupID;
 	}
 	  
     public List<Account> getAccountList() {
@@ -173,12 +173,12 @@ public class AccountController implements Serializable {
 	    }
 	}
 	
-	public String getFacultyName() {
-        return facultyName;
+	public int getFacultyID() {
+        return facultyID;
     }
 
-    public void setFacultyName(String facultyName) {
-        this.facultyName = facultyName;
+    public void setFacultyID(int facultyID) {
+        this.facultyID = facultyID;
     }
 	public UIComponent getReg() {
         return reg;
@@ -258,8 +258,8 @@ public class AccountController implements Serializable {
         
         accountSelected = e.getObject();
         
-        userGroupName = accountSelected.getBenutzergruppe().getBGName();
-        facultyName = accountSelected.getFaculty().getFacName();
+        userGroupID = accountSelected.getBenutzergruppe().getGroupID();
+        facultyID = accountSelected.getFaculty().getFbid();
         
     }
 	
@@ -272,11 +272,11 @@ public class AccountController implements Serializable {
     public void deleteAccount() throws Exception {
     	String msg;
     	accountList.remove(accountSelected);        
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Account> q = em.createNamedQuery("Account.findByAccID",Account.class);
-        q.setParameter("accID", accountSelected.getAccID());
-        account = (Account)q.getSingleResult();
-        
+        //EntityManager em = emf.createEntityManager();
+        //TypedQuery<Account> q = em.createNamedQuery("Account.findByAccID",Account.class);
+        //q.setParameter("accID", accountSelected.getAccID());
+        //account = (Account)q.getSingleResult();
+        account = accFacadeLocal.find(accountSelected.getAccID());
         try {
         	accFacadeLocal.remove(account);
         	msg = "delete";
@@ -289,7 +289,7 @@ public class AccountController implements Serializable {
             addInfoMessage(msg);
 	       
 	    }
-		em.close();
+		//em.close();
     }
     
    // ---------------------------------------------------------------------------------------------------------------------
@@ -299,7 +299,8 @@ public class AccountController implements Serializable {
      * @param bg
      * @return
      */
-    private Benutzergruppe findBG(String bg) {
+    private Benutzergruppe findBG(int bg) {
+    	/*
     	try{
             EntityManager em = emf.createEntityManager(); 
             TypedQuery<Benutzergruppe> query
@@ -309,7 +310,8 @@ public class AccountController implements Serializable {
         }
         catch(Exception e){   
         }
-        return userGroup;
+        */
+        return userGroup = userGroupEJB.find(bg);
     }
     
     /**
@@ -317,8 +319,9 @@ public class AccountController implements Serializable {
      * @param fac
      * @return
      */
-    private Faculty findFac(String fac) {
-        try{
+    private Faculty findFac(int fac) {
+        /*
+    	try{
             EntityManager em = emf.createEntityManager(); 
             TypedQuery<Faculty> query
                 = em.createNamedQuery("Faculty.findByFacName",Faculty.class);
@@ -327,7 +330,8 @@ public class AccountController implements Serializable {
         }
         catch(Exception e){   
         }
-        return faculty;
+        */
+        return faculty = facultyEJB.find(fac);
     }
     
     /**
@@ -342,8 +346,8 @@ public class AccountController implements Serializable {
 	        account.setAccName(accountSelected.getAccName());
 	        account.setAccPwd(accountSelected.getAccPwd());
 	        account.setAccEmail(accountSelected.getAccEmail());
-	        account.setBenutzergruppe(findBG(userGroupName));
-            account.setFaculty(findFac(facultyName));
+	        account.setBenutzergruppe(findBG(userGroupID));
+            account.setFaculty(findFac(facultyID));
             accFacadeLocal.edit(account);
             msg = "edit";
             //addMessage("messages", msg);
@@ -390,9 +394,9 @@ public class AccountController implements Serializable {
             newUser.setAccName(accountName);    
             newUser.setAccPwd(accountPassword);      
             newUser.setAccEmail(accountEmail);
-            newUser.setBenutzergruppe(findBG(userGroupName));
+            newUser.setBenutzergruppe(findBG(userGroupID));
             //Dropdown Menü
-            newUser.setFaculty(findFac(facultyName));
+            newUser.setFaculty(findFac(facultyID));
             try {
             	accFacadeLocal.create(newUser);
             	msg = "entry";

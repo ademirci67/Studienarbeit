@@ -385,11 +385,11 @@ public class SgmodulController implements Serializable {
     public void deleteSgmodul() throws Exception {
     	String msg;
     	sgmodulList.remove(sgmodulSelected);        
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Sgmodul> q = em.createNamedQuery("Sgmodul.findBySgmid",Sgmodul.class);
-        q.setParameter("sgmid", sgmodulSelected.getSgmid());
-        sgmodul = (Sgmodul)q.getSingleResult();
-        
+        //EntityManager em = emf.createEntityManager();
+        //TypedQuery<Sgmodul> q = em.createNamedQuery("Sgmodul.findBySgmid",Sgmodul.class);
+        //q.setParameter("sgmid", sgmodulSelected.getSgmid());
+        //sgmodul = (Sgmodul)q.getSingleResult();
+        sgmodul = sgModulFacadeLocal.find(sgmodulSelected.getSgmid());
         try {
         	sgModulFacadeLocal.remove(sgmodul);
         	msg = "delete";
@@ -402,7 +402,7 @@ public class SgmodulController implements Serializable {
             addInfoMessage(msg);
 	    	
 	    }
-		em.close();
+		//em.close();
     }
     
    //----------------------------------------------------------------------------------------------------------------------------------------------
@@ -413,6 +413,7 @@ public class SgmodulController implements Serializable {
      * @return
      */
     private Modul findMod(int mod) {
+    	/*
         try{
             EntityManager em = emf.createEntityManager(); 
             TypedQuery<Modul> query
@@ -422,7 +423,8 @@ public class SgmodulController implements Serializable {
         }
         catch(Exception e){   
         }
-        return module;
+        */
+        return module = modulEJB.find(mod);
     }
     
     /**
@@ -431,7 +433,8 @@ public class SgmodulController implements Serializable {
      * @return
      */
     private Studiengang findSg(int sg) {
-        try{
+        /*
+    	try{
             EntityManager em = emf.createEntityManager(); 
             TypedQuery<Studiengang> query
                 = em.createNamedQuery("Studiengang.findBySgid",Studiengang.class);
@@ -440,7 +443,8 @@ public class SgmodulController implements Serializable {
         }
         catch(Exception e){   
         }
-        return course;
+        */
+        return course = courseEJB.find(sg);
     }
     
     /**
@@ -449,7 +453,8 @@ public class SgmodulController implements Serializable {
      * @return
      */
     private Dozenten findDoz(int doz) {
-        try{
+        /*
+    	try{
             EntityManager em = emf.createEntityManager(); 
             TypedQuery<Dozenten> query
                 = em.createNamedQuery("Dozenten.findByDid",Dozenten.class);
@@ -458,7 +463,8 @@ public class SgmodulController implements Serializable {
         }
         catch(Exception e){   
         }
-        return professor;
+        */
+        return professor =  professorEJB.find(doz) ;
     }
     
    //----------------------------------------------------------------------------------------------------------------------------------------------

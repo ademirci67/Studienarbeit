@@ -231,10 +231,11 @@ public class DozentenController implements Serializable {
     public void deleteDozent() {
     	String msg;
     	professorList.remove(professorSelected);        
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Dozenten> q = em.createNamedQuery("Dozenten.findByDid",Dozenten.class);
-        q.setParameter("did", professorSelected.getDid());
-        professor = (Dozenten)q.getSingleResult();
+        //EntityManager em = emf.createEntityManager();
+        //TypedQuery<Dozenten> q = em.createNamedQuery("Dozenten.findByDid",Dozenten.class);
+        //q.setParameter("did", professorSelected.getDid());
+        //professor = (Dozenten)q.getSingleResult();
+    	professor = dozentenFacadeLocal.find(professorSelected.getDid());
         try {
         	dozentenFacadeLocal.remove(professor);
         	msg = "delete";
@@ -247,7 +248,7 @@ public class DozentenController implements Serializable {
             addInfoMessage(msg);
         }
         
-		em.close();
+		//em.close();
     }
     
     /**
