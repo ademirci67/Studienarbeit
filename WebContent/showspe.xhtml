@@ -271,10 +271,8 @@
 			        <p:outputLabel for="studentNumber" value="Studierendenanzahl:" />
 		            <p:inputText id="studentNumber" value="#{scheduleController.studentNumber}" style="width:90%"/>
 		 			
-		 			<f:facet name="footer">
 		 			<p:commandButton id="addButton" value="Speichern" process="@parent" update=":idForm" actionListener="#{scheduleController.addEvent}" oncomplete="PF('eventDialog').hide();" />
 		            <p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventDialog').hide();" rendered="#{(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}"/>
-		            </f:facet>
 		        </p:panelGrid>
 		        </p:outputPanel>
 		    </p:dialog>    
@@ -322,12 +320,10 @@
 			        <p:outputLabel for="studentNumber1" value="Studierendenanzahl:" />
 		            <p:inputText id="studentNumber1" value="#{scheduleController.eventSelected.studierendenzahl}" style="width:90%"/>
 		 			
-		 			<f:facet name="footer">
 		 			<p:commandButton id="addButton1" value="Speichern" process="@parent" update=":idForm" actionListener="#{scheduleController.editEvent}" oncomplete="PF('eventEditDialog').hide();" rendered="#{(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}"/>
 		            
 		            <p:commandButton value="Löschen" process="@parent" update=":idForm" actionListener="#{scheduleController.deleteEvent()}" oncomplete="PF('eventEditDialog').hide();" rendered="#{(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}"/>
                     <p:commandButton value="Abbrechen" process="@parent" oncomplete="PF('eventEditDialog').hide();" rendered="#{(loginController.isLoggedIn and (loginController.isAdm or loginController.isRzp or loginController.isSgl))}"/>
-		            </f:facet>
 		        </p:panelGrid>
 		        </p:outputPanel>
 		    </p:dialog>    
